@@ -641,14 +641,17 @@
     <button class="nav-btn" onclick="go('mining')">
       <span class="nav-num">06</span> Sentence mining
     </button>
+    <button class="nav-btn" onclick="go('media')">
+      <span class="nav-num">07</span> Other media
+    </button>
     <button class="nav-btn" onclick="go('listening')">
-      <span class="nav-num">07</span> Improving listening
+      <span class="nav-num">08</span> Improving listening
     </button>
     <button class="nav-btn" onclick="go('routine')">
-      <span class="nav-num">08</span> Daily routine
+      <span class="nav-num">09</span> Daily routine
     </button>
     <button class="nav-btn" onclick="go('speaking')">
-      <span class="nav-num">09</span> Speaking
+      <span class="nav-num">10</span> Speaking
     </button>
   </aside>
 
@@ -986,10 +989,6 @@
           <p class="link-card-title">JPDB.io</p>
           <p class="link-card-desc">Vocab difficulty rankings</p>
         </a>
-        <a class="link-card" href="https://learnnatively.com/" target="_blank">
-          <p class="link-card-title">LearnNatively</p>
-          <p class="link-card-desc">Anime, manga, and books by level</p>
-        </a>
       </div>
 
       <hr>
@@ -1034,6 +1033,177 @@
         <button class="page-nav-btn" onclick="go('steps')">
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">How to immerse</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('media')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Other media</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 07 OTHER MEDIA -->
+    <div id="v-media" class="view">
+      <span class="view-tag tag-green">practice</span>
+      <h2>Other media</h2>
+      <p class="view-sub">Anime is a great entry point, but the method works across everything. The more variety you add, the more natural and well-rounded your Japanese becomes.</p>
+
+      <hr>
+      <h3>Reading: manga</h3>
+      <p>Manga is one of the best complements to anime — it builds reading speed, exposes you to more kanji in context, and the visual storytelling makes it easy to follow even at lower levels. The same 0–2 unknown rule applies: look up what you can, skip what's overwhelming, and keep moving.</p>
+      <p>To get Yomitan working on manga you need OCR, since the text is part of the image. <strong>Manatan</strong> is the easiest all-in-one option — it handles OCR automatically and works on desktop, iOS, and Android. <strong>Mokuro</strong> pre-processes manga into hoverable HTML pages for desktop use.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://github.com/KolbyML/Manatan" target="_blank">
+          <p class="link-card-title">Manatan</p>
+          <p class="link-card-desc">All-in-one manga reader with auto OCR</p>
+        </a>
+        <a class="link-card" href="https://mokuro.moe/catalog/" target="_blank">
+          <p class="link-card-title">Mokuro catalog</p>
+          <p class="link-card-desc">Pre-processed manga, hoverable on desktop</p>
+        </a>
+        <a class="link-card" href="https://jiten.moe/" target="_blank">
+          <p class="link-card-title">Jiten.moe</p>
+          <p class="link-card-desc">Manga and books ranked by difficulty</p>
+        </a>
+        <a class="link-card" href="https://klmanga.loan/" target="_blank">
+          <p class="link-card-title">KLManga</p>
+          <p class="link-card-desc">Online raw manga reading</p>
+        </a>
+        <a class="link-card" href="https://dl-raw.si/" target="_blank">
+          <p class="link-card-title">DL-Raw</p>
+          <p class="link-card-desc">Online raw manga reading</p>
+        </a>
+        <a class="link-card" href="https://rawkuma.com/" target="_blank">
+          <p class="link-card-title">Rawkuma</p>
+          <p class="link-card-desc">Online raw manga reading</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>Reading: novels &amp; light novels</h3>
+      <p>Prose is harder than manga — no pictures to fill in the gaps, denser vocabulary, and more complex grammar. That said, web novels on Syosetu and Kakuyomu are written for casual reading and tend to be more accessible than retail books. For ebooks, the <strong>ッツ Reader</strong> renders Japanese text vertically in-browser and is compatible with Yomitan. If you're on mobile, <strong>Hoshi Reader</strong> (iOS) and <strong>Hoshi Reader Android</strong> both have first-class support for vertical text and dictionary lookups.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://reader.ttsu.app/" target="_blank">
+          <p class="link-card-title">ッツ Ebook Reader</p>
+          <p class="link-card-desc">EPUB reader with Yomitan support</p>
+        </a>
+        <a class="link-card" href="https://yomou.syosetu.com/" target="_blank">
+          <p class="link-card-title">Syosetu</p>
+          <p class="link-card-desc">Japanese web novels</p>
+        </a>
+        <a class="link-card" href="https://kakuyomu.jp/" target="_blank">
+          <p class="link-card-title">Kakuyomu</p>
+          <p class="link-card-desc">Web novels by Kadokawa</p>
+        </a>
+        <a class="link-card" href="https://apps.apple.com/us/app/hoshi-reader/id6758244332" target="_blank">
+          <p class="link-card-title">Hoshi Reader (iOS)</p>
+          <p class="link-card-desc">EPUB reader with popup dictionary</p>
+        </a>
+        <a class="link-card" href="https://annas-archive.gl/" target="_blank">
+          <p class="link-card-title">Anna's Archive</p>
+          <p class="link-card-desc">Light novel ebook downloads</p>
+        </a>
+        <a class="link-card" href="https://discord.gg/tmw" target="_blank">
+          <p class="link-card-title">TheMoeWay Discord</p>
+          <p class="link-card-desc">LN resources — student role required</p>
+        </a>
+      </div>
+      <div class="callout warn">
+        <strong>Note:</strong> Anna's Archive may be blocked in some regions — use a VPN if you can't access it.
+      </div>
+
+      <hr>
+      <h3>Visual novels</h3>
+      <p>Visual novels sit somewhere between reading and watching — voiced dialogue means you're training your ears at the same time as your reading, which makes them one of the most efficient immersion formats once you have some foundation. Text hooking with <strong>Textractor</strong> or <strong>JL</strong> lets you hover over any line with Yomitan, making lookups just as smooth as with anime subtitles. Ryuugames has a large catalogue of VNs available for download, and TheMoeWay has a full setup guide to get everything running.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.ryuugames.com/" target="_blank">
+          <p class="link-card-title">Ryuugames</p>
+          <p class="link-card-desc">VN downloads — includes adult content ⚠</p>
+        </a>
+        <a class="link-card" href="https://vnclub.org/" target="_blank">
+          <p class="link-card-title">VN Club</p>
+          <p class="link-card-desc">Guides, recommendations, and catalogue</p>
+        </a>
+        <a class="link-card" href="https://github.com/Artikash/Textractor/releases" target="_blank">
+          <p class="link-card-title">Textractor</p>
+          <p class="link-card-desc">Text hooker for VN engines</p>
+        </a>
+        <a class="link-card" href="https://github.com/rampaa/JL" target="_blank">
+          <p class="link-card-title">JL</p>
+          <p class="link-card-desc">Popup dictionary, no browser needed</p>
+        </a>
+        <a class="link-card" href="https://jpdb.io/" target="_blank">
+          <p class="link-card-title">JPDB.io</p>
+          <p class="link-card-desc">VN vocab difficulty ratings</p>
+        </a>
+        <a class="link-card" href="https://learnjapanese.moe/vn/" target="_blank">
+          <p class="link-card-title">TheMoeWay VN Guide</p>
+          <p class="link-card-desc">Full setup walkthrough</p>
+        </a>
+      </div>
+      <div class="callout warn">
+        <strong>NSFW warning:</strong> Ryuugames hosts adult visual novels alongside all-ages titles. Browse with that in mind.
+      </div>
+
+      <hr>
+      <h3>Games</h3>
+      <p>Games are harder to set up than VNs but extremely good for immersion — particularly RPGs, adventure games, and story-driven titles where you're reading a lot and the gameplay holds your attention. Text extraction varies by engine: <strong>Agent</strong> covers many emulator and PC game engines with script-based hooking, and <strong>GameSentenceMiner</strong> makes mining from games straightforward once you have it running.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://github.com/0xDC00/agent" target="_blank">
+          <p class="link-card-title">Agent</p>
+          <p class="link-card-desc">Script-based text extractor for games</p>
+        </a>
+        <a class="link-card" href="https://github.com/bpwhelan/GameSentenceMiner" target="_blank">
+          <p class="link-card-title">GameSentenceMiner</p>
+          <p class="link-card-desc">Mine cards directly from games</p>
+        </a>
+        <a class="link-card" href="https://lazyguidejp.github.io/jp-lazy-guide/setupGamingOnAndroid/" target="_blank">
+          <p class="link-card-title">Gaming on Android</p>
+          <p class="link-card-desc">Lazy Guide setup walkthrough</p>
+        </a>
+        <a class="link-card" href="https://github.com/rtr46/meikipop" target="_blank">
+          <p class="link-card-title">Meikipop</p>
+          <p class="link-card-desc">Popup dictionary overlay for games</p>
+        </a>
+        <a class="link-card" href="https://github.com/matt-m-o/YomiNinja" target="_blank">
+          <p class="link-card-title">YomiNinja</p>
+          <p class="link-card-desc">OCR + Yomitan for any game screen</p>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=h1NfF4yiaWE" target="_blank">
+          <p class="link-card-title">Game Gengo — Tier List</p>
+          <p class="link-card-desc">Top 100+ games for Japanese learners (2025)</p>
+        </a>
+      </div>
+
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/h1NfF4yiaWE" allowfullscreen loading="lazy" title="Top 100+ Games for Japanese Learners of 2025! (Tier List) — Game Gengo"></iframe>
+      </div>
+
+      <hr>
+      <h3>YouTube</h3>
+      <p>YouTube is one of the most underrated immersion sources — vlogs, variety content, cooking channels, commentary, and gaming streams expose you to natural, unscripted speech that anime and VNs don't. It's especially useful once you have a foundation and want to diversify the register of Japanese you're hearing.</p>
+      <p>ASBPlayer works directly on YouTube: load a subtitle file and it overlays Japanese subs onto any video. You can also find channels with auto-generated Japanese captions, which Yomitan can hover over in the transcript panel.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.youtube.com/@cijapanese" target="_blank">
+          <p class="link-card-title">Comprehensible Japanese</p>
+          <p class="link-card-desc">Graded input videos for learners</p>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/@Fischers" target="_blank">
+          <p class="link-card-title">Fischers</p>
+          <p class="link-card-desc">Japanese variety / vlog channel</p>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/" target="_blank">
+          <p class="link-card-title">YouTube</p>
+          <p class="link-card-desc">Search in Japanese for native content</p>
+        </a>
+      </div>
+      <div class="callout tip">
+        Search YouTube directly in Japanese (e.g. <code>料理 vlog</code>, <code>ゲーム実況</code>) to find content aimed at native speakers rather than learners.
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('mining')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Sentence mining</span>
         </button>
         <button class="page-nav-btn next" onclick="go('listening')">
           <span class="page-nav-label">Next →</span>
@@ -1093,9 +1263,9 @@
       <p>Anime is professionally recorded and clearly enunciated. Real speech isn't. Once you have a foundation, mix in other content — YouTube vlogs, variety shows, podcasts. People contract words, use slang, and speak over each other in ways anime doesn't prepare you for.</p>
 
       <div class="page-nav">
-        <button class="page-nav-btn" onclick="go('mining')">
+        <button class="page-nav-btn" onclick="go('media')">
           <span class="page-nav-label">← Prev</span>
-          <span class="page-nav-title">Sentence mining</span>
+          <span class="page-nav-title">Other media</span>
         </button>
         <button class="page-nav-btn next" onclick="go('routine')">
           <span class="page-nav-label">Next →</span>
@@ -1251,7 +1421,7 @@
 </div>
 
 <script>
-const views = ['welcome','basics','immersion','goal','setup','steps','mining','listening','routine','speaking'];
+const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking'];
 
 function go(id, pushState = true) {
   views.forEach(v => {
