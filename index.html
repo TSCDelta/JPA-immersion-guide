@@ -1252,7 +1252,8 @@
 
 <script>
 const views = ['welcome','basics','what','goal','setup','how','mining','listening','routine','speaking'];
-function go(id) {
+
+function go(id, pushState = true) {
   views.forEach(v => {
     document.getElementById('v-' + v).classList.remove('active');
     const btn = document.querySelectorAll('.nav-btn')[views.indexOf(v)];
@@ -1263,7 +1264,22 @@ function go(id) {
   if (activeBtn) activeBtn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   closeSidebar();
+  if (pushState) {
+    history.pushState({ view: id }, '', '/' + id);
+  }
 }
+
+window.addEventListener('popstate', (e) => {
+  const id = e.state?.view || 'welcome';
+  go(id, false);
+});
+
+(function init() {
+  const path = window.location.pathname.replace(/^\//, '').trim();
+  const id = views.includes(path) ? path : 'welcome';
+  go(id, false);
+})();
+
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('overlay').classList.toggle('open');
