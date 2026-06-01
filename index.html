@@ -622,7 +622,7 @@
     <button class="nav-btn" onclick="go('basics')">
       <span class="nav-num">01</span> Basics
     </button>
-    <button class="nav-btn" onclick="go('what')">
+    <button class="nav-btn" onclick="go('immersion')">
       <span class="nav-num">02</span> What is immersion?
     </button>
     <button class="nav-btn" onclick="go('goal')">
@@ -635,7 +635,7 @@
     </button>
 
     <span class="nav-section-label">Practice</span>
-    <button class="nav-btn" onclick="go('how')">
+    <button class="nav-btn" onclick="go('steps')">
       <span class="nav-num">05</span> How to immerse
     </button>
     <button class="nav-btn" onclick="go('mining')">
@@ -665,7 +665,7 @@
     </div>
 
     <!-- 01 WHAT IS IMMERSION -->
-    <div id="v-what" class="view">
+    <div id="v-immersion" class="view">
       <span class="view-tag tag-green">foundation</span>
       <h2>What is immersion?</h2>
       <p class="view-sub">Immersion means consuming real Japanese — watching, reading, listening — so you build a natural feel for how the language works.</p>
@@ -717,7 +717,7 @@
       </div>
 
       <div class="page-nav">
-        <button class="page-nav-btn" onclick="go('what')">
+        <button class="page-nav-btn" onclick="go('immersion')">
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">What is immersion?</span>
         </button>
@@ -828,7 +828,7 @@
           <span class="page-nav-label">← Back</span>
           <span class="page-nav-title">Home</span>
         </button>
-        <button class="page-nav-btn next" onclick="go('what')">
+        <button class="page-nav-btn next" onclick="go('immersion')">
           <span class="page-nav-label">Next →</span>
           <span class="page-nav-title">What is immersion?</span>
         </button>
@@ -930,7 +930,7 @@
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">The goal</span>
         </button>
-        <button class="page-nav-btn next" onclick="go('how')">
+        <button class="page-nav-btn next" onclick="go('steps')">
           <span class="page-nav-label">Next →</span>
           <span class="page-nav-title">How to immerse</span>
         </button>
@@ -938,7 +938,7 @@
     </div>
 
     <!-- 04 HOW TO IMMERSE -->
-    <div id="v-how" class="view">
+    <div id="v-steps" class="view">
       <span class="view-tag tag-green">practice</span>
       <h2>How to immerse</h2>
       <p class="view-sub">Think of each sentence as a small puzzle. Your job is to fit the pieces together — look things up when needed, use context when you can, and move on.</p>
@@ -1031,7 +1031,7 @@
       </div>
 
       <div class="page-nav">
-        <button class="page-nav-btn" onclick="go('how')">
+        <button class="page-nav-btn" onclick="go('steps')">
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">How to immerse</span>
         </button>
@@ -1251,7 +1251,7 @@
 </div>
 
 <script>
-const views = ['welcome','basics','what','goal','setup','how','mining','listening','routine','speaking'];
+const views = ['welcome','basics','immersion','goal','setup','steps','mining','listening','routine','speaking'];
 
 function go(id, pushState = true) {
   views.forEach(v => {
