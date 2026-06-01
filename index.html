@@ -653,6 +653,9 @@
     <button class="nav-btn" onclick="go('speaking')">
       <span class="nav-num">10</span> Speaking
     </button>
+    <button class="nav-btn" onclick="go('jlpt')">
+      <span class="nav-num">11</span> JLPT
+    </button>
   </aside>
 
   <main>
@@ -874,6 +877,10 @@
           <p class="link-card-title">Anizone</p>
           <p class="link-card-desc">Streaming site</p>
         </a>
+      </div>
+
+      <div class="callout tip">
+        <strong>Bunpro</strong> is a grammar SRS that drills grammar points in context — useful alongside immersion for N5 through N1. Browse the full grammar point list for free at <a href="https://bunpro.jp/grammar_points" target="_blank" style="color:var(--text)">bunpro.jp/grammar_points</a>.
       </div>
 
       <hr>
@@ -1413,6 +1420,85 @@
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">Daily routine</span>
         </button>
+        <button class="page-nav-btn next" onclick="go('jlpt')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">JLPT</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- 11 JLPT -->
+    <div id="v-jlpt" class="view">
+      <span class="view-tag tag-amber">exam prep</span>
+      <h2>JLPT</h2>
+      <p class="view-sub">The Japanese Language Proficiency Test runs N5 (beginner) to N1 (advanced). It's the most widely recognised certification for Japanese — useful for work, visas, and university admissions in Japan.</p>
+
+      <div class="callout info">
+        <strong>Immersion and JLPT prep work well together.</strong> The reading and listening sections reward exactly the kind of comprehension immersion builds. Grammar and vocab sections need more targeted study — that's where dedicated prep books come in.
+      </div>
+
+      <hr>
+      <h3>Practice tests</h3>
+      <p>Doing timed mock tests under real conditions is the most effective way to prepare. The JLPT format is specific — knowing how questions are structured saves time on the day.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://ten-jlpt-site.vercel.app/" target="_blank">
+          <p class="link-card-title">JLPT Practice Tests</p>
+          <p class="link-card-desc">Practice tests for all levels</p>
+        </a>
+        <a class="link-card" href="https://www.jlptpracticetest.com/" target="_blank">
+          <p class="link-card-title">JLPT Practice Test</p>
+          <p class="link-card-desc">105 past exam tests, N1–N5, with instant feedback</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>Reading material</h3>
+      <p>The N2 and N1 reading sections pull heavily from formal written Japanese — essays, editorials, informational texts. Note.com (personal essays and commentary) and NHK Web (news articles) are good sources of level-appropriate native reading material you can mine with Yomitan.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://note.com/" target="_blank">
+          <p class="link-card-title">Note.com</p>
+          <p class="link-card-desc">Japanese essays and opinion pieces</p>
+        </a>
+        <a class="link-card" href="https://www.nhk.or.jp/news/" target="_blank">
+          <p class="link-card-title">NHK Web News</p>
+          <p class="link-card-desc">Formal news Japanese, good for N2–N1</p>
+        </a>
+        <a class="link-card" href="https://www3.nhk.or.jp/news/easy/" target="_blank">
+          <p class="link-card-title">NHK Web Easy</p>
+          <p class="link-card-desc">Simplified news articles for N4–N3</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>Study books</h3>
+      <p>The two dominant prep series approach the exam differently. Most serious learners combine them.</p>
+
+      <div class="card">
+        <p><strong>Shin Kanzen Master</strong> (新完全マスター) — the thorough option. Separate books for grammar, vocabulary, kanji, reading, and listening, covering N4 to N1. Explanations are mostly in Japanese and the content is demanding, but it's the go-to for people aiming to pass with a solid score rather than just scrape by. Best for N2–N1 prep.</p>
+        <p><strong>Nihongo Sou Matome</strong> (日本語総まとめ) — the accessible option. Each book covers a full level in six weeks, with one lesson per day and English explanations. Goes all the way from N5 to N1. Better paced for beginners and good for building familiarity with the format. Works well as a first pass before moving to Kanzen Master for harder levels.</p>
+        <p>The standard approach is to use Sou Matome for an initial run-through, then consolidate weak areas with Kanzen Master closer to the exam.</p>
+      </div>
+
+      <div class="callout tip">
+        Both series are widely available on Amazon Japan, Amazon, and specialist Japanese book retailers. Search the series name + your target level (e.g. <code>新完全マスター N2 文法</code>).
+      </div>
+
+      <hr>
+      <h3>Grammar reference</h3>
+      <p>The Dictionary of Japanese Grammar (DoJG) is a three-volume reference series covering Basic, Intermediate, and Advanced grammar points. Each entry has a clear explanation, usage notes, and multiple example sentences. The Anki deck below is built from all three volumes — front shows example sentences, back reveals the grammar point, English equivalent, and usage. Useful to run alongside immersion rather than as a standalone study tool.</p>
+      <div class="link-grid" style="grid-template-columns: 1fr;">
+        <a class="link-card" href="https://ankiweb.net/shared/info/1013111837" target="_blank">
+          <p class="link-card-title">DoJG Anki Deck</p>
+          <p class="link-card-desc">629 grammar points from all three Dictionary of Japanese Grammar volumes</p>
+        </a>
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('speaking')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Speaking</span>
+        </button>
         <div></div>
       </div>
     </div>
@@ -1421,7 +1507,7 @@
 </div>
 
 <script>
-const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking'];
+const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking','jlpt'];
 
 function go(id, pushState = true) {
   views.forEach(v => {
