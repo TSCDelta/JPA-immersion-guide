@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Immersion Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1a19;
+    --bg-2: #202020;
+    --bg-3: #272726;
+    --border: #2c2c2b;
+    --border-strong: #383836;
+    --text: #ededec;
+    --text-muted: #7d7d78;
+    --text-dim: #55554e;
+    --green: #b89ff0;
+    --green-dim: rgba(184,159,240,0.1);
+    --amber: #e8c84a;
+    --amber-dim: rgba(232,200,74,0.1);
+    --blue: #5bb8d4;
+    --blue-dim: rgba(91,184,212,0.1);
+    --sidebar-w: 200px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Geist', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+  .header-tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  header h1 {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+  .header-sep { color: var(--text-dim); font-size: 13px; }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    flex: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ── SIDEBAR ── */
+  aside {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    padding: 2rem 0;
+    position: sticky;
+    top: 48px;
+    height: calc(100vh - 48px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-section-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1rem 0 0.4rem;
+  }
+  .nav-section-label:first-child { padding-top: 0; }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: color 0.1s;
+  }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--text); }
+  .nav-num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    min-width: 18px;
+  }
+  .nav-btn.active .nav-num { color: var(--green); }
+
+  /* ── MAIN ── */
+  main {
+    flex: 1;
+    padding: 2.5rem 0 2.5rem 3rem;
+    max-width: 640px;
+    border-left: 1px solid var(--border);
+    margin-left: 1.5rem;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── TYPOGRAPHY ── */
+  .view-tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+  }
+  .tag-green { color: var(--green); }
+  .tag-blue  { color: var(--blue);  }
+  .tag-amber { color: var(--amber); }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .view-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    max-width: 520px;
+  }
+  h3 {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'Geist Mono', monospace;
+    margin: 2rem 0 0.75rem;
+  }
+  p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 0.85rem;
+    max-width: 560px;
+  }
+  p strong { color: var(--text); font-weight: 500; }
+  p a { color: var(--text); text-underline-offset: 3px; }
+  p a:hover { color: var(--green); }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.75rem 0;
+  }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    border-left: 2px solid;
+    border-radius: 0 3px 3px 0;
+    max-width: 560px;
+  }
+  .callout.info  { background: var(--blue-dim);  border-color: var(--blue); }
+  .callout.warn  { background: var(--amber-dim); border-color: var(--amber); }
+  .callout.tip   { background: var(--green-dim); border-color: var(--green); }
+  .callout strong { color: var(--text); font-weight: 500; }
+
+  /* ── CARDS ── */
+  .card {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    margin: 0.75rem 0;
+  }
+  .card p { margin-bottom: 0.5rem; max-width: 560px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card ol, .card ul {
+    padding-left: 1.25rem;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 560px;
+  }
+  .card li { margin-bottom: 0.2rem; }
+  .card li strong { color: var(--text); font-weight: 500; }
+
+  /* ── LINK GRID ── */
+  .link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin: 0.75rem 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 560px;
+  }
+  .link-card {
+    display: block;
+    background: var(--bg);
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    transition: background 0.1s;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .link-card:last-child { border-right: none; }
+  .link-card:hover { background: var(--bg-2); }
+  .link-card-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1px;
+  }
+  .link-card-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  /* ── VIDEO EMBED ── */
+  .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    margin: 1rem 0;
+    background: #000;
+    max-width: 560px;
+  }
+  .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* ── STEPS ── */
+  .steps { list-style: none; padding: 0; margin: 0.75rem 0; }
+  .step {
+    display: flex;
+    gap: 16px;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-n {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 20px;
+    padding-top: 3px;
+  }
+  .step-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    flex: 1;
+  }
+  .step-body strong { color: var(--text); font-weight: 500; }
+  .step-body a { color: var(--text); text-underline-offset: 3px; }
+  .step-body a:hover { color: var(--green); }
+  .step-body code {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--text);
+  }
+
+  /* ── NAV BUTTONS AT BOTTOM ── */
+  .page-nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    max-width: 560px;
+  }
+  .page-nav-btn {
+    flex: 1;
+    padding: 12px 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: none;
+    color: var(--text-muted);
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.1s, color 0.1s;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .page-nav-btn:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .page-nav-btn.next { text-align: right; }
+  .page-nav-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .page-nav-btn:hover .page-nav-label { color: var(--green); }
+  .page-nav-title { font-size: 13px; font-weight: 400; }
+
+  /* ── ROUTINE ── */
+  .routine-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+  .routine-row:last-child { border-bottom: none; }
+  .routine-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 80px;
+  }
+  .routine-val {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: right;
+    line-height: 1.5;
+  }
+  .routine-val strong { color: var(--text); }
+
+  kbd {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    background: var(--bg-2);
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 2px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--text);
+  }
+  /* ── BURGER BUTTON (hidden on desktop) ── */
+  .burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .burger span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: background 0.1s;
+  }
+  .burger:hover span { background: var(--text); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 680px) {
+    .burger { display: flex; }
+
+    .layout {
+      flex-direction: column;
+      max-width: 100%;
+      position: relative;
+    }
+
+    /* Sidebar hidden by default, slides in as overlay */
+    aside {
+      display: none;
+      position: fixed;
+      top: 48px;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 48px);
+      background: var(--bg);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+      z-index: 100;
+      overflow-y: auto;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+    }
+    aside.open { display: flex; flex-direction: column; }
+
+    /* Dim overlay behind sidebar */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 48px;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+    .sidebar-overlay.open { display: block; }
+
+    main {
+      padding: 1.75rem 1.25rem;
+      border-left: none;
+      margin-left: 0;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    h2 { font-size: 20px; }
+    .video-wrap, .page-nav, .callout, p, .card ol, .card ul { max-width: 100%; }
+    .link-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+    .step-body { font-size: 13px; }
+  }
+  /* ── WELCOME PAGE ── */
+  .welcome-wrap {
+    padding: 3rem 0 2rem;
+    max-width: 480px;
+  }
+  .welcome-eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--text-dim);
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .welcome-title {
+    font-size: 34px;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+  .welcome-title em {
+    font-style: normal;
+    color: var(--green);
+  }
+  .welcome-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 2.25rem;
+  }
+  .welcome-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--green);
+    color: #1a0d2e;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .welcome-btn:hover { opacity: 0.85; }
+
+  /* ── BASICS CARDS ── */
+  .basics-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0.75rem 0 1.25rem;
+    max-width: 560px;
+  }
+  .basics-card {
+    background: var(--bg);
+    padding: 1.1rem 1.15rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    transition: background 0.1s;
+  }
+  .basics-card:hover { background: var(--bg-2); }
+  .basics-card-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .basics-num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    color: var(--green);
+    min-width: 18px;
+  }
+  .basics-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .basics-card-sub {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 1px;
+  }
+  .basics-card-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+    padding-left: 28px;
+  }
+  .basics-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-left: 28px;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+  }
+  .basics-links a {
+    font-size: 12px;
+    font-family: 'Geist Mono', monospace;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 11px;
+    border: 1px solid var(--border-strong);
+    border-radius: 20px;
+    background: var(--bg-2);
+    transition: color 0.1s, border-color 0.1s, background 0.1s;
+    white-space: nowrap;
+  }
+  .basics-links a:hover { color: var(--green); border-color: var(--green); background: var(--green-dim); }
+  .basics-links a span { font-size: 9px; opacity: 0.5; }
+  .basics-rec {
+    font-family: 'Geist Mono', monospace;
+    font-size: 9px;
+    background: var(--green-dim);
+    color: var(--green) !important;
+    padding: 1px 5px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    border: none !important;
+  }
+
+  @media (max-width: 680px) {
+    .welcome-toc { grid-template-columns: 1fr; }
+    .welcome-title { font-size: 24px; }
+    .basics-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="header-tag">immersion guide</span>
+  <button class="burger" id="burger" onclick="toggleSidebar()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="layout">
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+  <aside id="sidebar">
+    <button class="nav-btn active" onclick="go('welcome')" style="margin-bottom:0.5rem;">
+      <span class="nav-num" style="color:var(--green);">✦</span> Home
+    </button>
+
+    <span class="nav-section-label">Foundation</span>
+    <button class="nav-btn" onclick="go('basics')">
+      <span class="nav-num">01</span> Basics
+    </button>
+    <button class="nav-btn" onclick="go('what')">
+      <span class="nav-num">02</span> What is immersion?
+    </button>
+    <button class="nav-btn" onclick="go('goal')">
+      <span class="nav-num">03</span> The goal
+    </button>
+
+    <span class="nav-section-label">Setup</span>
+    <button class="nav-btn" onclick="go('setup')">
+      <span class="nav-num">04</span> Tool setup
+    </button>
+
+    <span class="nav-section-label">Practice</span>
+    <button class="nav-btn" onclick="go('how')">
+      <span class="nav-num">05</span> How to immerse
+    </button>
+    <button class="nav-btn" onclick="go('mining')">
+      <span class="nav-num">06</span> Sentence mining
+    </button>
+    <button class="nav-btn" onclick="go('listening')">
+      <span class="nav-num">07</span> Improving listening
+    </button>
+    <button class="nav-btn" onclick="go('routine')">
+      <span class="nav-num">08</span> Daily routine
+    </button>
+    <button class="nav-btn" onclick="go('speaking')">
+      <span class="nav-num">09</span> Speaking
+    </button>
+  </aside>
+
+  <main>
+
+    <!-- 00 WELCOME -->
+    <div id="v-welcome" class="view active">
+      <div class="welcome-wrap">
+        <span class="welcome-eyebrow">日本語</span>
+        <h2 class="welcome-title">Learn Japanese<br>through <em>immersion</em></h2>
+        <p class="welcome-desc">Welcome. Learn Japanese the natural way through reading, listening, writing, and speaking.</p>
+        <button class="welcome-btn" onclick="go('basics')">Start the guide →</button>
+      </div>
+    </div>
+
+    <!-- 01 WHAT IS IMMERSION -->
+    <div id="v-what" class="view">
+      <span class="view-tag tag-green">foundation</span>
+      <h2>What is immersion?</h2>
+      <p class="view-sub">Immersion means consuming real Japanese — watching, reading, listening — so you build a natural feel for how the language works.</p>
+
+      <p>Rather than memorising rules from a textbook, you absorb patterns the same way you absorbed your first language as a child. This is based on the <strong>Input Hypothesis</strong>: the best way to acquire a language is through <strong>comprehensible input</strong> — content you mostly understand, with a little you don't.</p>
+
+      <div class="callout info">
+        Input has to be comprehensible to work. If you understand nothing at all, it's hard to make progress. Aim for content where you can follow what's happening, even if you miss details.
+      </div>
+
+      <hr>
+      <h3>Why not just use textbooks?</h3>
+      <p>Textbooks teach you concepts, but they can't show you all the ways language is actually used. Japanese isn't a 1:1 translation of English — many words and grammar points have nuances that simply don't exist in English.</p>
+      <p>The particles <strong>は and が</strong> are a classic example. People struggle with them for years studying from textbooks, because the difference only clicks through seeing them used in real sentences across many contexts. Immersion is how that happens.</p>
+
+      <div class="callout warn">
+        You will understand almost nothing at first. This is completely normal. Progress feels slow for a long time, then suddenly accelerates. Just keep going.
+      </div>
+
+      <hr>
+      <h3>Watch: what is input?</h3>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/J_EQDtpYSNM" allowfullscreen loading="lazy" title="What is input?"></iframe>
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('basics')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Basics</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('goal')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">The goal</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 02 THE GOAL -->
+    <div id="v-goal" class="view">
+      <span class="view-tag tag-green">foundation</span>
+      <h2>The goal: automaticity</h2>
+      <p class="view-sub">Understanding Japanese without translating it in your head first.</p>
+
+      <p>In your native language, you don't consciously decode each word when someone speaks to you. You just understand. That's <strong>automaticity</strong> — and it's what immersion is building toward.</p>
+      <p>Early on, you'll be translating everything and looking things up constantly. That's fine and expected. Over time, sentences start clicking before you finish reading them. Eventually whole scenes flow without effort. The goal is to reach that point in Japanese.</p>
+
+      <div class="callout tip">
+        Getting there takes hundreds or even thousands of hours of immersion. But it mostly means watching anime you enjoy, so it's not as daunting as it sounds.
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('what')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">What is immersion?</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('setup')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Tool setup</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 01 BASICS -->
+    <div id="v-basics" class="view">
+      <span class="view-tag tag-green">foundation</span>
+      <h2>Basics</h2>
+      <p class="view-sub">Before immersing, you need a foundation. Work through these four things in order — each one builds on the last.</p>
+
+      <div class="basics-grid">
+
+        <div class="basics-card">
+          <div class="basics-card-head">
+            <span class="basics-num">01</span>
+            <div>
+              <div class="basics-card-title">Kana</div>
+              <div class="basics-card-sub">Hiragana &amp; Katakana</div>
+            </div>
+          </div>
+          <p class="basics-card-body">Learn Hiragana then Katakana, one row at a time. Drill with realkana.com until you can read each set without hesitation. Use the Tofugu guides if you need mnemonics.</p>
+          <div class="basics-links">
+            <a href="https://realkana.com/" target="_blank">realkana.com <span>↗</span></a>
+            <a href="https://www.tofugu.com/japanese/learn-hiragana/" target="_blank">Tofugu Hiragana <span>↗</span></a>
+            <a href="https://www.tofugu.com/japanese/learn-katakana/" target="_blank">Tofugu Katakana <span>↗</span></a>
+          </div>
+        </div>
+
+        <div class="basics-card">
+          <div class="basics-card-head">
+            <span class="basics-num">02</span>
+            <div>
+              <div class="basics-card-title">Grammar</div>
+              <div class="basics-card-sub">One guide, start to finish</div>
+            </div>
+          </div>
+          <p class="basics-card-body">Pick one guide and read through it. Understand each point, then move on — don't aim for perfection. Yokubi is recommended; Tae Kim and Japanese Ammo with Misa are solid alternatives.</p>
+          <div class="basics-links">
+            <a href="https://yoku.bi/" target="_blank">Yokubi <span class="basics-rec">recommended</span></a>
+            <a href="https://guidetojapanese.org/learn/" target="_blank">Tae Kim <span>↗</span></a>
+            <a href="https://www.youtube.com/playlist?list=PLd5-Wp_4tLqYZxS5j3g6kbeOfVXlTkr3N" target="_blank">Japanese Ammo with Misa <span>↗</span></a>
+          </div>
+        </div>
+
+        <div class="basics-card">
+          <div class="basics-card-head">
+            <span class="basics-num">03</span>
+            <div>
+              <div class="basics-card-title">Vocab &amp; Kanji</div>
+              <div class="basics-card-sub">Anki · 10–20 cards/day</div>
+            </div>
+          </div>
+          <p class="basics-card-body">Use Anki with the Kaishi 1.5k deck. Do 10–20 new cards a day. No need to study kanji in isolation — picking it up through vocab is enough.</p>
+          <div class="basics-links">
+            <a href="https://apps.ankiweb.net/" target="_blank">Anki <span>↗</span></a>
+            <a href="https://github.com/donkuri/kaishi" target="_blank">Kaishi 1.5k deck <span>↗</span></a>
+            <a href="https://www.youtube.com/watch?v=DcY2Svs3h8M" target="_blank">How to use Anki <span>↗</span></a>
+            <a href="https://www.youtube.com/watch?v=exkXaVYvb68" target="_blank">Why this works <span>↗</span></a>
+          </div>
+        </div>
+
+        <div class="basics-card">
+          <div class="basics-card-head">
+            <span class="basics-num">04</span>
+            <div>
+              <div class="basics-card-title">Pitch Accent</div>
+              <div class="basics-card-sub">10 min daily ear training</div>
+            </div>
+          </div>
+          <p class="basics-card-body">Japanese uses pitch (high/low) rather than stress. Read the pitch accent primer to understand the basics, then train your ear with Kuuube's minimal pairs for 10 minutes daily.</p>
+          <div class="basics-links">
+            <a href="https://docs.google.com/document/d/1ReBf08JFK4n0PXdOxThAfWuiK9UWVZEWWzeKSECWTQo/edit#heading=h.p1aowci5qgxr" target="_blank">Pitch accent primer <span>↗</span></a>
+            <a href="https://kuuuube.github.io/minimal-pairs/" target="_blank">Kuuube's minimal pairs <span>↗</span></a>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+      <h3>Daily routine for this stage</h3>
+      <div class="card">
+        <div class="routine-row">
+          <span class="routine-label">Anki</span>
+          <span class="routine-val"><strong>10–20 new cards</strong> + reviews · 15–30 min</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Grammar</span>
+          <span class="routine-val">2–3 sections from your chosen guide</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Pitch</span>
+          <span class="routine-val">10 min minimal pairs daily</span>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <strong>Stage goal:</strong> finish the grammar guide, reach ~1,000 known words, and pass minimal pairs. Once you're there, move on to immersion.
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('welcome')">
+          <span class="page-nav-label">← Back</span>
+          <span class="page-nav-title">Home</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('what')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">What is immersion?</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- 04 SETUP -->
+    <div id="v-setup" class="view">
+      <span class="view-tag tag-blue">setup</span>
+      <h2>Tool setup</h2>
+      <p class="view-sub">Four tools that turn anime into an immersion environment. Follow the video below, then use the written steps alongside it.</p>
+
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/XMzcSPzguKo" allowfullscreen loading="lazy" title="ASBPlayer setup guide"></iframe>
+      </div>
+
+      <div class="link-grid">
+        <a class="link-card" href="http://learnjapanese.moe/yomichan" target="_blank">
+          <p class="link-card-title">Yomitan setup guide</p>
+          <p class="link-card-desc">Install + add dictionaries</p>
+        </a>
+        <a class="link-card" href="https://chromewebstore.google.com/detail/asbplayer-language-learni/hkledmpjpaehamkiehglnbelcpdflcab" target="_blank">
+          <p class="link-card-title">ASBPlayer — Chrome</p>
+          <p class="link-card-desc">Chrome Web Store</p>
+        </a>
+        <a class="link-card" href="https://github.com/killergerbah/asbplayer" target="_blank">
+          <p class="link-card-title">ASBPlayer — Firefox</p>
+          <p class="link-card-desc">GitHub download</p>
+        </a>
+        <a class="link-card" href="https://jimaku.cc/" target="_blank">
+          <p class="link-card-title">Jimaku.cc</p>
+          <p class="link-card-desc">Subtitle files for anime</p>
+        </a>
+        <a class="link-card" href="https://www.miruro.to/" target="_blank">
+          <p class="link-card-title">Miruro</p>
+          <p class="link-card-desc">Streaming site</p>
+        </a>
+        <a class="link-card" href="https://anizone.to/" target="_blank">
+          <p class="link-card-title">Anizone</p>
+          <p class="link-card-desc">Streaming site</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>What you're installing</h3>
+      <div class="card">
+        <ul>
+          <li><strong>ASBPlayer</strong> — attaches Japanese subtitle files to streaming video in your browser, including YouTube</li>
+          <li><strong>Yomitan</strong> — hover over any Japanese word to get an instant dictionary pop-up</li>
+          <li><strong>Jimaku</strong> — where you download Japanese subtitle files for anime</li>
+          <li><strong>A streaming site</strong> — needs to let you disable built-in subtitles (<a href="https://www.miruro.to/" target="_blank" style="color:var(--text)">Miruro</a>, <a href="https://anizone.to/" target="_blank" style="color:var(--text)">Anizone</a>, Crunchyroll, Netflix all work)</li>
+        </ul>
+      </div>
+
+      <hr>
+      <h3>Step-by-step</h3>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-n">01</span>
+          <span class="step-body">Install <strong>Yomitan</strong> first. Follow the setup guide at <a href="http://learnjapanese.moe/yomichan" target="_blank">learnjapanese.moe/yomichan</a> — it walks you through installing dictionaries too.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">02</span>
+          <span class="step-body">Install the <strong>ASBPlayer extension</strong> from the <a href="https://chromewebstore.google.com/detail/asbplayer-language-learni/hkledmpjpaehamkiehglnbelcpdflcab" target="_blank">Chrome Web Store</a>. Firefox users can grab it from <a href="https://github.com/killergerbah/asbplayer" target="_blank">GitHub</a>.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">03</span>
+          <span class="step-body">Go to <a href="https://jimaku.cc/" target="_blank">jimaku.cc</a>, search for your anime, and download the subtitle file for the episode you want. Either <code>.srt</code> or <code>.ass</code> format works fine.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">04</span>
+          <span class="step-body">Open <a href="https://killergerbah.github.io/asbplayer/" target="_blank">killergerbah.github.io/asbplayer</a>, click <strong>Browse</strong>, and select the subtitle file you downloaded.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">05</span>
+          <span class="step-body">Go to your streaming site or YouTube, find your anime, and start playing it. <strong>Disable the site's built-in subtitles</strong> so they don't overlap.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">06</span>
+          <span class="step-body">A small camera icon will appear at the bottom-right of the video player. Click it and select your anime from the list — the Japanese subtitles will appear on the video.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">07</span>
+          <span class="step-body">Hover over any word in the subtitles with Yomitan to look it up. You're ready to immerse.</span>
+        </li>
+      </ol>
+
+      <div class="callout info">
+        If subtitles are out of sync, press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>→</kbd> to push them forward, or <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>←</kbd> to pull them back. Each press adjusts by 100ms.
+      </div>
+
+      <div class="callout tip">
+        <strong>YouTube works too.</strong> Open any YouTube video in your browser, load a subtitle file via ASBPlayer, and it will overlay the Japanese subs directly on the video — useful for J-drama clips, variety shows, and anything else on YouTube.
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('goal')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">The goal</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('how')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">How to immerse</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 04 HOW TO IMMERSE -->
+    <div id="v-how" class="view">
+      <span class="view-tag tag-green">practice</span>
+      <h2>How to immerse</h2>
+      <p class="view-sub">Think of each sentence as a small puzzle. Your job is to fit the pieces together — look things up when needed, use context when you can, and move on.</p>
+
+      <h3>The process</h3>
+      <div class="card">
+        <ol>
+          <li>A sentence appears. Read it.</li>
+          <li>Count how many things you don't know — words, grammar, kanji.</li>
+          <li><strong>0–2 unknown things:</strong> look them up with Yomitan. Spend 30–60 seconds working out what the sentence means.</li>
+          <li><strong>3 or more unknown things:</strong> skip it and move on. Don't force it.</li>
+          <li>Whether you got it or not — move to the next sentence.</li>
+        </ol>
+      </div>
+
+      <div class="callout info">
+        Skipping sentences isn't giving up — it's correct use of the method. A sentence with too many unknowns won't stick even if you look everything up. Move on and come back to hard things naturally over time.
+      </div>
+
+      <hr>
+      <h3>Watch: the process in action</h3>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/9KlwmHXsXhQ" allowfullscreen loading="lazy" title="How to immerse"></iframe>
+      </div>
+
+      <hr>
+      <h3>How often to look things up</h3>
+      <p>There's no single right answer. Adjust based on what you're watching:</p>
+      <div class="card">
+        <ul>
+          <li><strong>Hard content →</strong> look up more. You understand deeply and pick up vocab faster, but you slow down.</li>
+          <li><strong>Comfortable content →</strong> look up less. You move faster and build real-time comprehension closer to how you'll eventually just watch.</li>
+        </ul>
+      </div>
+
+      <hr>
+      <h3>What should I watch?</h3>
+      <p>Anything you enjoy. A good starting point is a show you've already watched in English — you know the plot, so you can focus on the Japanese without getting lost. These sites have anime rated by difficulty:</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://jiten.moe/" target="_blank">
+          <p class="link-card-title">Jiten.moe</p>
+          <p class="link-card-desc">Anime by difficulty level</p>
+        </a>
+        <a class="link-card" href="https://jpdb.io/" target="_blank">
+          <p class="link-card-title">JPDB.io</p>
+          <p class="link-card-desc">Vocab difficulty rankings</p>
+        </a>
+        <a class="link-card" href="https://learnnatively.com/" target="_blank">
+          <p class="link-card-title">LearnNatively</p>
+          <p class="link-card-desc">Anime, manga, and books by level</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>Passive immersion</h3>
+      <p>Passive immersion means having Japanese audio on while your attention is elsewhere — on a walk, doing dishes, cooking. Less attention means fewer gains, but during genuinely low-focus tasks it's still useful background exposure. Don't let it replace active sessions.</p>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('setup')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Tool setup</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('mining')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Sentence mining</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 05 SENTENCE MINING -->
+    <div id="v-mining" class="view">
+      <span class="view-tag tag-green">practice</span>
+      <h2>Sentence mining</h2>
+      <p class="view-sub">Saving words from your immersion directly into Anki, so you study vocab that's actually useful to you.</p>
+
+      <p>Premade decks like Kaishi 1.5k are great for getting started. But once you're immersing, the most useful words depend on what you're watching. Mining bridges the two — your Anki deck grows in the direction of your own content.</p>
+
+      <div class="card">
+        <p><strong>How it works:</strong> When you hover over a word with Yomitan, you can save it to Anki with one keypress. ASBPlayer also captures the sentence and an audio clip from the episode automatically — so each card has context built in.</p>
+      </div>
+
+      <div class="callout tip">
+        Can't sentence mine yet due to device setup? Just continue with a premade deck for now. Mining is useful but not essential to start immersing.
+      </div>
+
+      <hr>
+      <h3>Setup guide</h3>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/B60cj69MSmA" allowfullscreen loading="lazy" title="Sentence mining tutorial"></iframe>
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('how')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">How to immerse</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('listening')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Improving listening</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 06 LISTENING -->
+    <div id="v-listening" class="view">
+      <span class="view-tag tag-amber">practice</span>
+      <h2>Improving listening</h2>
+      <p class="view-sub">Subtitles carry a lot of the load. Once your reading is comfortable, it's time to train your ears directly.</p>
+
+      <p>After spending time with Japanese subtitles, your reading comprehension will grow faster than your listening. That's expected — the text does a lot of the work. Intensive listening is how you close that gap.</p>
+
+      <hr>
+      <h3>Intensive listening</h3>
+      <p>Watch without subtitles visible. Only reveal them when you genuinely can't catch something. This forces you to actually hear the sounds, pitch, and rhythm rather than relying on text.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step-n">01</span>
+          <span class="step-body">Open ASBPlayer with subtitles loaded but <strong>hidden</strong>. Watch normally.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">02</span>
+          <span class="step-body">When you hit a sentence you can't fully hear, <strong>replay it a few times</strong> and try to work it out.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">03</span>
+          <span class="step-body">Still can't get it? <strong>Reveal the subtitles</strong>. Look up 1–2 unknowns if needed. Skip if there are 3+.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">04</span>
+          <span class="step-body"><strong>Relisten to the sentence</strong> while reading the subtitle a few times to connect the sounds to the words.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">05</span>
+          <span class="step-body"><strong>Hide the subtitles again</strong> and continue.</span>
+        </li>
+      </ol>
+
+      <div class="link-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <a class="link-card" href="https://www.youtube.com/watch?v=o8857j-RwhA" target="_blank" style="border-right: 1px solid var(--border);">
+          <p class="link-card-title">Intensive listening video</p>
+          <p class="link-card-desc">Demonstration of the process</p>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=b25dE43O00Q" target="_blank" style="border-right: none;">
+          <p class="link-card-title">Listening for pitch</p>
+          <p class="link-card-desc">How to actively hear pitch accent</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>Diversify your input</h3>
+      <p>Anime is professionally recorded and clearly enunciated. Real speech isn't. Once you have a foundation, mix in other content — YouTube vlogs, variety shows, podcasts. People contract words, use slang, and speak over each other in ways anime doesn't prepare you for.</p>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('mining')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Sentence mining</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('routine')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Daily routine</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 07 ROUTINE -->
+    <div id="v-routine" class="view">
+      <span class="view-tag tag-amber">practice</span>
+      <h2>Daily routine</h2>
+      <p class="view-sub">Consistency matters more than volume. A steady hour every day beats a seven-hour session once a week.</p>
+
+      <h3>Core routine</h3>
+      <div class="card">
+        <div class="routine-row">
+          <span class="routine-label">Anki</span>
+          <span class="routine-val"><strong>5–20 new cards</strong> + reviews · 20–30 min</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Immersion</span>
+          <span class="routine-val"><strong>1–2 hours</strong> of anime with Japanese subs</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Look-ups</span>
+          <span class="routine-val">0–2 unknowns per sentence · skip the rest</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Passive</span>
+          <span class="routine-val">Japanese audio during low-focus tasks · optional</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        You're aiming for <strong>95% comprehension</strong> of the anime you watch — the point where you rarely need to look things up and scenes flow without effort.
+      </div>
+
+      <hr>
+      <h3>Example day</h3>
+      <div class="card">
+        <div class="routine-row">
+          <span class="routine-label">Morning</span>
+          <span class="routine-val">Anki: 20 new cards + reviews</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Session 1</span>
+          <span class="routine-val">1 episode, reading focus · 25 min</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Session 2</span>
+          <span class="routine-val">1 episode, intensive listening · 25 min</span>
+        </div>
+        <div class="routine-row">
+          <span class="routine-label">Session 3</span>
+          <span class="routine-val">Manga reading session · 40 min</span>
+        </div>
+      </div>
+
+      <hr>
+      <h3>How long does this stage take?</h3>
+      <p>Building solid comprehension takes hundreds to thousands of hours. Progress will feel slow, then one day something clicks and it gets noticeably easier. That keeps happening. Just don't stop.</p>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('listening')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Improving listening</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('speaking')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Speaking</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 09 SPEAKING -->
+    <div id="v-speaking" class="view">
+      <span class="view-tag tag-amber">practice</span>
+      <h2>Speaking</h2>
+      <p class="view-sub">Output is a skill on top of input — you still need to practice it separately. The more you've immersed, the easier it gets.</p>
+
+      <div class="callout warn">
+        <strong>Input first.</strong> You can't say what you haven't absorbed yet. Get comfortable with immersion before making output a priority — but there's no real harm in starting whenever.
+      </div>
+
+      <hr>
+      <h3>What makes output sound natural</h3>
+      <div class="card">
+        <ul>
+          <li><strong>Grammar</strong> — not textbook-perfect, but correct where it matters. Which rules are flexible (e.g. すごい美味しい is technically wrong but totally normal) comes from immersion, not study.</li>
+          <li><strong>Word choice</strong> — Japanese runs on set phrases. Using a word in the wrong context sounds wrong even with perfect grammar, like saying "to bode good weather" instead of "to bode well". You build this through exposure.</li>
+          <li><strong>Social register</strong> — saying ありがとう to a compliment, overusing あなた, or skipping ます/です with strangers are all "English brain" mistakes. Natural output means knowing how Japanese people actually behave, not just what the words translate to.</li>
+        </ul>
+      </div>
+
+      <hr>
+      <h3>Noticing</h3>
+      <p>Noticing isn't a separate activity — it's the engine underneath all of the others. When you practice output, you expose gaps between what you can understand and what you can actually produce. That friction is the point. It kickstarts your brain into actively picking up the phrases you're missing during immersion, rather than letting them slide by unnoticed. Try to stay consciously aware of this process as you work through each exercise.</p>
+
+      <hr>
+      <h3>Activities</h3>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-n">01</span>
+          <span class="step-body"><strong>Conversation practice</strong> — talk or text with a native speaker. <a href="https://www.italki.com/" target="_blank">iTalki</a>, HelloTalk, Tandem, language exchange servers. Talking with other learners is fine for low-pressure practice, but most of your time should be with natives — they're the only ones who can show you what natural actually sounds like.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">02</span>
+          <span class="step-body"><strong>Self-corrected writing</strong> — write anything in Japanese, then leave it for an hour or two. Come back and read it with fresh eyes. You don't need to know how to fix what's off — just mark it. Your noticing engine will absorb better phrasing later during immersion. A Google Doc with highlights works well for this.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">03</span>
+          <span class="step-body"><strong>Attentive listening</strong> — watch unscripted conversation (podcasts, variety streams, vlogs) and actively hunt for phrases you'd want to use. Pay attention to how speakers transition topics, use filler words, and react to each other. ~15 min a day is enough — stop when your focus drifts.</span>
+        </li>
+        <li class="step">
+          <span class="step-n">04</span>
+          <span class="step-body"><strong>Active production</strong> — deliberately use a word you've only been passive on, specifically to test the water. Watch how a native speaker reacts. Do they ask you to repeat it? Rephrase what you said? That reaction tells you more than any dictionary entry.</span>
+        </li>
+      </ol>
+
+      <div class="link-grid" style="grid-template-columns: 1fr;">
+        <a class="link-card" href="https://morg.systems/Learning-to-Output" target="_blank">
+          <p class="link-card-title">Learning to Output — Morg</p>
+          <p class="link-card-desc">Full breakdown of every activity above, with examples</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>Writing kanji by hand</h3>
+      <p>If you want to be able to write Japanese by hand, you need to practice it separately — reading kanji and writing kanji are different skills. The Kanken Deck is the standard tool for this: it covers all jōyō kanji with stroke order, readings, and writing prompts, structured by Kanji Kentei level.</p>
+
+      <div class="link-grid" style="grid-template-columns: 1fr;">
+        <a class="link-card" href="https://drive.google.com/drive/folders/1lFvmBAVPLB_t-g3l-jR1BVWFIiZbEgdO" target="_blank">
+          <p class="link-card-title">Kanken Deck — Google Drive</p>
+          <p class="link-card-desc">Complete Jouyou Kanji writing deck with stroke order</p>
+        </a>
+      </div>
+
+      <div class="callout info">
+        Don't start this early. Writing practice is only worth the time investment once you already recognise most jōyō kanji from reading. If you're still building reading comprehension, hold off.
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('routine')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Daily routine</span>
+        </button>
+        <div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const views = ['welcome','basics','what','goal','setup','how','mining','listening','routine','speaking'];
+function go(id) {
+  views.forEach(v => {
+    document.getElementById('v-' + v).classList.remove('active');
+    const btn = document.querySelectorAll('.nav-btn')[views.indexOf(v)];
+    if (btn) btn.classList.remove('active');
+  });
+  document.getElementById('v-' + id).classList.add('active');
+  const activeBtn = document.querySelectorAll('.nav-btn')[views.indexOf(id)];
+  if (activeBtn) activeBtn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  closeSidebar();
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+</script>
+</body>
+</html>
