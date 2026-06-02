@@ -26,6 +26,48 @@
     --sidebar-w: 200px;
   }
 
+  [data-theme="light"] {
+    --bg: #fce8f2;
+    --bg-2: #f5d8e8;
+    --bg-3: #ecc8dc;
+    --border: #d8a0c0;
+    --border-strong: #c078a8;
+    --text: #2a0838;
+    --text-muted: #6b2088;
+    --text-dim: #b06ab8;
+    --green: #5b6abf;
+    --green-dim: rgba(91,106,191,0.1);
+    --amber: #b89010;
+    --amber-dim: rgba(184,144,16,0.1);
+    --blue: #5b6abf;
+    --blue-dim: rgba(91,106,191,0.1);
+  }
+
+  [data-theme="light"] .page-nav-btn.next {
+    background: #5b6abf;
+    border-color: #4858a8;
+    color: #ffffff;
+  }
+  [data-theme="light"] .page-nav-btn.next .page-nav-label { color: rgba(255,255,255,0.6); }
+  [data-theme="light"] .page-nav-btn.next:hover { background: #4858a8; }
+
+  [data-theme="light"] .page-nav-btn:not(.next) {
+    background: none;
+    border-color: var(--border);
+    color: var(--text-muted);
+  }
+  [data-theme="light"] .page-nav-btn:not(.next):hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+    background: none;
+  }
+
+  [data-theme="light"] .welcome-btn {
+    background: #c8a000;
+    color: #ffffff;
+  }
+  [data-theme="light"] .welcome-btn:hover { opacity: 0.88; }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -386,13 +428,31 @@
     border-radius: 3px;
     color: var(--text);
   }
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    margin-left: auto;
+    background: none;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    color: var(--text-dim);
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: color 0.1s, border-color 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--text-dim); }
+
   /* ── BURGER BUTTON (hidden on desktop) ── */
   .burger {
     display: none;
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-    margin-left: auto;
     background: none;
     border: none;
     cursor: pointer;
@@ -431,7 +491,7 @@
       padding: 1.5rem 1.25rem;
       z-index: 100;
       overflow-y: auto;
-      box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
     }
     aside.open { display: flex; flex-direction: column; }
 
@@ -496,7 +556,7 @@
     gap: 8px;
     padding: 10px 20px;
     background: var(--green);
-    color: #1a0d2e;
+    color: var(--bg);
     font-family: 'Geist Mono', monospace;
     font-size: 12px;
     font-weight: 500;
@@ -606,6 +666,9 @@
 
 <header>
   <span class="header-tag">immersion guide</span>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span id="themeIcon">☀</span> <span id="themeLabel">light</span>
+  </button>
   <button class="burger" id="burger" onclick="toggleSidebar()" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
@@ -1605,6 +1668,27 @@ window.addEventListener('popstate', (e) => {
   go(id, false);
 })();
 
+const themes = ['dark', 'light'];
+const themeIcons  = { dark: '☀', light: '☾' };
+const themeLabels = { dark: 'light', light: 'dark' };
+
+function applyTheme(t) {
+  if (t === 'dark') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', t);
+  }
+  document.getElementById('themeIcon').textContent  = themeIcons[t];
+  document.getElementById('themeLabel').textContent = themeLabels[t];
+  localStorage.setItem('theme', t);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = themes[(themes.indexOf(current) + 1) % themes.length];
+  applyTheme(next);
+}
+
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('overlay').classList.toggle('open');
@@ -1613,6 +1697,11 @@ function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
 }
+
+(function initTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved && themes.includes(saved)) applyTheme(saved);
+})();
 </script>
 </body>
 </html>
