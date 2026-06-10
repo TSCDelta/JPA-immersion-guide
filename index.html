@@ -795,7 +795,215 @@
     white-space: nowrap;
   }
   .res-toc-link:hover { color: var(--green); border-color: var(--green); }
-  
+
+  .resource-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px;
+  margin:1rem 0 1.5rem;
+}
+
+.resource-card{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:72px;
+
+  background:#10142d;
+  border:1px solid #2c4fff;
+  border-radius:14px;
+
+  color:white;
+  text-decoration:none;
+  text-align:center;
+  font-size:13px;
+
+  transition:.15s;
+}
+
+.resource-card:hover{
+  transform:translateY(-2px);
+}
+
+/* ── RESOURCE PICKER OVERLAY ── */
+.res-picker-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.res-picker-overlay.open {
+  display: flex;
+}
+.res-picker-panel {
+  background: var(--bg-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  width: min(480px, 94vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.res-picker-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.res-picker-title {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.res-picker-search {
+  flex: 1;
+  background: var(--bg-3);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 7px 11px;
+  font-family: 'Geist', sans-serif;
+  font-size: 12px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.res-picker-search::placeholder { color: var(--text-dim); }
+.res-picker-search:focus { border-color: var(--green); }
+.res-picker-close {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 0.1s, background 0.1s;
+  flex-shrink: 0;
+}
+.res-picker-close:hover { color: var(--text); background: var(--bg-3); }
+
+.res-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+@media (max-width: 400px) {
+  .res-picker-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.res-cat-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 14px 6px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  min-height: 76px;
+}
+.res-cat-btn:hover {
+  border-color: var(--green);
+  background: var(--green-dim);
+  transform: translateY(-1px);
+}
+.res-cat-btn.hidden { display: none; }
+.res-cat-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+.res-cat-label {
+  font-family: 'Geist', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.3;
+}
+.res-cat-btn:hover .res-cat-icon,
+.res-cat-btn:hover .res-cat-label { color: var(--green); }
+
+/* ── RESOURCE DETAIL VIEWS ── */
+.res-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: color 0.1s, border-color 0.1s;
+}
+.res-back-btn:hover { color: var(--text); border-color: var(--text-dim); }
+
+/* ── RESOURCE SEARCH RESULTS ── */
+.res-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.res-search-empty {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 1.5rem 0;
+  letter-spacing: 0.04em;
+}
+.res-result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.1s, background 0.1s;
+  width: 100%;
+}
+.res-result-item:hover {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.res-result-cat {
+  font-family: 'Geist Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.res-result-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+.res-result-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
 </style>
 <body>
 
@@ -859,7 +1067,7 @@
     <button class="nav-btn" onclick="go('anki')">
       <span class="nav-num">↯</span> Anki
     </button>
-    <button class="nav-btn" onclick="go('resources')">
+    <button class="nav-btn" onclick="openResourcePicker()">
       <span class="nav-num">≡</span> Resources
     </button>
 
@@ -1805,12 +2013,67 @@
         </a>
       </div>
 
+      <hr>
+      <h3>Grammar resources</h3>
+      <p>Grammar is the section most learners underestimate going into the JLPT. These tools cover every level from N5 to N1, with explanations in both English and Japanese.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://nihongokyoshi-net.com/jlpt-grammars/" target="_blank">
+          <p class="link-card-title">NihongoKyoshi JLPT Grammar</p>
+          <p class="link-card-desc">Every JLPT grammar point explained in Japanese — N5 to N1, free</p>
+        </a>
+        <a class="link-card" href="https://drive.google.com/file/d/1tDBaabwgZMO8nxkcwcw4qBXayuk_513T/view" target="_blank">
+          <p class="link-card-title">NihongoKyoshi grammar deck</p>
+          <p class="link-card-desc">Anki deck for JLPT grammar — Japanese definitions only</p>
+        </a>
+        <a class="link-card" href="https://bunpro.jp/grammar_points" target="_blank">
+          <p class="link-card-title">Bunpro grammar list</p>
+          <p class="link-card-desc">Grammar reference with SRS reviews — free to browse, $5/mo for full access</p>
+        </a>
+        <a class="link-card" href="https://mainichi-nonbiri.com/" target="_blank">
+          <p class="link-card-title">Mainichi Nonbiri</p>
+          <p class="link-card-desc">All JLPT grammar in Japanese — includes 敬語 and onomatopoeia. N4+</p>
+        </a>
+        <a class="link-card" href="https://dojglite.github.io/main/index.html" target="_blank">
+          <p class="link-card-title">DoJG Lite</p>
+          <p class="link-card-desc">Free online Dictionary of Japanese Grammar — essential reference for N3+</p>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=JIZ49pjJmR8" target="_blank">
+          <p class="link-card-title">JLPT N1 Grammar — 1 Hour Review</p>
+          <p class="link-card-desc">日本語の森 video covering N1 grammar points in full. Not for beginners</p>
+        </a>
+      </div>
+
+      <hr>
+      <h3>Study platforms</h3>
+      <p>Full-featured tools that combine grammar, kanji, and vocab in a structured SRS environment — useful if you want a single platform rather than assembling individual resources.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.renshuu.org/" target="_blank">
+          <p class="link-card-title">Renshuu</p>
+          <p class="link-card-desc">Grammar, kanji, and vocab quizzes with explanations — free with paid tier</p>
+        </a>
+        <a class="link-card" href="https://marumori.io/" target="_blank">
+          <p class="link-card-title">MaruMori</p>
+          <p class="link-card-desc">All-in-one grammar/kanji/vocab SRS with a guided "adventure" path, N5–N1 — paid</p>
+        </a>
+        <a class="link-card" href="https://minato-jf.jp/Home/Index" target="_blank">
+          <p class="link-card-title">Minato</p>
+          <p class="link-card-desc">Free Japan Foundation courses across multiple levels and languages</p>
+        </a>
+        <a class="link-card" href="https://minato-jf.jp/Home/JapaneseApplication" target="_blank">
+          <p class="link-card-title">Minato — App Portal</p>
+          <p class="link-card-desc">Japanese learning apps from the Japan Foundation</p>
+        </a>
+      </div>
+
       <div class="page-nav">
         <button class="page-nav-btn" onclick="go('speaking')">
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">Speaking</span>
         </button>
-        <div></div>
+        <button class="page-nav-btn next" onclick="go('anki')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Anki</span>
+        </button>
       </div>
     </div>
 
@@ -1932,6 +2195,17 @@
       <hr>
       <h3>When to start sentence mining</h3>
       <p>Once you finish Kaishi 1.5k (~1,500 words), you have enough of a foundation to start sentence mining — pulling words directly from content you're watching or reading into your own Anki deck. At that point your immersion will start generating more vocabulary than any premade deck can. See the <button class="faq-link-btn" onclick="go('mining')">Sentence mining</button> page for how to set that up.</p>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('jlpt')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">JLPT</span>
+        </button>
+        <button class="page-nav-btn next" onclick="openResourcePicker()">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Resources</span>
+        </button>
+      </div>
     </div>
 
     <!-- RESOURCES -->
@@ -1939,30 +2213,27 @@
       <span class="view-tag tag-blue">resources</span>
       <h2>Resources</h2>
       <p class="view-sub">Everything you need, organized by category.</p>
+      <div class="resource-grid">
+        <a class="resource-card" href="#res-kana">Kana</a>
+        <a class="resource-card" href="#res-anki">Anki</a>
+        <a class="resource-card" href="#res-dictionaries">Dictionary Tools</a>
+        <a class="resource-card" href="#res-grammar">Grammar</a>
 
-      <div class="res-toc">
-        <a class="res-toc-link" href="#res-kana">Kana</a>
-        <a class="res-toc-link" href="#res-anki">Anki</a>
-        <a class="res-toc-link" href="#res-yomitan">Yomitan</a>
-        <a class="res-toc-link" href="#res-mining">Mining</a>
-        <a class="res-toc-link" href="#res-dictionaries">Dictionaries</a>
-        <a class="res-toc-link" href="#res-pitch">Pitch accent</a>
-        <a class="res-toc-link" href="#res-grammar">Grammar</a>
-        <a class="res-toc-link" href="#res-kanji">Kanji</a>
-        <a class="res-toc-link" href="#res-anime">Anime</a>
-        <a class="res-toc-link" href="#res-drama">J-Drama</a>
-        <a class="res-toc-link" href="#res-manga">Manga</a>
-        <a class="res-toc-link" href="#res-novels">Novels</a>
-        <a class="res-toc-link" href="#res-vn">Visual Novels &amp; Games</a>
-        <a class="res-toc-link" href="#res-podcasts">Podcasts &amp; YouTube</a>
-        <a class="res-toc-link" href="#res-audio">Condensed audio</a>
-        <a class="res-toc-link" href="#res-immersion">Sentence search</a>
-        <a class="res-toc-link" href="#res-subs">Subtitles</a>
-        <a class="res-toc-link" href="#res-mobile">Mobile</a>
-        <a class="res-toc-link" href="#res-tracking">Tracking</a>
-        <a class="res-toc-link" href="#res-textbooks">Textbooks</a>
+        <a class="resource-card" href="#res-anime">Anime</a>
+        <a class="resource-card" href="#res-drama">TV Shows</a>
+        <a class="resource-card" href="#res-manga">OCR & Manga</a>
+        <a class="resource-card" href="#res-novels">Novels</a>
+
+        <a class="resource-card" href="#res-vn">VNs & Games</a>
+        <a class="resource-card" href="#res-podcasts">Podcasts</a>
+        <a class="resource-card" href="#res-subs">Subtitles</a>
+        <a class="resource-card" href="#res-mobile">Mobile Apps</a>
+
+        <a class="resource-card" href="#res-kanji">Kanji</a>
+        <a class="resource-card" href="#res-immersion">Sentence Search</a>
+        <a class="resource-card" href="#res-tracking">Tracking</a>
+        <a class="resource-card" href="#res-textbooks">Guides</a>
       </div>
-
       <hr>
 
       <!-- KANA -->
@@ -3191,29 +3462,643 @@
         </div>
 
       </div><!-- /faq-list -->
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="openResourcePicker()">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Resources</span>
+        </button>
+        <div></div>
+      </div>
     </div><!-- /v-faq -->
 
-  </main>
+    <!-- RESOURCE CATEGORY: KANA -->
+    <div id="v-res-kana" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>Kana</h2>
+      <p class="view-sub">Hiragana and katakana practice tools. Learn the syllabaries before everything else.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://kuuuube.github.io/kana-quiz/kana/" target="_blank"><p class="link-card-title">Kuuube Kana Quiz</p><p class="link-card-desc">Drill hiragana and katakana with audio</p></a>
+        <a class="link-card" href="https://kuuuube.github.io/kana-quiz-sounds/" target="_blank"><p class="link-card-title">Kuuube Kana Quiz (Sounds)</p><p class="link-card-desc">Audio-based kana recognition practice</p></a>
+        <a class="link-card" href="https://kana.pro/" target="_blank"><p class="link-card-title">Kana.pro</p><p class="link-card-desc">Fast kana typing drill — row by row</p></a>
+        <a class="link-card" href="https://djtguide.neocities.org/kana/index.html" target="_blank"><p class="link-card-title">DJT Kana</p><p class="link-card-desc">Kana recognition game with audio</p></a>
+        <a class="link-card" href="https://www.realkana.com/" target="_blank"><p class="link-card-title">Real Kana</p><p class="link-card-desc">Typing quiz for hiragana and katakana — also on iOS</p></a>
+        <a class="link-card" href="https://kana-quiz.tofugu.com/" target="_blank"><p class="link-card-title">Tofugu Kana Quiz</p><p class="link-card-desc">Simple romaji input quiz — beginner friendly</p></a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=6p9Il_j0zjc" target="_blank"><p class="link-card-title">Learn All Hiragana in 1 Hour</p><p class="link-card-desc">JapanesePod101 video — write and read</p></a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=s6DKRgtVLGA" target="_blank"><p class="link-card-title">Learn All Katakana in 1 Hour</p><p class="link-card-desc">JapanesePod101 video — write and read</p></a>
+        <a class="link-card" href="http://japanese-lesson.com/characters/hiragana/hiragana_writing.html" target="_blank"><p class="link-card-title">Hiragana writing practice</p><p class="link-card-desc">Printable PDF sheets with stroke order</p></a>
+        <a class="link-card" href="http://japanese-lesson.com/characters/katakana/katakana_writing.html" target="_blank"><p class="link-card-title">Katakana writing practice</p><p class="link-card-desc">Printable PDF sheets with stroke order</p></a>
+      </div>
+    </div>
 
+    <!-- RESOURCE CATEGORY: ANKI -->
+    <div id="v-res-anki" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>Anki</h2>
+      <p class="view-sub">Free spaced-repetition flashcard app. The standard for vocab, sentence mining, and grammar review.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://apps.ankiweb.net/" target="_blank"><p class="link-card-title">Anki</p><p class="link-card-desc">Download for Windows, Mac, Linux</p></a>
+        <a class="link-card" href="https://ankiweb.net/shared/info/1196762551" target="_blank"><p class="link-card-title">Kaishi 1.5k deck</p><p class="link-card-desc">Recommended starter vocab deck — 1,500 core words with audio</p></a>
+        <a class="link-card" href="https://github.com/donkuri/lapis" target="_blank"><p class="link-card-title">Lapis note type</p><p class="link-card-desc">Elegant, simple mining note type — recommended</p></a>
+        <a class="link-card" href="https://arbyste.github.io/jp-mining-note/alternatives/" target="_blank"><p class="link-card-title">JP Mining Note alternatives</p><p class="link-card-desc">Overview of different Anki note types for mining</p></a>
+        <a class="link-card" href="https://ankiweb.net/shared/info/1610304449" target="_blank"><p class="link-card-title">Kanji Grid add-on</p><p class="link-card-desc">Visualize kanji coverage across your decks</p></a>
+        <a class="link-card" href="https://ankiweb.net/shared/info/759825185" target="_blank"><p class="link-card-title">True Retention add-on</p><p class="link-card-desc">Shows real retention rate vs Anki's default metric</p></a>
+        <a class="link-card" href="https://ankiweb.net/shared/info/2055492159" target="_blank"><p class="link-card-title">AnkiConnect add-on</p><p class="link-card-desc">Required for Yomitan → Anki card creation</p></a>
+        <a class="link-card" href="https://ankiweb.net/shared/info/876946123" target="_blank"><p class="link-card-title">PassFail add-on</p><p class="link-card-desc">Simplifies review buttons to just Pass and Fail</p></a>
+        <a class="link-card" href="https://ankiweb.net/shared/info/1771074083" target="_blank"><p class="link-card-title">Review Heatmap add-on</p><p class="link-card-desc">GitHub-style heatmap of your review activity</p></a>
+        <a class="link-card" href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md#step-2-configure-fsrs-settings" target="_blank"><p class="link-card-title">FSRS setup guide</p><p class="link-card-desc">Configure FSRS scheduler for better retention</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: DICTIONARIES -->
+    <div id="v-res-dictionaries" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-blue">resources</span>
+      <h2>Dictionary Tools</h2>
+      <p class="view-sub">Look up words, parse sentences, and hear native pronunciation.</p>
+      <h3>Yomitan</h3>
+      <p>Pop-up dictionary for your browser. Hover over any Japanese text to instantly look it up and send cards to Anki.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://chromewebstore.google.com/detail/yomitan-popup-dictionary/likgccmbimhjbgkjambclfkhldnlhbnn" target="_blank"><p class="link-card-title">Yomitan (Chrome)</p><p class="link-card-desc">Install the extension from the Chrome Web Store</p></a>
+        <a class="link-card" href="https://yomitan.wiki/" target="_blank"><p class="link-card-title">Yomitan Wiki</p><p class="link-card-desc">Official setup guide and documentation</p></a>
+        <a class="link-card" href="https://learnjapanese.moe/yomichan/" target="_blank"><p class="link-card-title">Yomitan setup (TMW)</p><p class="link-card-desc">TheMoeWay's detailed Yomitan + Anki setup tutorial</p></a>
+        <a class="link-card" href="https://lazyguidejp.github.io/jp-lazy-guide/setupYomitanOnPC/" target="_blank"><p class="link-card-title">Yomitan setup (Lazy Guide)</p><p class="link-card-desc">Step-by-step PC setup guide for Yomitan</p></a>
+        <a class="link-card" href="https://learnjapanese.link/dictionaries" target="_blank"><p class="link-card-title">shoui dictionary collection</p><p class="link-card-desc">Curated Yomitan dictionary pack — the most complete collection</p></a>
+        <a class="link-card" href="https://github.com/MarvNC/yomitan-dictionaries" target="_blank"><p class="link-card-title">Yomitan Dictionaries (MarvNC)</p><p class="link-card-desc">Collection of recommended dictionaries for Yomitan</p></a>
+      </div>
+      <h3>Online dictionaries</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://jisho.org/" target="_blank"><p class="link-card-title">Jisho</p><p class="link-card-desc">Standard J↔E dictionary — radical search, stroke order, examples</p></a>
+        <a class="link-card" href="https://www.weblio.jp/" target="_blank"><p class="link-card-title">Weblio</p><p class="link-card-desc">Japanese monolingual — 大辞林 and more. N3+</p></a>
+        <a class="link-card" href="https://jiten.moe/" target="_blank"><p class="link-card-title">Jiten.moe</p><p class="link-card-desc">Anime vocab difficulty rankings + dictionary</p></a>
+        <a class="link-card" href="https://jpdb.io/" target="_blank"><p class="link-card-title">JPDB</p><p class="link-card-desc">Dictionary with media frequency lists and SRS deck sync</p></a>
+        <a class="link-card" href="https://dojglite.github.io/main/index.html" target="_blank"><p class="link-card-title">DoJG Lite</p><p class="link-card-desc">Free online Dictionary of Japanese Grammar — essential reference</p></a>
+        <a class="link-card" href="https://www.kanjipedia.jp/" target="_blank"><p class="link-card-title">Kanjipedia</p><p class="link-card-desc">Official kanji dictionary — readings, radicals, 四字熟語. N4+</p></a>
+        <a class="link-card" href="https://forvo.com/languages/ja/" target="_blank"><p class="link-card-title">Forvo</p><p class="link-card-desc">Hear any word pronounced by a native speaker</p></a>
+        <a class="link-card" href="https://ichi.moe/" target="_blank"><p class="link-card-title">Ichi.moe</p><p class="link-card-desc">Sentence parser — breaks down grammar into components</p></a>
+        <a class="link-card" href="https://jotoba.de/" target="_blank"><p class="link-card-title">Jotoba</p><p class="link-card-desc">Multilingual dictionary with autocomplete, kanji radical tree, and inflection display</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: GRAMMAR -->
+    <div id="v-res-grammar" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>Grammar</h2>
+      <p class="view-sub">Guides, references, and courses for Japanese grammar at every level.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://yoku.bi/" target="_blank"><p class="link-card-title">Yokubi <span class="basics-rec">recommended</span></p><p class="link-card-desc">Concise grammar guide — designed to get you reading fast</p></a>
+        <a class="link-card" href="https://guidetojapanese.org/learn/complete/" target="_blank"><p class="link-card-title">Tae Kim's Guide</p><p class="link-card-desc">Classic free grammar guide — direct and approachable</p></a>
+        <a class="link-card" href="https://imabi.org/" target="_blank"><p class="link-card-title">Imabi</p><p class="link-card-desc">Thorough, comprehensive grammar for all levels — best for intermediate+</p></a>
+        <a class="link-card" href="https://dojglite.github.io/main/index.html" target="_blank"><p class="link-card-title">DoJG Lite</p><p class="link-card-desc">Free online Dictionary of Japanese Grammar — essential reference</p></a>
+        <a class="link-card" href="https://nihongokyoshi-net.com/jlpt-grammars/" target="_blank"><p class="link-card-title">NihongoKyoshi JLPT Grammar</p><p class="link-card-desc">JLPT grammar points taught in Japanese — N5 to N1</p></a>
+        <a class="link-card" href="https://bunpro.jp/grammar_points" target="_blank"><p class="link-card-title">Bunpro grammar list</p><p class="link-card-desc">Free grammar reference with SRS reviews — $5/mo for full access</p></a>
+        <a class="link-card" href="https://mainichi-nonbiri.com/" target="_blank"><p class="link-card-title">Mainichi Nonbiri</p><p class="link-card-desc">All JLPT grammar in Japanese — includes 敬語 and onomatopoeia. N4+</p></a>
+        <a class="link-card" href="https://www.youtube.com/playlist?list=PLg9uYxuZf8x_A-vcqqyOFZu06WlhnypWj" target="_blank"><p class="link-card-title">Cure Dolly — Organic Japanese</p><p class="link-card-desc">Structural approach to Japanese grammar via video series</p></a>
+        <a class="link-card" href="https://kellenok.github.io/cure-script/1-the-basic-types-of-sentences.html" target="_blank"><p class="link-card-title">Cure Dolly transcript</p><p class="link-card-desc">Full text transcript of the Organic Japanese series</p></a>
+        <a class="link-card" href="https://sakubi.neocities.org/" target="_blank"><p class="link-card-title">Sakubi</p><p class="link-card-desc">Compact grammar guide — quick read, good for reference</p></a>
+        <a class="link-card" href="https://boirodaisuki.neocities.org/" target="_blank"><p class="link-card-title">Grammar Guide Nobody Asked For</p><p class="link-card-desc">Crash course in Japanese grammar — note: adult-oriented examples</p></a>
+        <a class="link-card" href="https://baileysnyder.com/jconj/" target="_blank"><p class="link-card-title">Japanese Conjugation Practice</p><p class="link-card-desc">Test your conjugation knowledge — requires prior study</p></a>
+        <a class="link-card" href="https://www.renshuu.org/" target="_blank"><p class="link-card-title">Renshuu</p><p class="link-card-desc">Grammar, kanji, and vocab quizzes with explanations — free with paid tier</p></a>
+        <a class="link-card" href="https://marumori.io/" target="_blank"><p class="link-card-title">MaruMori</p><p class="link-card-desc">All-in-one grammar/kanji/vocab SRS with a guided "adventure" path, N5-N1 — paid</p></a>
+        <a class="link-card" href="https://minato-jf.jp/Home/Index" target="_blank"><p class="link-card-title">Minato</p><p class="link-card-desc">Free Japan Foundation courses across multiple levels and languages</p></a>
+        <a class="link-card" href="https://www.nhk.or.jp/lesson/en/" target="_blank"><p class="link-card-title">NHK World — Easy Japanese</p><p class="link-card-desc">48 short A1-A2 lessons with video skits, free</p></a>
+        <a class="link-card" href="https://drive.google.com/file/d/1tDBaabwgZMO8nxkcwcw4qBXayuk_513T/view" target="_blank"><p class="link-card-title">NihongoKyoshi grammar deck</p><p class="link-card-desc">Anki deck for JLPT grammar — Japanese definitions only</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: ANIME -->
+    <div id="v-res-anime" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-amber">resources</span>
+      <h2>Anime</h2>
+      <p class="view-sub">Where to stream, download, and find anime ordered by difficulty.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://nyaa.si/" target="_blank"><p class="link-card-title">Nyaa.si</p><p class="link-card-desc">Torrent tracker for raw anime — best source for downloads</p></a>
+        <a class="link-card" href="https://aniwatchtv.to/" target="_blank"><p class="link-card-title">Aniwatchtv.to</p><p class="link-card-desc">Stream anime — can disable subtitles and switch to JP audio</p></a>
+        <a class="link-card" href="https://anilist.co/" target="_blank"><p class="link-card-title">AniList</p><p class="link-card-desc">Track, discover, and organize your anime and manga</p></a>
+        <a class="link-card" href="https://jiten.moe/" target="_blank"><p class="link-card-title">Jiten.moe</p><p class="link-card-desc">Anime ranked by vocabulary difficulty — pick your level</p></a>
+        <a class="link-card" href="https://learnnatively.com/" target="_blank"><p class="link-card-title">Natively</p><p class="link-card-desc">Find anime and manga suited to your level — community-rated difficulty</p></a>
+        <a class="link-card" href="https://www.immersionkit.com/" target="_blank"><p class="link-card-title">ImmersionKit</p><p class="link-card-desc">Search native sentences and audio from anime</p></a>
+        <a class="link-card" href="https://nadeshiko.co/" target="_blank"><p class="link-card-title">Nadeshiko</p><p class="link-card-desc">Anime sentence search with audio clips</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: TV SHOWS / J-DRAMA -->
+    <div id="v-res-drama" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-amber">resources</span>
+      <h2>TV Shows &amp; J-Drama</h2>
+      <p class="view-sub">Live action Japanese drama, variety shows, and live TV streams.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.viki.com/categories/country/japan/genre/all?sort=popular" target="_blank"><p class="link-card-title">Rakuten Viki</p><p class="link-card-desc">Stream J-drama — some with Japanese subs available</p></a>
+        <a class="link-card" href="https://web.utako.moe/" target="_blank"><p class="link-card-title">Japanese Live TV Streams</p><p class="link-card-desc">Watch Japanese TV channels live in your browser</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: OCR & MANGA -->
+    <div id="v-res-manga" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>OCR &amp; Manga</h2>
+      <p class="view-sub">Read raw manga online and use OCR tools to hover over text with Yomitan.</p>
+      <h3>Reading manga</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://rawkuma.net/" target="_blank"><p class="link-card-title">Rawkuma</p><p class="link-card-desc">Read raw manga online</p></a>
+        <a class="link-card" href="https://dlraw.ac/" target="_blank"><p class="link-card-title">DLRaw</p><p class="link-card-desc">Raw manga downloads</p></a>
+        <a class="link-card" href="https://mangareader.to" target="_blank"><p class="link-card-title">Mangareader.to</p><p class="link-card-desc">Free raw manga — combine with Yomitan for mining</p></a>
+        <a class="link-card" href="https://hakuneko.download/" target="_blank"><p class="link-card-title">Hakuneko Downloader</p><p class="link-card-desc">Download Japanese manga — filter by "raw" and "japanese" tags</p></a>
+        <a class="link-card" href="https://klmanga.loan/" target="_blank"><p class="link-card-title">KLManga</p><p class="link-card-desc">Online raw manga reading</p></a>
+        <a class="link-card" href="https://dl-raw.si/" target="_blank"><p class="link-card-title">DL-Raw</p><p class="link-card-desc">Online raw manga reading</p></a>
+      </div>
+      <h3>OCR tools</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://github.com/KolbyML/Manatan" target="_blank"><p class="link-card-title">Manatan</p><p class="link-card-desc">All-in-one manga reader with auto OCR</p></a>
+        <a class="link-card" href="https://mokuro.moe/catalog/" target="_blank"><p class="link-card-title">Mokuro catalog</p><p class="link-card-desc">Pre-processed manga, hoverable on desktop</p></a>
+        <a class="link-card" href="https://github.com/AuroraWright/owocr" target="_blank"><p class="link-card-title">owocr</p><p class="link-card-desc">Screen OCR for reading manga and games</p></a>
+        <a class="link-card" href="https://github.com/rtr46/meikiocr/tree/main" target="_blank"><p class="link-card-title">MeikiOCR</p><p class="link-card-desc">OCR tool for Japanese text recognition</p></a>
+        <a class="link-card" href="https://github.com/kha-white/manga-ocr" target="_blank"><p class="link-card-title">Manga-OCR</p><p class="link-card-desc">Manga-optimized OCR — high accuracy on speech bubbles</p></a>
+        <a class="link-card" href="https://yomininja.com/" target="_blank"><p class="link-card-title">YomiNinja</p><p class="link-card-desc">Screen OCR with Yomitan integration for games</p></a>
+        <a class="link-card" href="https://getShareX.com/" target="_blank"><p class="link-card-title">ShareX</p><p class="link-card-desc">Screenshot OCR — turns images of text into copyable text</p></a>
+      </div>
+      <h3>Difficulty rankings</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://jiten.moe/" target="_blank"><p class="link-card-title">Jiten.moe</p><p class="link-card-desc">Manga and books ranked by difficulty</p></a>
+        <a class="link-card" href="https://learnnatively.com/" target="_blank"><p class="link-card-title">LearnNatively</p><p class="link-card-desc">Community-rated difficulty for manga and books</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: NOVELS -->
+    <div id="v-res-novels" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>Novels &amp; Light Novels</h2>
+      <p class="view-sub">Web novels, ebooks, and readers for native Japanese prose.</p>
+      <h3>Web novels</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://yomou.syosetu.com/" target="_blank"><p class="link-card-title">Syosetu</p><p class="link-card-desc">Japanese web novels</p></a>
+        <a class="link-card" href="https://kakuyomu.jp/" target="_blank"><p class="link-card-title">Kakuyomu</p><p class="link-card-desc">Web novels by Kadokawa</p></a>
+        <a class="link-card" href="https://komachi.yomiuri.co.jp/" target="_blank"><p class="link-card-title">発言小町 (Komachi)</p><p class="link-card-desc">Advice-column Q&amp;A forum — casual native writing. N3+</p></a>
+        <a class="link-card" href="https://eikaiwa.dmm.com/uknow/" target="_blank"><p class="link-card-title">DMM Eikaiwa Q&amp;A</p><p class="link-card-desc">Read Japanese questions by native learners — natural phrasing</p></a>
+      </div>
+      <h3>Ebook readers</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://reader.ttsu.app/" target="_blank"><p class="link-card-title">ッツ Ebook Reader</p><p class="link-card-desc">EPUB reader with Yomitan support</p></a>
+        <a class="link-card" href="https://apps.apple.com/us/app/hoshi-reader/id6758244332" target="_blank"><p class="link-card-title">Hoshi Reader (iOS)</p><p class="link-card-desc">EPUB reader with popup dictionary</p></a>
+        <a class="link-card" href="https://github.com/HuangAntimony/Hoshi-Reader-Android" target="_blank"><p class="link-card-title">Hoshi Reader (Android)</p><p class="link-card-desc">Japanese ebook reader with Yomitan dictionaries and 縦書き support</p></a>
+      </div>
+      <h3>Downloads</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://annas-archive.gl/" target="_blank"><p class="link-card-title">Anna's Archive</p><p class="link-card-desc">Light novel ebook downloads</p></a>
+        <a class="link-card" href="https://discord.gg/tmw" target="_blank"><p class="link-card-title">TheMoeWay Discord</p><p class="link-card-desc">LN resources — student role required</p></a>
+      </div>
+      <div class="callout warn"><strong>Note:</strong> Anna's Archive may be blocked in some regions — use a VPN if you can't access it.</div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: VNs & GAMES -->
+    <div id="v-res-vn" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-amber">resources</span>
+      <h2>Visual Novels &amp; Games</h2>
+      <p class="view-sub">VN databases, downloads, text hookers, and game mining tools.</p>
+      <h3>Discover &amp; download</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://vndb.org/" target="_blank"><p class="link-card-title">VNDB</p><p class="link-card-desc">Visual novel database — discover, rate, and track VNs</p></a>
+        <a class="link-card" href="https://jpdb.io/" target="_blank"><p class="link-card-title">JPDB</p><p class="link-card-desc">Vocab difficulty rankings for VNs, anime, and games</p></a>
+        <a class="link-card" href="https://www.ryuugames.com/tag/japanese/" target="_blank"><p class="link-card-title">RyuuGames</p><p class="link-card-desc">Visual novel and game downloads — large library</p></a>
+        <a class="link-card" href="https://vnclub.org/" target="_blank"><p class="link-card-title">VN Club</p><p class="link-card-desc">Guides, recommendations, and catalogue</p></a>
+        <a class="link-card" href="https://learnjapanese.moe/vn/" target="_blank"><p class="link-card-title">VN setup guide (TMW)</p><p class="link-card-desc">Full guide to setting up visual novels for Japanese reading</p></a>
+      </div>
+      <div class="callout warn"><strong>NSFW warning:</strong> Ryuugames hosts adult visual novels alongside all-ages titles.</div>
+      <h3>Text hooking</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://github.com/Chenx221/Textractor" target="_blank"><p class="link-card-title">Textractor</p><p class="link-card-desc">Hook and extract text from visual novels</p></a>
+        <a class="link-card" href="https://github.com/rampaa/JL" target="_blank"><p class="link-card-title">JL</p><p class="link-card-desc">Popup dictionary, no browser needed</p></a>
+        <a class="link-card" href="https://github.com/AuroraWright/LunaTranslator/releases/tag/LunaHook" target="_blank"><p class="link-card-title">LunaHook</p><p class="link-card-desc">Modern Textractor alternative — part of LunaTranslator</p></a>
+      </div>
+      <h3>Games</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://github.com/0xDC00/agent" target="_blank"><p class="link-card-title">Agent</p><p class="link-card-desc">Script-based text extractor for games</p></a>
+        <a class="link-card" href="https://github.com/bpwhelan/GameSentenceMiner" target="_blank"><p class="link-card-title">GameSentenceMiner</p><p class="link-card-desc">Mine cards directly from games</p></a>
+        <a class="link-card" href="https://yomininja.com/" target="_blank"><p class="link-card-title">YomiNinja</p><p class="link-card-desc">OCR + Yomitan for any game screen</p></a>
+        <a class="link-card" href="https://github.com/rtr46/meikipop" target="_blank"><p class="link-card-title">Meikipop</p><p class="link-card-desc">Popup dictionary overlay for games</p></a>
+        <a class="link-card" href="https://babadum.com/" target="_blank"><p class="link-card-title">Babadum</p><p class="link-card-desc">Free vocab game with 1500 words — listening, recall, and matching modes</p></a>
+        <a class="link-card" href="https://store.steampowered.com/app/1632490/Shashingo_Learn_Japanese_with_Photography/" target="_blank"><p class="link-card-title">Shashingo</p><p class="link-card-desc">Wander a Japanese city taking photos to learn vocab — paid, ~$20</p></a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=h1NfF4yiaWE" target="_blank"><p class="link-card-title">Game Gengo — Tier List</p><p class="link-card-desc">Top 100+ games for Japanese learners (2025)</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: MINING SETUP -->
+    <div id="v-res-mining" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>Mining Setup</h2>
+      <p class="view-sub">Tools for extracting sentences from anime, manga, VNs, and games into Anki.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://animecards.site/minefromanime/" target="_blank"><p class="link-card-title">Mine from anime (AnimeCards)</p><p class="link-card-desc">MPV setup and sentence mining from anime</p></a>
+        <a class="link-card" href="https://chromewebstore.google.com/detail/asbplayer-language-learni/hkledmpjpaehamkiehglnbelcpdflcab" target="_blank"><p class="link-card-title">asbplayer (Chrome)</p><p class="link-card-desc">Attach JP subtitles to streaming video and mine to Anki</p></a>
+        <a class="link-card" href="https://github.com/zhongfly/mpv-winbuild/releases" target="_blank"><p class="link-card-title">MPV (Windows build)</p><p class="link-card-desc">Video player used for anime mining setup</p></a>
+        <a class="link-card" href="https://github.com/bpwhelan/GameSentenceMiner" target="_blank"><p class="link-card-title">GameSentenceMiner</p><p class="link-card-desc">Mine sentences from games automatically</p></a>
+        <a class="link-card" href="https://github.com/rtr46/meikipop" target="_blank"><p class="link-card-title">Meikipop</p><p class="link-card-desc">OCR-based popup dictionary for manga, games, images</p></a>
+        <a class="link-card" href="https://github.com/rampaa/JL" target="_blank"><p class="link-card-title">JL</p><p class="link-card-desc">Lookup tool for gaming/reading without a browser</p></a>
+        <a class="link-card" href="https://getShareX.com/" target="_blank"><p class="link-card-title">ShareX</p><p class="link-card-desc">Screenshot OCR — turns images of text into copyable text for mining</p></a>
+        <a class="link-card" href="https://migaku.com/" target="_blank"><p class="link-card-title">Migaku</p><p class="link-card-desc">Browser extension — instant flashcards from anything you read/watch. Paid, $10/mo</p></a>
+        <a class="link-card" href="https://donkuri.github.io/learn-japanese/mining/" target="_blank"><p class="link-card-title">Donkuri's Mining Setup</p><p class="link-card-desc">Mining setup guide for various media</p></a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=PAUYnp5wOE0" target="_blank"><p class="link-card-title">Mining Tutorial (JouzuJuls)</p><p class="link-card-desc">Sentence mining video walkthrough</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: PODCASTS -->
+    <div id="v-res-podcasts" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-blue">resources</span>
+      <h2>Podcasts &amp; YouTube</h2>
+      <p class="view-sub">Listening immersion for every level — from beginner monologues to native-speed variety content.</p>
+      <div class="link-grid" style="grid-template-columns:1fr;margin-bottom:1rem;">
+        <a class="link-card" href="https://docs.google.com/spreadsheets/d/17P2dBQHnBnHcG3ua_24IO6sP9RDC-5b3WHV9Ri2N5qU/edit?gid=0#gid=0" target="_blank"><p class="link-card-title">Japanese Podcast spreadsheet</p><p class="link-card-desc">Community-maintained reference of Japanese podcasts by level and topic</p></a>
+      </div>
+      <h3>Podcasts — N5/N4</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://open.spotify.com/show/0TWRqowC0TPhXlG79M0qzv" target="_blank"><p class="link-card-title">Japanese with Shun</p><p class="link-card-desc">Easy Japanese using Genki 1–2 grammar — beginner monologues</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/4W4jYoKRmjlURKO1fIfcOK" target="_blank"><p class="link-card-title">Nihongo con Teppei</p><p class="link-card-desc">Short monologue episodes, natural pace, no English</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/5VgrjvbQRFNPykH1QiBXFJ" target="_blank"><p class="link-card-title">Masa Sensei</p><p class="link-card-desc">Conversational Japanese with a teacher — clear and approachable</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/6Nl8RDfPxsk4h4bfWe76Kg" target="_blank"><p class="link-card-title">Miku Real Japanese</p><p class="link-card-desc">Slow and clear — good for beginners, with vocabulary lists</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/1gQ0ZdFpTOqiyLeOaCCn6U" target="_blank"><p class="link-card-title">Real Japanese Podcast (Haruka)</p><p class="link-card-desc">Natural Japanese with a native speaker — everyday topics</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/0hQDsR0brfk88Nls8fydo4" target="_blank"><p class="link-card-title">YUYU Nihongo</p><p class="link-card-desc">Easy and clear Japanese — great for beginner comprehension practice</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/36rMtvLGfaoGRkVggzxabI" target="_blank"><p class="link-card-title">バイリンガルニュース</p><p class="link-card-desc">News in Japanese and English — good comprehension check</p></a>
+      </div>
+      <h3>Podcasts — N3/N2</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://open.spotify.com/show/4wPIfqMTsTArlUBMpdkaAK" target="_blank"><p class="link-card-title">Learn Japanese from Real Talks (Hiro)</p><p class="link-card-desc">Natural speed, no repetition — clear articulation, good vocab training</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/3XYAAxLqxqEDR4rNErjrnC" target="_blank"><p class="link-card-title">Satominichi</p><p class="link-card-desc">Natural Japanese monologues — good for intermediate listeners</p></a>
+        <a class="link-card" href="https://open.spotify.com/show/3nBZ3AgBAfSYdHbpJflIHZ" target="_blank"><p class="link-card-title">ゆる言語学ラジオ</p><p class="link-card-desc">Native speed — linguistics topics, great for acclimating to natural speech</p></a>
+        <a class="link-card" href="https://www.radiojapan.org/" target="_blank"><p class="link-card-title">Radio Japan</p><p class="link-card-desc">Stream live Japanese radio in your browser — variety of stations. N4+</p></a>
+        <a class="link-card" href="https://www.nhk.or.jp/radio/" target="_blank"><p class="link-card-title">NHK Radio</p><p class="link-card-desc">Japanese radio in your browser — N4+</p></a>
+      </div>
+      <h3>YouTube channels</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.youtube.com/@cijapanese" target="_blank"><p class="link-card-title">Comprehensible Japanese</p><p class="link-card-desc">Graded input videos for learners</p></a>
+        <a class="link-card" href="https://www.youtube.com/@akane325" target="_blank"><p class="link-card-title">あかね的日本語教室</p><p class="link-card-desc">Vlogs in real situations — practical phrases and vocab. N4+</p></a>
+        <a class="link-card" href="https://www.youtube.com/@moshimoshi.yusuke" target="_blank"><p class="link-card-title">もしもしゆうすけ</p><p class="link-card-desc">Conversation videos with JP and EN subs. N4+</p></a>
+        <a class="link-card" href="https://www.youtube.com/@nihongonomori2013" target="_blank"><p class="link-card-title">日本語の森</p><p class="link-card-desc">Culture, lifestyle, JLPT prep — JP subs. N3+</p></a>
+        <a class="link-card" href="https://www.youtube.com/@Fischers" target="_blank"><p class="link-card-title">Fischers</p><p class="link-card-desc">Japanese variety / vlog channel</p></a>
+        <a class="link-card" href="https://www.youtube.com/@SambonJuku" target="_blank"><p class="link-card-title">三本塾 Sambon Juku</p><p class="link-card-desc">Grammar explained in Japanese — JP + EN captions</p></a>
+        <a class="link-card" href="https://www.youtube.com/@JiroJapanese" target="_blank"><p class="link-card-title">Jiro Japanese</p><p class="link-card-desc">Podcasts and game playthroughs with on-screen furigana + JLPT-graded vocab. N4+</p></a>
+        <a class="link-card" href="https://www.youtube.com/playlist?list=PLiFNg5fXiX30vpnFGTQueUpGrTn7fzSsW" target="_blank"><p class="link-card-title">Project Sekai — Story Playlist</p><p class="link-card-desc">400+ hours of fully voiced visual novel stories — furigana, subtitles, varied everyday language. N3+</p></a>
+        <a class="link-card" href="https://www.youtube.com/@heronimmersion" target="_blank"><p class="link-card-title">Heron JP Immersion</p><p class="link-card-desc">Video game content with sentence-by-sentence breakdown</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: SUBTITLES -->
+    <div id="v-res-subs" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-blue">resources</span>
+      <h2>Subtitles</h2>
+      <p class="view-sub">Japanese subtitle files for anime — use with asbplayer or MPV for immersion.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://jimaku.cc/" target="_blank"><p class="link-card-title">Jimaku.cc</p><p class="link-card-desc">Japanese subtitle files for anime — sync with asbplayer</p></a>
+        <a class="link-card" href="https://kitsunekko.net/dirlst.php?dir=subtitles%2Fjapanese%2F" target="_blank"><p class="link-card-title">Kitsunekko</p><p class="link-card-desc">Large archive of Japanese anime subtitle files</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: KANJI -->
+    <div id="v-res-kanji" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>Kanji</h2>
+      <p class="view-sub">Learn kanji through vocabulary — not in isolation. Resources for recognition, radicals, and writing.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://kanjialive.com/214-traditional-kanji-radicals/" target="_blank"><p class="link-card-title">Kanji Alive</p><p class="link-card-desc">Learn kanji radicals and how they form kanji</p></a>
+        <a class="link-card" href="https://kanji.koohii.com/" target="_blank"><p class="link-card-title">Kanji Koohii</p><p class="link-card-desc">Community mnemonics for kanji radicals</p></a>
+        <a class="link-card" href="https://www.kanjipedia.jp/" target="_blank"><p class="link-card-title">Kanjipedia</p><p class="link-card-desc">Official kanji dictionary — readings, radicals, 四字熟語. N4+</p></a>
+        <a class="link-card" href="https://www.dailykanji.xyz/" target="_blank"><p class="link-card-title">Daily Kanji</p><p class="link-card-desc">One JLPT-graded word per day — streak tracking, native audio, stats page</p></a>
+        <a class="link-card" href="https://www.wanikani.com/" target="_blank"><p class="link-card-title">WaniKani</p><p class="link-card-desc">SRS-based kanji and vocab — structured radicals-first approach. Paid</p></a>
+        <a class="link-card" href="https://yoji.jitenon.jp/" target="_blank"><p class="link-card-title">四字熟語辞典 (Jitenon)</p><p class="link-card-desc">Dictionary of yojijukugo (four-character idioms) — N2+</p></a>
+        <a class="link-card" href="https://kanji.jitenon.jp/" target="_blank"><p class="link-card-title">Kanji Jitenon</p><p class="link-card-desc">Kanji dictionary with yojijukugo, readings, radicals, and stroke order</p></a>
+        <a class="link-card" href="https://happylilac.net/syogaku.html" target="_blank"><p class="link-card-title">ちびむすドリル</p><p class="link-card-desc">Printable Japanese school worksheets — kanji practice for all grades. N4+</p></a>
+        <a class="link-card" href="https://www.uni-passau.de/fileadmin/dokumente/hsg/nippon/Skripte/kanjibookjlptn5.pdf" target="_blank"><p class="link-card-title">Kanji Writing (N5)</p><p class="link-card-desc">103 N5 kanji with meanings, readings, and writing grid</p></a>
+        <a class="link-card" href="https://drive.google.com/drive/folders/1lFvmBAVPLB_t-g3l-jR1BVWFIiZbEgdO?usp=sharing" target="_blank"><p class="link-card-title">Kanji Kentei Deck</p><p class="link-card-desc">Anki deck for all jōyō kanji by Kanken level</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: PITCH ACCENT -->
+    <div id="v-res-pitch" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-amber">resources</span>
+      <h2>Pitch Accent</h2>
+      <p class="view-sub">Understand, train, and acquire Japanese pitch accent patterns.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://kotu.io/" target="_blank"><p class="link-card-title">KOTU.io</p><p class="link-card-desc">Pitch accent recognition trainer</p></a>
+        <a class="link-card" href="https://www.youtube.com/playlist?list=PLeK-ilb1gk6md2oCbjPh4Rl0lnXXOV22P" target="_blank"><p class="link-card-title">Dogen Japanese Phonetics</p><p class="link-card-desc">Comprehensive pitch accent video series by Dogen</p></a>
+        <a class="link-card" href="https://www.youtube.com/watch?v=I-dRbTnLmBY" target="_blank"><p class="link-card-title">Darius — Notes on pitch acquisition</p><p class="link-card-desc">How to actually acquire pitch accent through immersion</p></a>
+        <a class="link-card" href="https://www.youtube.com/@yudaisensei2020" target="_blank"><p class="link-card-title">Yudai Sensei</p><p class="link-card-desc">YouTube channel focused on pitch accent training</p></a>
+        <a class="link-card" href="https://docs.google.com/document/d/1ReBf08JFK4n0PXdOxThAfWuiK9UWVZEWWzeKSECWTQo/edit" target="_blank"><p class="link-card-title">Usagi Chan Pronunciation Guide</p><p class="link-card-desc">Comprehensive pitch accent primer and how-to</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: CONDENSED AUDIO -->
+    <div id="v-res-audio" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-blue">resources</span>
+      <h2>Condensed Audio</h2>
+      <p class="view-sub">Audio with silences removed — maximizes listening exposure per hour. Good for passive immersion.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://condensedaudiocatalog.com/" target="_blank"><p class="link-card-title">Condensed Audio Catalog</p><p class="link-card-desc">Searchable catalog of condensed anime audio</p></a>
+        <a class="link-card" href="https://ercanserteli.com/condenser/" target="_blank"><p class="link-card-title">Condenser</p><p class="link-card-desc">Condense your own audio — remove silences from any video/audio</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: SENTENCE SEARCH -->
+    <div id="v-res-immersion" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>Sentence Search</h2>
+      <p class="view-sub">Search for any word used in context with audio from anime, novels, and YouTube.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.immersionkit.com/" target="_blank"><p class="link-card-title">ImmersionKit</p><p class="link-card-desc">Search sentences + audio from anime — with translation</p></a>
+        <a class="link-card" href="https://nadeshiko.co/" target="_blank"><p class="link-card-title">Nadeshiko</p><p class="link-card-desc">Anime sentence search — larger catalog than ImmersionKit</p></a>
+        <a class="link-card" href="https://filmot.com/" target="_blank"><p class="link-card-title">Filmot</p><p class="link-card-desc">Search YouTube subtitles — find any word used naturally</p></a>
+        <a class="link-card" href="https://youglish.com/japanese" target="_blank"><p class="link-card-title">YouGlish</p><p class="link-card-desc">Hear any word pronounced by natives in YouTube clips</p></a>
+        <a class="link-card" href="https://massif.la/" target="_blank"><p class="link-card-title">Massif</p><p class="link-card-desc">Sentence search sourced from Syosetu web novels</p></a>
+        <a class="link-card" href="https://sentencesearch.neocities.org/" target="_blank"><p class="link-card-title">SentenceSearch</p><p class="link-card-desc">Sentences from multiple learning resources with audio</p></a>
+        <a class="link-card" href="https://kotu.io/" target="_blank"><p class="link-card-title">コツ</p><p class="link-card-desc">Search sentence audio from anime, audiobooks, news, YouTube — with pitch accent graph</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: MOBILE APPS -->
+    <div id="v-res-mobile" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-blue">resources</span>
+      <h2>Mobile Apps</h2>
+      <p class="view-sub">Essential apps for Anki, reading, and dictionary lookup on Android and iOS.</p>
+      <h3>Android</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://play.google.com/store/apps/details?id=com.ichi2.anki" target="_blank"><p class="link-card-title">AnkiDroid</p><p class="link-card-desc">Free Anki client for Android</p></a>
+        <a class="link-card" href="https://github.com/KamWithK/AnkiconnectAndroid" target="_blank"><p class="link-card-title">AnkiConnect for Android</p><p class="link-card-desc">Enables Yomitan → AnkiDroid card creation on Android</p></a>
+        <a class="link-card" href="https://github.com/HuangAntimony/Hoshi-Reader-Android" target="_blank"><p class="link-card-title">Hoshi Reader (Android)</p><p class="link-card-desc">Japanese ebook reader with Yomitan dictionaries and 縦書き support</p></a>
+        <a class="link-card" href="https://github.com/lrorpilla/jidoujisho" target="_blank"><p class="link-card-title">jidoujisho</p><p class="link-card-desc">Mobile video player, reader, and Anki card creation toolkit</p></a>
+      </div>
+      <h3>iOS</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://apps.apple.com/us/app/ankimobile-flashcards/id373493387" target="_blank"><p class="link-card-title">AnkiMobile</p><p class="link-card-desc">Official Anki app for iOS — $24.99, funds Anki development</p></a>
+        <a class="link-card" href="https://apps.apple.com/us/app/hoshi-reader/id6758244332" target="_blank"><p class="link-card-title">Hoshi Reader</p><p class="link-card-desc">Beautiful EPUB reader with popup dictionary and Anki support</p></a>
+        <a class="link-card" href="https://apps.apple.com/us/app/shirabe-jisho/id1005203380" target="_blank"><p class="link-card-title">Shirabe Jisho</p><p class="link-card-desc">Best bilingual dictionary app for iOS</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: TRACKING & STATS -->
+    <div id="v-res-tracking" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-blue">resources</span>
+      <h2>Tracking &amp; Stats</h2>
+      <p class="view-sub">Track your anime, manga, VNs, books, and vocabulary progress.</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://anilist.co/" target="_blank"><p class="link-card-title">AniList</p><p class="link-card-desc">Track anime and manga — lists, scores, stats</p></a>
+        <a class="link-card" href="https://bookmeter.com/" target="_blank"><p class="link-card-title">Bookmeter</p><p class="link-card-desc">Track books you've read — Japanese community</p></a>
+        <a class="link-card" href="https://jpdb.io/" target="_blank"><p class="link-card-title">JPDB</p><p class="link-card-desc">Track known vocabulary synced to your immersion content</p></a>
+        <a class="link-card" href="https://vndb.org/" target="_blank"><p class="link-card-title">VNDB</p><p class="link-card-desc">Track visual novels — lists, votes, release info</p></a>
+      </div>
+    </div>
+
+    <!-- RESOURCE CATEGORY: GUIDES & TEXTBOOKS -->
+    <div id="v-res-textbooks" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-amber">resources</span>
+      <h2>Guides &amp; Textbooks</h2>
+      <p class="view-sub">PDFs, structured courses, and textbook resources. You didn't find them here though. 🤫</p>
+      <div class="link-grid">
+        <a class="link-card" href="https://mega.nz/folder/dS8j3RaR#IrTXP2U6EPL7NIDHleskZw" target="_blank"><p class="link-card-title">Genki I (PDF)</p><p class="link-card-desc">The most popular beginner Japanese textbook — 2nd edition</p></a>
+        <a class="link-card" href="https://mega.nz/folder/FQkwBZYb#WKX6XQHOVORI-jzlbUWkaA" target="_blank"><p class="link-card-title">Genki II (PDF)</p><p class="link-card-desc">Continuation of Genki — intermediate beginner</p></a>
+        <a class="link-card" href="https://drive.google.com/drive/folders/1hSWxKncq3XjPSkZ3g_6ckL5xlyIwVMOj" target="_blank"><p class="link-card-title">N5–N1 Textbook Collection</p><p class="link-card-desc">Massive Drive folder of Japanese textbooks across all JLPT levels</p></a>
+        <a class="link-card" href="https://www.guidetojapanese.org/grammar_guide.pdf" target="_blank"><p class="link-card-title">Tae Kim's Grammar Guide (PDF)</p><p class="link-card-desc">Downloadable PDF of the complete Tae Kim grammar guide</p></a>
+        <a class="link-card" href="https://hep.ph.liv.ac.uk/~payne/sgfSigmaThing/James%20W.%20Heisig%20-%20Remembering%20Kanji%204%BA%20Edition%20-%20Vol%201.pdf" target="_blank"><p class="link-card-title">Remembering the Kanji Vol. 1 (PDF)</p><p class="link-card-desc">Heisig's kanji memorisation method — meanings and stories for 2,200 kanji</p></a>
+        <a class="link-card" href="https://mfadhillah.wordpress.com/wp-content/uploads/2012/12/minna-no-nihongo-i-c3bcbersetzungen-grammatikalische-erklc3a4rungen-englisch.pdf" target="_blank"><p class="link-card-title">Minna no Nihongo I (PDF)</p><p class="link-card-desc">English grammar explanations for Minna no Nihongo vol. 1</p></a>
+        <a class="link-card" href="https://www.nhk.or.jp/lesson/en/lessons/" target="_blank"><p class="link-card-title">NHK World — Easy Japanese</p><p class="link-card-desc">48 free A1–A2 video lessons with downloadable materials</p></a>
+        <a class="link-card" href="https://ocw.mit.edu/courses/21g-501-japanese-i-fall-2019/pages/syllabus/" target="_blank"><p class="link-card-title">MIT OCW — Genki I (Lessons 1–6)</p><p class="link-card-desc">Full MIT course materials using Genki I — for beginners</p></a>
+        <a class="link-card" href="https://ocw.mit.edu/courses/21g-502-japanese-ii-spring-2020/pages/syllabus/" target="_blank"><p class="link-card-title">MIT OCW — Genki I (Lessons 7–12)</p><p class="link-card-desc">MIT course materials — for those with basic grammar foundations</p></a>
+        <a class="link-card" href="https://ocw.mit.edu/courses/21g-503-japanese-iii-fall-2019/pages/syllabus/" target="_blank"><p class="link-card-title">MIT OCW — Genki II (Lessons 13–18)</p><p class="link-card-desc">MIT course materials — advanced N5 / early N4</p></a>
+        <a class="link-card" href="https://ocw.mit.edu/courses/21g-504-japanese-iv-spring-2020/pages/syllabus/" target="_blank"><p class="link-card-title">MIT OCW — Genki II (Lessons 19–23)</p><p class="link-card-desc">MIT course materials — intermediate N4</p></a>
+        <a class="link-card" href="https://a2.marugotoweb.jp/en/" target="_blank"><p class="link-card-title">Marugoto (A2)</p><p class="link-card-desc">Japan Foundation textbook site — free A2 level practice</p></a>
+        <a class="link-card" href="https://corp.monoxer.com/" target="_blank"><p class="link-card-title">Monoxer</p><p class="link-card-desc">Kanji writing practice app used by Japanese students — free, no ads, fully in Japanese</p></a>
+        <a class="link-card" href="https://happylilac.net/syogaku.html" target="_blank"><p class="link-card-title">ちびむすドリル</p><p class="link-card-desc">Japanese school worksheets used by actual teachers — all subjects, all grades. N4+</p></a>
+        <a class="link-card" href="https://drive.google.com/drive/folders/1lFvmBAVPLB_t-g3l-jR1BVWFIiZbEgdO?usp=sharing" target="_blank"><p class="link-card-title">Kanji Kentei Deck (Google Drive)</p><p class="link-card-desc">Anki deck for all jōyō kanji by Kanken level</p></a>
+      </div>
+    </div>
+
+  </main>
+</div><!-- /layout -->
+
+<!-- ── RESOURCE PICKER OVERLAY ── -->
+<div id="res-picker" class="res-picker-overlay" onclick="closeResourcePicker(event)">
+  <div class="res-picker-panel">
+    <div class="res-picker-header">
+      <span class="res-picker-title">Resources</span>
+      <input id="res-picker-search" class="res-picker-search" type="text" placeholder="Search categories..." oninput="filterCategories(this.value)" />
+      <button class="res-picker-close" onclick="closeResourcePickerBtn()">✕</button>
+    </div>
+    <div class="res-picker-grid" id="res-picker-grid">
+      <button class="res-cat-btn" data-label="Kana" onclick="goRes('res-kana')">
+        <span class="res-cat-icon">あ</span>
+        <span class="res-cat-label">Kana</span>
+      </button>
+      <button class="res-cat-btn" data-label="Anki" onclick="goRes('res-anki')">
+        <span class="res-cat-icon">🃏</span>
+        <span class="res-cat-label">Anki</span>
+      </button>
+      <button class="res-cat-btn" data-label="Dictionary Tools" onclick="goRes('res-dictionaries')">
+        <span class="res-cat-icon">📖</span>
+        <span class="res-cat-label">Dictionary Tools</span>
+      </button>
+      <button class="res-cat-btn" data-label="Grammar" onclick="goRes('res-grammar')">
+        <span class="res-cat-icon">📖</span>
+        <span class="res-cat-label">Grammar</span>
+      </button>
+      <button class="res-cat-btn" data-label="Anime" onclick="goRes('res-anime')">
+        <span class="res-cat-icon">📺</span>
+        <span class="res-cat-label">Anime</span>
+      </button>
+      <button class="res-cat-btn" data-label="TV Shows" onclick="goRes('res-drama')">
+        <span class="res-cat-icon">📡</span>
+        <span class="res-cat-label">TV Shows</span>
+      </button>
+      <button class="res-cat-btn" data-label="OCR & Manga" onclick="goRes('res-manga')">
+        <span class="res-cat-icon">[ ]</span>
+        <span class="res-cat-label">OCR &amp; Manga</span>
+      </button>
+      <button class="res-cat-btn" data-label="Novels" onclick="goRes('res-novels')">
+        <span class="res-cat-icon">📕</span>
+        <span class="res-cat-label">Novels</span>
+      </button>
+      <button class="res-cat-btn" data-label="VNs & Games" onclick="goRes('res-vn')">
+        <span class="res-cat-icon">🎮</span>
+        <span class="res-cat-label">VNs &amp; Games</span>
+      </button>
+      <button class="res-cat-btn" data-label="Emulators" onclick="goRes('res-mining')">
+        <span class="res-cat-icon">🎮</span>
+        <span class="res-cat-label">Mining Setup</span>
+      </button>
+      <button class="res-cat-btn" data-label="Podcast" onclick="goRes('res-podcasts')">
+        <span class="res-cat-icon">🎧</span>
+        <span class="res-cat-label">Podcast</span>
+      </button>
+      <button class="res-cat-btn" data-label="Subtitles" onclick="goRes('res-subs')">
+        <span class="res-cat-icon">💬</span>
+        <span class="res-cat-label">Subtitles</span>
+      </button>
+      <button class="res-cat-btn" data-label="Kanji" onclick="goRes('res-kanji')">
+        <span class="res-cat-icon">漢</span>
+        <span class="res-cat-label">Kanji</span>
+      </button>
+      <button class="res-cat-btn" data-label="Writing" onclick="goRes('res-pitch')">
+        <span class="res-cat-icon">✍</span>
+        <span class="res-cat-label">Pitch Accent</span>
+      </button>
+      <button class="res-cat-btn" data-label="Phonetics Audio Output" onclick="goRes('res-audio')">
+        <span class="res-cat-icon">🎵</span>
+        <span class="res-cat-label">Condensed Audio</span>
+      </button>
+      <button class="res-cat-btn" data-label="Sentence Search" onclick="goRes('res-immersion')">
+        <span class="res-cat-icon">🔍</span>
+        <span class="res-cat-label">Sentence Search</span>
+      </button>
+      <button class="res-cat-btn" data-label="Mobile Apps" onclick="goRes('res-mobile')">
+        <span class="res-cat-icon">📱</span>
+        <span class="res-cat-label">Mobile Apps</span>
+      </button>
+      <button class="res-cat-btn" data-label="Guides Stats Databases" onclick="goRes('res-textbooks')">
+        <span class="res-cat-icon">📄</span>
+        <span class="res-cat-label">Guides &amp; Textbooks</span>
+      </button>
+      <button class="res-cat-btn" data-label="Downloading Tracking Misc" onclick="goRes('res-tracking')">
+        <span class="res-cat-icon">🔧</span>
+        <span class="res-cat-label">Tracking &amp; Stats</span>
+      </button>
+      <button class="res-cat-btn" data-label="JLPT" onclick="go('jlpt')">
+        <span class="res-cat-icon">🏆</span>
+        <span class="res-cat-label">JLPT</span>
+      </button>
+    </div>
+    <div id="res-search-results" class="res-search-results" style="display:none;"></div>
+  </div>
+</div>
 
 <script>
-const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking','jlpt','anki','resources','faq'];
+const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking','jlpt','anki','resources','faq',
+  'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks'];
 
 function go(id, pushState = true) {
   views.forEach(v => {
-    document.getElementById('v-' + v).classList.remove('active');
+    const el = document.getElementById('v-' + v);
+    if (el) el.classList.remove('active');
     const btn = document.querySelectorAll('.nav-btn')[views.indexOf(v)];
     if (btn) btn.classList.remove('active');
   });
-  document.getElementById('v-' + id).classList.add('active');
+  const target = document.getElementById('v-' + id);
+  if (target) target.classList.add('active');
   const activeBtn = document.querySelectorAll('.nav-btn')[views.indexOf(id)];
   if (activeBtn) activeBtn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   closeSidebar();
+  closeResourcePickerBtn();
   if (pushState) {
     history.pushState({ view: id }, '', '/' + id);
   }
 }
+
+function openResourcePicker() {
+  document.getElementById('res-picker').classList.add('open');
+  document.getElementById('res-picker-search').value = '';
+  filterCategories('');
+  closeSidebar();
+}
+
+function closeResourcePickerBtn() {
+  document.getElementById('res-picker').classList.remove('open');
+}
+
+function closeResourcePicker(e) {
+  if (e.target === document.getElementById('res-picker')) {
+    closeResourcePickerBtn();
+  }
+}
+
+function goRes(catId) {
+  closeResourcePickerBtn();
+  go(catId);
+}
+
+function filterCategories(query) {
+  const q = query.toLowerCase().trim();
+  const grid = document.getElementById('res-picker-grid');
+  const resultsEl = document.getElementById('res-search-results');
+
+  if (!q) {
+    // Show category grid, hide results
+    grid.style.display = '';
+    resultsEl.style.display = 'none';
+    resultsEl.innerHTML = '';
+    document.querySelectorAll('#res-picker-grid .res-cat-btn').forEach(btn => {
+      btn.classList.remove('hidden');
+    });
+    return;
+  }
+
+  // Hide category grid, show results
+  grid.style.display = 'none';
+  resultsEl.style.display = 'flex';
+
+  // Map of view id -> category display name
+  const catNames = {
+    'res-kana': 'Kana',
+    'res-anki': 'Anki',
+    'res-dictionaries': 'Dictionary Tools',
+    'res-grammar': 'Grammar',
+    'res-anime': 'Anime',
+    'res-drama': 'TV Shows',
+    'res-manga': 'OCR & Manga',
+    'res-novels': 'Novels',
+    'res-vn': 'VNs & Games',
+    'res-mining': 'Mining Setup',
+    'res-podcasts': 'Podcasts',
+    'res-subs': 'Subtitles',
+    'res-kanji': 'Kanji',
+    'res-pitch': 'Pitch Accent',
+    'res-audio': 'Condensed Audio',
+    'res-immersion': 'Sentence Search',
+    'res-mobile': 'Mobile Apps',
+    'res-tracking': 'Tracking & Stats',
+    'res-textbooks': 'Guides & Textbooks',
+  };
+
+  const matches = [];
+  for (const [viewId, catName] of Object.entries(catNames)) {
+    const view = document.getElementById('v-' + viewId);
+    if (!view) continue;
+    view.querySelectorAll('.link-card').forEach(card => {
+      const title = card.querySelector('.link-card-title')?.textContent || '';
+      const desc = card.querySelector('.link-card-desc')?.textContent || '';
+      if ((title + ' ' + desc).toLowerCase().includes(q)) {
+        matches.push({ catId: viewId, catName, title: title.trim(), desc: desc.trim(), href: card.href });
+      }
+    });
+  }
+
+  if (matches.length === 0) {
+    resultsEl.innerHTML = '<div class="res-search-empty">No resources found for "' + query.replace(/</g,'&lt;') + '"</div>';
+    return;
+  }
+
+  resultsEl.innerHTML = matches.map(m => `
+    <button class="res-result-item" onclick="goRes('${m.catId}')">
+      <span class="res-result-cat">${m.catName}</span>
+      <span class="res-result-name">${m.title}</span>
+      ${m.desc ? `<span class="res-result-desc">${m.desc}</span>` : ''}
+    </button>
+  `).join('');
+}
+
 
 window.addEventListener('popstate', (e) => {
   const id = e.state?.view || 'welcome';
