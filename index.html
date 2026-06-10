@@ -663,8 +663,117 @@
     .welcome-title { font-size: 24px; }
     .basics-grid { grid-template-columns: 1fr; }
   }
+  /* ── FAQ ── */
+  .faq-search-wrap {
+    margin: 1.25rem 0 0.5rem;
+    max-width: 560px;
+  }
+  .faq-search-row {
+    display: flex;
+    gap: 8px;
+  }
+  .faq-input {
+    flex: 1;
+    background: var(--bg-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 9px 12px;
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .faq-input::placeholder { color: var(--text-dim); }
+  .faq-input:focus { border-color: var(--green); }
+  .faq-search-btn {
+    background: var(--green);
+    color: var(--bg);
+    border: none;
+    border-radius: 4px;
+    padding: 9px 18px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .faq-search-btn:hover { opacity: 0.85; }
+  .faq-result {
+    margin-top: 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 1rem 1.15rem;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+  .faq-result-loading {
+    color: var(--text-dim);
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .faq-result strong { color: var(--text); font-weight: 500; }
+  .faq-result a { color: var(--text); text-underline-offset: 3px; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-align: left;
+    transition: color 0.1s;
+  }
+  .faq-q:hover { color: var(--text); }
+  .faq-chevron {
+    font-family: 'Geist Mono', monospace;
+    font-size: 14px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .faq-q.open { color: var(--text); }
+  .faq-q.open .faq-chevron { transform: rotate(45deg); color: var(--green); }
+  .faq-a {
+    display: none;
+    padding: 0 0 1rem;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 520px;
+  }
+  .faq-a strong { color: var(--text); font-weight: 500; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-size: inherit;
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .faq-link-btn:hover { color: var(--green); }
+  .faq-item.faq-highlight .faq-q { color: var(--green); }
 </style>
-</head>
 <body>
 
 <header>
@@ -722,6 +831,11 @@
     <button class="nav-btn" onclick="go('jlpt')">
       <span class="nav-num">11</span> JLPT
     </button>
+
+    <span class="nav-section-label">Help</span>
+    <button class="nav-btn" onclick="go('faq')">
+      <span class="nav-num">?</span> FAQ
+    </button>
   </aside>
 
   <main>
@@ -739,6 +853,10 @@
         <a href="https://discord.gg/jpacademy" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 10px 20px; background: transparent; border: 1px solid var(--border-strong); color: var(--text-muted); font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.04em; border-radius: 3px; text-decoration: none; transition: all 0.15s;">
           Join the Discord <span style="font-size: 13px;">↗</span>
         </a>
+        <br>
+        <button onclick="go('faq')" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 10px 20px; background: transparent; border: 1px solid var(--border-strong); color: var(--text-muted); font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.04em; border-radius: 3px; cursor: pointer; transition: all 0.15s;">
+          Browse FAQ →
+        </button>
       </div>
     </div>
 
@@ -1669,11 +1787,257 @@
       </div>
     </div>
 
+
+    <!-- FAQ -->
+    <div id="v-faq" class="view">
+      <span class="view-tag tag-blue">help</span>
+      <h2>FAQ</h2>
+      <p class="view-sub">Common questions from the community. Type anything below and the search will find the most relevant answer.</p>
+
+      <div class="faq-search-wrap">
+        <div class="faq-search-row">
+          <input id="faqInput" class="faq-input" type="text" placeholder="e.g. How do I learn kanji?" onkeydown="if(event.key==='Enter')runFaqSearch()" />
+          <button class="faq-search-btn" onclick="runFaqSearch()">Search</button>
+        </div>
+        <div id="faqResult" class="faq-result" style="display:none;"></div>
+      </div>
+
+      <hr>
+      <h3>All questions</h3>
+      <div class="faq-list" id="faqList">
+
+        <div class="faq-item" data-q="What is the difference between は as ha and as wa particle">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between は as "ha" and as "wa"?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">は is the Hiragana "ha," pronounced as "wa" only when used as a particle.<br><br><em>Example:</em> おはよう = ohayou (ha), これは = kore wa (wa as particle). Greetings like こんにちは originally had は as a particle, so the "wa" reading stuck even as they became single words.</div>
+        </div>
+
+        <div class="faq-item" data-q="How do I get started learning Japanese beginner first steps">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I get started learning Japanese?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Learn Hiragana and Katakana first — the two basic syllabaries. Then move on to basic grammar, essential vocabulary (with kanji), and then immersion. See the <button class="faq-link-btn" onclick="go('basics')">Basics page</button> for the full roadmap.</div>
+        </div>
+
+        <div class="faq-item" data-q="difference between Hiragana Katakana writing systems">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between Hiragana and Katakana?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Both represent the same sounds but serve different purposes.<br><br><strong>Hiragana:</strong> Normal Japanese words alongside kanji. Soft/warm feeling for onomatopoeia.<br><strong>Katakana:</strong> Loanwords from non-Chinese languages (バイト, パン). Harsh/sharp feeling for onomatopoeia.<br><br><em>Example:</em> あいうえお (Hiragana) vs アイウエオ (Katakana).</div>
+        </div>
+
+        <div class="faq-item" data-q="small kana きゃ りゅ ちょ combined sounds">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What are small kana for? (きゃ, りゅ, ちょ)</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">A small kana and the big one before it form a unit making their own combined sound.<br><br><em>Examples:</em> きや = kiya, but きゃ = kya. りゅ = ryu, ちょ = cho.</div>
+        </div>
+
+        <div class="faq-item" data-q="small tsu っ double consonant silent beat">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the small っ (small tsu) for?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">It's like a silent beat in music — a pause before the next consonant. とぱ is two beats; とっぱ is three, with a silent one in the middle.</div>
+        </div>
+
+        <div class="faq-item" data-q="how much time study per day hours motivation">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How much time should I study per day?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">As much as you want to and no more than you can handle. Don't burn yourself out trying to hit someone else's "one hour a day" standard. Focus on quality over quantity.</div>
+        </div>
+
+        <div class="faq-item" data-q="how to get into immersion prerequisites ready start">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I get into immersion?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Ideally know Hiragana/Katakana, N5 grammar, and ~1,000 common words (with kanji) before diving in. Without that foundation you won't be able to make much sense of content. See the <button class="faq-link-btn" onclick="go('immersion')">Immersion page</button> for more.</div>
+        </div>
+
+        <div class="faq-item" data-q="how to make myself study motivation discipline habit mindset">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I make myself study / stay motivated?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Change your mindset. Say "I <em>get</em> to study" instead of "I <em>have</em> to study." Lower the bar so the bare minimum happens with almost no effort. Keep Japanese present in your daily life — people only change in response to their environments.</div>
+        </div>
+
+        <div class="faq-item" data-q="order learn grammar points sequence">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What order should I learn grammar points in?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">The order in which you encounter them through immersion — manga, anime, games, etc. There's no prescribed sequence that beats simply reading and watching real content.</div>
+        </div>
+
+        <div class="faq-item" data-q="difference between two words synonyms similar vocabulary">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between two similar words?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Look it up. Search "[Word A] [Word B] difference" and you'll get a dedicated article with multiple examples instantly — faster and more thorough than asking anyone.</div>
+        </div>
+
+        <div class="faq-item" data-q="can I use romaji skip hiragana katakana kanji writing system">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Can I use Romaji / skip Hiragana, Katakana, or Kanji?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">No. All reliable resources use Japanese writing. Skipping any part makes progress nearly impossible. Hiragana and Katakana can each be learned in a few hours. Kanji is best picked up through vocabulary over time.</div>
+        </div>
+
+        <div class="faq-item" data-q="difference ji di zu du ぢ づ じ ず compound words">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between じ/ぢ and ず/づ?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">No pronunciation difference in standard Japanese. Which character a word uses depends on etymology. When a compound is formed from a word starting with つ or ち, those usually become づ or ぢ. Otherwise, it must be memorised per word.</div>
+        </div>
+
+        <div class="faq-item" data-q="finished hiragana katakana what next steps after kana">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>I've finished Hiragana and Katakana. What's next?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Start grammar, vocabulary, and kanji together.<br><br><strong>Grammar:</strong> Cure Dolly, Japanese Ammo with Misa (YouTube), Genki, Tae Kim's Guide, or Bunpro.<br><strong>Vocab & Kanji:</strong> Anki with the Kaishi 1.5k deck or WaniKani.<br><br>Duolingo is only useful for kana drilling.</div>
+        </div>
+
+        <div class="faq-item" data-q="word meaning definition dictionary look up kanji reading">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What does a word mean? How do I read this kanji?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Use a free dictionary. <a href="https://jisho.org/" target="_blank" style="color:var(--text)">Jisho.org</a> is the most popular, with example sentences and kanji readings. Takoboto is a great app alternative. Kanji you can't copy-paste can be drawn using Android's or Google Translate's handwriting input.</div>
+        </div>
+
+        <div class="faq-item" data-q="why is kanji important necessary essential Japanese">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why is kanji important?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a"><strong>Disambiguation:</strong> かみ can mean paper (紙), hair (髪), or god (神) — kanji makes it clear.<br><strong>Readability:</strong> No spaces in Japanese; kanji creates visual word boundaries.<br><strong>Comprehension:</strong> Knowing a kanji's meaning often lets you guess unfamiliar words.<br><strong>Culture:</strong> Kanji carry historical and literary depth impossible to replicate with kana alone.</div>
+        </div>
+
+        <div class="faq-item" data-q="how to learn kanji efficient method study vocabulary radicals">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I learn kanji?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Learn kanji through vocabulary — as part of real words, not in isolation. Studying kanji alone leads to confusion over readings and wasted time. Learn components to recognise shapes; pick up readings naturally as a side effect of learning words. Anki with the Kaishi 1.5k deck is the recommended starting point.</div>
+        </div>
+
+        <div class="faq-item" data-q="is duolingo effective good learning Japanese app">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Is Duolingo effective for learning Japanese?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Not for serious learning. Duolingo was designed for European languages and handles Japanese poorly — rote kanji, missing grammar patterns, context-free vocab. It's fine for building a daily habit at the very start, but real progress needs better tools. See the <button class="faq-link-btn" onclick="go('basics')">Basics page</button> for recommended resources.</div>
+        </div>
+
+        <div class="faq-item" data-q="what is pitch accent high low tone pronunciation Japanese">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is pitch accent?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Japanese uses pitch (high vs low) rather than stress to shape words. There are four patterns: 頭高 (first mora high), 中高 (accent in the middle), 尾高 (end high, heard before a particle), and 平板 (flat, no drop). Rules: the first two mora always have opposite pitch; once pitch drops it can't rise again. See the <button class="faq-link-btn" onclick="go('basics')">Basics page</button> for training resources.</div>
+        </div>
+
+        <div class="faq-item" data-q="ko so a do kore sore are dore this that demonstratives distance">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the ko/so/a/do system? (これ, それ, あれ, どれ)</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Demonstratives based on distance:<br><br>
+          <strong>ko-</strong> = close to the speaker (this / here)<br>
+          <strong>so-</strong> = close to the listener (that / there)<br>
+          <strong>a-</strong> = far from both (that over there)<br>
+          <strong>do-</strong> = question (which? / where?)<br><br>
+          Applies to: kore/sore/are/dore (things), kono/sono/ano/dono (modifiers), koko/soko/asoko/doko (places), kocchi/socchi/acchi/docchi (directions).</div>
+        </div>
+
+        <div class="faq-item" data-q="is AI ChatGPT useful learning Japanese chatbot">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Is AI / ChatGPT useful for learning Japanese?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Useful as a rough starting point, unreliable for specifics. AI has been wrong on grammar points, kanji readings, definitions, and synonym distinctions. You'd spend more time fact-checking than learning. Use dedicated tools: Jisho for vocab, Bunpro or Tae Kim for grammar, Anki for retention.</div>
+        </div>
+
+        <div class="faq-item" data-q="kanji alone first or through words vocabulary which method">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Should I learn kanji by themselves first, or through words?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Through words. Learning kanji in isolation is time-consuming and inefficient — confusing readings, no context. Pick up kanji naturally as a side effect of building vocabulary.</div>
+        </div>
+
+        <div class="faq-item" data-q="how to read more improve reading Japanese books manga">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I improve my reading?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Read more Japanese, regularly. Watch <a href="https://www.youtube.com/watch?v=5o1o7nBusWU" target="_blank" style="color:var(--text)">7 Tricks That Instantly Boosted My Japanese Reading</a> by Jared for practical tips. See the <button class="faq-link-btn" onclick="go('media')">Other media page</button> for reading material.</div>
+        </div>
+
+        <div class="faq-item" data-q="やで meaning kansai dialect Osaka Japanese slang">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What does 〇〇やで mean?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">It's Kansai dialect (関西弁) for だよ — a casual sentence-ending particle meaning "it is" or "you know." Common in media set in Osaka or the Kansai region.</div>
+        </div>
+
+        <!-- VOCAB -->
+        <div class="faq-item" data-q="how to learn vocabulary Japanese Anki flashcards words">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I learn vocabulary?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Use a spaced repetition system (SRS) like <a href="https://apps.ankiweb.net/" target="_blank" style="color:var(--text)">Anki</a>. Anki calculates exactly when you need to review each card so nothing slips through the cracks. Start with a premade deck like <a href="https://github.com/donkuri/kaishi" target="_blank" style="color:var(--text)">Kaishi 1.5k</a> — it covers the most common ~1,500 words with kanji and audio. Do 10–20 new cards per day alongside your reviews. Don't try to do too many at once; the review pile compounds quickly. Once you're immersing, transition to sentence mining your own cards from content you actually consume.</div>
+        </div>
+
+        <div class="faq-item" data-q="what is spaced repetition SRS Anki how it works memory">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is spaced repetition (SRS) and why use it?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Spaced repetition is a study technique that shows you flashcards at increasing intervals based on how well you know them. If you get a card right, you see it again later. If you get it wrong, it comes back sooner. The result is that you spend the most time on things you don't know and almost no time on things you already know — which is dramatically more efficient than re-reading a list equally. Anki is the standard tool for this. It's free on PC and Android.</div>
+        </div>
+
+        <div class="faq-item" data-q="Anki reviews backlog piling up too many cards overwhelmed">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>My Anki reviews are piling up. What do I do?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Stop adding new cards temporarily and clear your backlog first. The number one cause of a review pile-up is adding new cards too fast. Lower your daily new card limit (10–15 is sustainable for most people). Reviews compound: 20 new cards a day means roughly 80–100 reviews daily once cards mature. It's better to learn fewer words consistently than to add lots and abandon the deck entirely.</div>
+        </div>
+
+        <div class="faq-item" data-q="what is sentence mining how to do it vocabulary immersion Anki">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is sentence mining and should I do it?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Sentence mining is taking words you encounter during immersion and turning them into Anki cards — using the original sentence as context. Instead of learning from a generic list, you learn words that are actually relevant to the content you're watching or reading.<br><br>
+          The process: encounter an unknown word → look it up → save the sentence + definition as an Anki card → review it later.<br><br>
+          It's more effective than premade decks for intermediate learners because the words come from content you care about, which makes them easier to remember. The standard tool for this alongside anime is <a href="https://killergerbah.github.io/asbplayer/" target="_blank" style="color:var(--text)">ASBPlayer</a> + <a href="https://learnjapanese.moe/yomichan/" target="_blank" style="color:var(--text)">Yomitan</a>. Start premade decks first, transition to mining once you're actively immersing.</div>
+        </div>
+
+        <div class="faq-item" data-q="premade deck vs sentence mining which is better Kaishi">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Should I use a premade deck or sentence mine my own cards?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Both, at different stages. Start with a premade deck like Kaishi 1.5k — it gives you the ~1,000 most useful words fast without needing to understand content first. Once you're immersing regularly and have a foundation, gradually shift to sentence mining words from your own content. Mined cards are more memorable because they come from things you actually encountered and care about. Many learners run both in parallel: finish their premade deck reviews + add a few mined cards daily.</div>
+        </div>
+
+        <!-- IMMERSION -->
+        <div class="faq-item" data-q="what is active vs passive immersion difference listening">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between active and passive immersion?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a"><strong>Active immersion</strong> means your full attention is on the Japanese content. You're reading, listening, looking things up — fully engaged. This is where the real gains happen.<br><br><strong>Passive immersion</strong> means Japanese is playing in the background while your attention is partly elsewhere — washing dishes, walking, etc. The less attention you pay, the fewer gains you make. It's not useless, but it doesn't replace active sessions. Use passive immersion to squeeze more exposure out of dead time, not as a substitute for real study.</div>
+        </div>
+
+        <div class="faq-item" data-q="what is extensive vs intensive reading immersion look ups">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between extensive and intensive immersion?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">The difference comes down to how many look-ups you do.<br><br><strong>Intensive:</strong> You pause frequently to look up unknown words and grammar. You understand more deeply and pick up vocab faster, but it's slower and more mentally tiring.<br><strong>Extensive:</strong> You read/watch at natural pace, skipping over unknowns and relying on context. Builds real-time fluency and reading speed, but you need decent comprehension first for it to work.<br><br>Neither is strictly better — adjust based on difficulty. Use more look-ups on hard content, fewer on comfortable content.</div>
+        </div>
+
+        <div class="faq-item" data-q="comprehensible input what does it mean i+1 Krashen">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is "comprehensible input" and why does it matter?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Comprehensible input is the idea from linguist Stephen Krashen that you acquire language best when you understand most of what you're consuming — not 100%, but enough that the unfamiliar parts are graspable from context. Content where you understand nothing gives your brain nothing to latch onto. Content where you understand everything teaches you nothing new. The sweet spot is content you mostly follow with a handful of unknowns — sometimes called "i+1" (your current level plus one step beyond). That's why building a vocabulary and grammar foundation before immersing is important.</div>
+        </div>
+
+        <div class="faq-item" data-q="how long does immersion take to work hours fluency progress">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How long does immersion take? When will I see results?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Progress is non-linear. The first few months feel slow and frustrating — you understand almost nothing. Then things start clicking. Most people doing 1–2 hours of immersion daily report noticeably improved comprehension around the 3–6 month mark, and genuine comfort with content around 1–2 years. Reaching near-native fluency typically takes thousands of hours of immersion total. The timeline shortens dramatically if you immerse more per day. The main thing is consistency — 30 minutes daily beats 5 hours once a week.</div>
+        </div>
+
+        <div class="faq-item" data-q="what should I watch read immerse in beginner content recommendation anime">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What should I watch/read for immersion as a beginner?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Start with content you've already seen in English — you know the plot, so you can focus on the Japanese without getting lost. Slice-of-life anime tends to use everyday vocabulary with clear pronunciation, making it more accessible than action or fantasy genres. Useful tools for finding level-appropriate content: <a href="https://jiten.moe/" target="_blank" style="color:var(--text)">Jiten.moe</a> (anime by difficulty), <a href="https://jpdb.io/" target="_blank" style="color:var(--text)">JPDB.io</a> (vocab difficulty rankings), <a href="https://learnnatively.com/" target="_blank" style="color:var(--text)">LearnNatively</a> (books and manga by level). The most important thing is to pick something you enjoy — motivation matters more than optimal difficulty.</div>
+        </div>
+
+        <div class="faq-item" data-q="what is the immersion method AJATT all japanese all the time">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the immersion method / AJATT?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">The immersion method is a language acquisition approach where the bulk of your learning comes from consuming native content in the target language rather than studying from textbooks. AJATT (All Japanese All The Time) was an influential blog by Khatzumoto that popularised the idea of surrounding yourself with Japanese constantly — media, music, background audio, phone settings, everything — to replicate the environment of living in Japan from anywhere. The modern approach is less extreme but keeps the core idea: spend as much time as possible with the language through things you actually enjoy.</div>
+        </div>
+
+        <div class="faq-item" data-q="why immersion over textbook Genki grammar study traditional methods">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why immersion over textbooks / traditional study?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Textbooks teach you rules but can't show you how those rules play out across the thousands of natural contexts you'll encounter in real Japanese. Language is too vast for any classroom to cover — native speakers use phrases, nuances, and register shifts that textbooks simply don't document. Immersion gives you real exposure to how the language actually works, building the intuition (automaticity) that lets you understand without translating in your head. Textbooks and grammar guides are still useful as a foundation — but they're the rope you build to help climb the mountain, not the climbing itself.</div>
+        </div>
+
+        <div class="faq-item" data-q="what is Yomitan how to use pop-up dictionary browser extension">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is Yomitan and how do I use it?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Yomitan is a browser extension that gives you an instant pop-up dictionary when you hover over (or select) any Japanese text in your browser. It can show vocab definitions, kanji readings, pitch accent, grammar explanations, and more depending on which dictionaries you install. It's essential for immersion — instead of copying and pasting words into Jisho constantly, you hover and get an answer instantly. You can also send cards directly to Anki from it for sentence mining. Setup guide: <a href="https://learnjapanese.moe/yomichan/" target="_blank" style="color:var(--text)">learnjapanese.moe/yomichan</a>.</div>
+        </div>
+
+        <div class="faq-item" data-q="output speaking writing when to start delay output">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>When should I start speaking / outputting?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">There's no universal rule, but output is most productive once you have a solid input foundation. Speaking before you've absorbed enough of the language means you'll reinforce incorrect patterns. That said, don't delay indefinitely — many learners get so used to consuming that they never push themselves to produce. A practical approach: start with low-stakes textual output (texting, Discord, writing in Japanese) before speaking, since writing gives you time to think. Aim to have a reasonable comprehension of the language before attempting sustained conversation. The <button class="faq-link-btn" onclick="go('speaking')">Speaking page</button> covers this in detail.</div>
+        </div>
+
+        <div class="faq-item" data-q="how to improve listening comprehension cant understand without subtitles">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I improve my listening comprehension?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Listening comprehension lags behind reading for most learners because reading lets you control the pace. The fix is deliberate listening practice — not just having audio on in the background. One effective method is intensive listening: watch without subtitles, stop on sentences you can't parse, replay them a few times, then reveal the subtitle to confirm. This forces your brain to actually process sounds rather than reading to understand. See the <button class="faq-link-btn" onclick="go('listening')">Improving listening page</button> for the full process. Consistency matters more than technique — just listen more.</div>
+        </div>
+
+        <div class="faq-item" data-q="how to type Japanese keyboard setup PC Android iOS input method">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I type in Japanese?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a"><strong>PC (Windows):</strong> Go to Settings → Time &amp; Language → Language &amp; Region → Add Japanese. Once added, you'll have a Microsoft IME. Switch between English and Japanese with Alt+` or the taskbar icon. Type romaji and it converts to kana automatically — press Space to convert to kanji.<br><br><strong>Mac:</strong> System Preferences → Keyboard → Input Sources → add Hiragana.<br><br><strong>Android:</strong> Settings → General Management → Language → Add Japanese keyboard (Gboard works well).<br><br><strong>iOS:</strong> Settings → General → Keyboard → Keyboards → Add New Keyboard → Japanese (Romaji).</div>
+        </div>
+
+        <div class="faq-item" data-q="N5 N4 N3 N2 N1 JLPT levels what order beginner intermediate advanced">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What are the JLPT levels and what do they mean?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">The JLPT (Japanese Language Proficiency Test) has five levels, N5 through N1, with N5 being beginner and N1 being the most advanced. Rough benchmarks:<br><br>
+          <strong>N5:</strong> Basic greetings, simple sentences, ~800 words.<br>
+          <strong>N4:</strong> Everyday situations, basic conversations, ~1,500 words.<br>
+          <strong>N3:</strong> Everyday topics at moderate difficulty, ~3,750 words.<br>
+          <strong>N2:</strong> Near-fluent reading of newspapers and complex text, ~6,000 words.<br>
+          <strong>N1:</strong> Broad reading and listening comprehension of native-level content, ~10,000+ words.<br><br>
+          N2 is considered the minimum for working in a Japanese-language environment. N1 is widely respected as a credential. See the <button class="faq-link-btn" onclick="go('jlpt')">JLPT page</button> for prep resources.</div>
+        </div>
+
+        <div class="faq-item" data-q="visual novels manga light novels reading practice Japanese">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Can I use manga / visual novels / light novels for immersion?</span><span class="faq-chevron">+</span></button>
+          <div class="faq-a">Yes — reading is one of the most efficient forms of immersion because you control the pace. Manga is great for beginners since images provide context. Visual novels are excellent because you get audio alongside the text. Light novels are pure reading and require stronger vocabulary. A few starting points:<br><br>
+          <strong>Manga:</strong> <a href="https://klmanga.pics/" target="_blank" style="color:var(--text)">klmanga.pics</a>, Shonen Jump Plus, Pixiv Comics.<br>
+          <strong>Visual Novels:</strong> <a href="https://learnjapanese.moe/vn/" target="_blank" style="color:var(--text)">learnjapanese.moe/vn</a> has a full setup guide.<br>
+          <strong>Web novels:</strong> <a href="https://kakuyomu.jp/" target="_blank" style="color:var(--text)">Kakuyomu</a> and <a href="https://syosetu.com/" target="_blank" style="color:var(--text)">Narou</a> for free content.<br><br>
+          Use Yomitan in your browser for instant lookups on anything you read.</div>
+        </div>
+
+      </div><!-- /faq-list -->
+    </div><!-- /v-faq -->
+
   </main>
-</div>
+
 
 <script>
-const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking','jlpt'];
+const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking','jlpt','faq'];
 
 function go(id, pushState = true) {
   views.forEach(v => {
@@ -1730,6 +2094,60 @@ function toggleSidebar() {
 function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
+}
+
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  item.classList.toggle('open', !wasOpen);
+  btn.classList.toggle('open', !wasOpen);
+}
+
+const FAQ_DATA = [];
+
+async function runFaqSearch() {
+  const input = document.getElementById('faqInput');
+  const resultBox = document.getElementById('faqResult');
+  const query = input.value.trim();
+  if (!query) return;
+
+  resultBox.style.display = 'block';
+  resultBox.innerHTML = '<span class="faq-result-loading">searching...</span>';
+
+  // Gather all FAQ items as context
+  const items = document.querySelectorAll('#faqList .faq-item');
+  const faqContext = Array.from(items).map((item, i) => {
+    const q = item.querySelector('.faq-q span:first-child')?.textContent || '';
+    const a = item.querySelector('.faq-a')?.innerText || '';
+    return `Q${i+1}: ${q}\nA${i+1}: ${a}`;
+  }).join('\n\n');
+
+  const systemPrompt = `You are a helpful FAQ assistant for a Japanese language learning website called the Immersion Guide. 
+Answer the user's question using ONLY the FAQ content below. Be concise and direct. 
+If the answer is in the FAQ, summarise it clearly. If it's not covered, say so briefly and suggest they browse the FAQ list.
+Do not make up information. Do not use markdown formatting — plain text only.
+
+FAQ CONTENT:
+${faqContext}`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: query }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || 'No answer found.';
+    resultBox.innerHTML = text.replace(/\n/g, '<br>');
+  } catch (err) {
+    resultBox.innerHTML = 'Search unavailable right now. Browse the questions below.';
+  }
 }
 
 (function initTheme() {
