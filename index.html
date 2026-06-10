@@ -3270,43 +3270,52 @@ async function runFaqSearch() {
   const input = document.getElementById('faqInput');
   const resultBox = document.getElementById('faqResult');
   const query = input.value.trim();
+
   if (!query) return;
 
   resultBox.style.display = 'block';
-  resultBox.innerHTML = '<span class="faq-result-loading">searching...</span>';
+  resultBox.innerHTML =
+    '<span class="faq-result-loading">searching...</span>';
 
-  // Gather all FAQ items as context
   const items = document.querySelectorAll('#faqList .faq-item');
-  const faqContext = Array.from(items).map((item, i) => {
-    const q = item.querySelector('.faq-q span:first-child')?.textContent || '';
-    const a = item.querySelector('.faq-a')?.innerText || '';
-    return `Q${i+1}: ${q}\nA${i+1}: ${a}`;
-  }).join('\n\n');
 
-  const systemPrompt = `You are a helpful FAQ assistant for a Japanese language learning website called the Immersion Guide. 
-Answer the user's question using ONLY the FAQ content below. Be concise and direct. 
-If the answer is in the FAQ, summarise it clearly. If it's not covered, say so briefly and suggest they browse the FAQ list.
-Do not make up information. Do not use markdown formatting — plain text only.
+  const faqContext = Array.from(items)
+    .map((item, i) => {
+      const q =
+        item.querySelector('.faq-q span:first-child')
+          ?.textContent || '';
 
-FAQ CONTENT:
-${faqContext}`;
+      const a =
+        item.querySelector('.faq-a')
+          ?.innerText || '';
+
+      return `Q${i + 1}: ${q}\nA${i + 1}: ${a}`;
+    })
+    .join('\n\n');
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/faq', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: query }]
+        query,
+        faqContext
       })
     });
+
     const data = await response.json();
-    const text = data.content?.find(b => b.type === 'text')?.text || 'No answer found.';
-    resultBox.innerHTML = text.replace(/\n/g, '<br>');
+
+    resultBox.innerHTML =
+      (data.answer || 'No answer found.')
+        .replace(/\n/g, '<br>');
+
   } catch (err) {
-    resultBox.innerHTML = 'Search unavailable right now. Browse the questions below.';
+    console.error(err);
+
+    resultBox.innerHTML =
+      'Search unavailable right now. Browse the questions below.';
   }
 }
 
