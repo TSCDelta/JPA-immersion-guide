@@ -3924,6 +3924,15 @@
       </div>
     </div>
 
+    <!-- RESOURCE CATEGORY: ALL -->
+    <div id="v-res-all" class="view">
+      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+      <span class="view-tag tag-green">resources</span>
+      <h2>All Resources</h2>
+      <p class="view-sub">Every resource in one scrollable page.</p>
+      <div id="res-all-content"></div>
+    </div>
+
   </main>
 </div><!-- /layout -->
 
@@ -3936,6 +3945,10 @@
       <button class="res-picker-close" onclick="closeResourcePickerBtn()">✕</button>
     </div>
     <div class="res-picker-grid" id="res-picker-grid">
+      <button class="res-cat-btn" data-label="All Resources" onclick="goRes('res-all')" style="border-color:var(--green);background:var(--green-dim);">
+        <span class="res-cat-icon" style="color:var(--green);">✦</span>
+        <span class="res-cat-label" style="color:var(--green);">All</span>
+      </button>
       <button class="res-cat-btn" data-label="Kana" onclick="goRes('res-kana')">
         <span class="res-cat-icon">あ</span>
         <span class="res-cat-label">Kana</span>
@@ -4023,7 +4036,46 @@
 
 <script>
 const views = ['welcome','basics','immersion','goal','setup','steps','mining','media','listening','routine','speaking','jlpt','anki','resources','faq',
-  'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks'];
+  'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
+
+const resCategories = [
+  { id: 'res-kana',        label: 'Kana' },
+  { id: 'res-anki',        label: 'Anki' },
+  { id: 'res-dictionaries',label: 'Dictionary Tools' },
+  { id: 'res-grammar',     label: 'Grammar' },
+  { id: 'res-anime',       label: 'Anime' },
+  { id: 'res-drama',       label: 'TV Shows' },
+  { id: 'res-manga',       label: 'OCR & Manga' },
+  { id: 'res-novels',      label: 'Novels' },
+  { id: 'res-vn',          label: 'VNs & Games' },
+  { id: 'res-mining',      label: 'Mining Setup' },
+  { id: 'res-podcasts',    label: 'Podcasts & YouTube' },
+  { id: 'res-subs',        label: 'Subtitles' },
+  { id: 'res-kanji',       label: 'Kanji' },
+  { id: 'res-pitch',       label: 'Pitch Accent' },
+  { id: 'res-audio',       label: 'Condensed Audio' },
+  { id: 'res-immersion',   label: 'Sentence Search' },
+  { id: 'res-mobile',      label: 'Mobile Apps' },
+  { id: 'res-tracking',    label: 'Tracking & Stats' },
+  { id: 'res-textbooks',   label: 'Guides & Textbooks' },
+];
+
+function buildResAll() {
+  const container = document.getElementById('res-all-content');
+  if (container.hasChildNodes()) return; // already built
+  resCategories.forEach(cat => {
+    const src = document.getElementById('v-' + cat.id);
+    if (!src) return;
+    const heading = document.createElement('h3');
+    heading.textContent = cat.label;
+    heading.style.marginTop = '2rem';
+    container.appendChild(heading);
+    // Clone all link-grids and callouts from the category view
+    src.querySelectorAll('.link-grid, .callout').forEach(el => {
+      container.appendChild(el.cloneNode(true));
+    });
+  });
+}
 
 function go(id, pushState = true) {
   views.forEach(v => {
@@ -4034,6 +4086,7 @@ function go(id, pushState = true) {
   });
   const target = document.getElementById('v-' + id);
   if (target) target.classList.add('active');
+  if (id === 'res-all') buildResAll();
   const activeBtn = document.querySelectorAll('.nav-btn')[views.indexOf(id)];
   if (activeBtn) activeBtn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
