@@ -4253,23 +4253,19 @@ async function runFaqSearch() {
     '<span class="faq-result-loading">searching...</span>';
 
   const items = document.querySelectorAll('#faqList .faq-item');
-  const queryWords = query.toLowerCase().split(/\s+/);
 
-  const scored = Array.from(items).map((item) => {
-    const q = item.querySelector('.faq-q span:first-child')?.textContent || '';
-    const a = item.querySelector('.faq-a')?.innerText || '';
-    const text = (q + ' ' + a).toLowerCase();
-    const score = queryWords.filter(w => text.includes(w)).length;
-    return { q, a, score };
-  });
+  const faqContext = Array.from(items)
+    .map((item, i) => {
+      const q =
+        item.querySelector('.faq-q span:first-child')
+          ?.textContent || '';
 
-  const topItems = scored
-    .filter(x => x.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 5);
+      const a =
+        item.querySelector('.faq-a')
+          ?.innerText || '';
 
-  const faqContext = (topItems.length ? topItems : scored.slice(0, 5))
-    .map((x, i) => `Q${i + 1}: ${x.q}\nA${i + 1}: ${x.a}`)
+      return `Q${i + 1}: ${q}\nA${i + 1}: ${a}`;
+    })
     .join('\n\n');
 
   try {
