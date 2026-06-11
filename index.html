@@ -4219,12 +4219,23 @@ function toggleFaq(btn) {
 
 const FAQ_DATA = [];
 
+let faqLastSearch = 0;
+
 async function runFaqSearch() {
   const input = document.getElementById('faqInput');
   const resultBox = document.getElementById('faqResult');
   const query = input.value.trim();
 
   if (!query) return;
+
+  const now = Date.now();
+  const remaining = Math.ceil((5000 - (now - faqLastSearch)) / 1000);
+  if (remaining > 0) {
+    resultBox.style.display = 'block';
+    resultBox.innerHTML = `<span class="faq-result-loading">please wait ${remaining}s before searching again</span>`;
+    return;
+  }
+  faqLastSearch = now;
 
   resultBox.style.display = 'block';
   resultBox.innerHTML =
