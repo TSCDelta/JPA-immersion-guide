@@ -1023,6 +1023,9 @@
     <button class="nav-btn active" onclick="go('welcome')" style="margin-bottom:0.5rem;">
       <span class="nav-num" style="color:var(--green);">✦</span> Home
     </button>
+    <button class="nav-btn" onclick="go('shortguide')" style="margin-bottom:0.5rem;">
+      <span class="nav-num" style="color:var(--amber);">★</span> A short guide
+    </button>
 
     <span class="nav-section-label">Foundation</span>
     <button class="nav-btn" onclick="go('basics')">
@@ -1078,6 +1081,82 @@
   </aside>
 
   <main>
+
+    <!-- SHORT GUIDE -->
+    <div id="v-shortguide" class="view">
+      <span class="view-tag tag-amber">quick start</span>
+      <h2>A short guide</h2>
+
+      <h3>Start here</h3>
+      <div class="card">
+        <ul>
+          <li>Learn kana using <a href="https://www.tofugu.com/japanese/learn-hiragana/" target="_blank">Tofugu</a> or <a href="https://kuuuube.github.io/kana-quiz/" target="_blank">Kuuube's kana quiz</a></li>
+          <li>Read a grammar guide — <a href="https://yoku.bi/" target="_blank">Yokubi</a> is recommended, or Tae Kim and Cure Dolly</li>
+        </ul>
+      </div>
+
+      <h3>At the same time</h3>
+      <div class="card">
+        <ul>
+          <li>Work through <a href="https://ankiweb.net/shared/info/1196762551" target="_blank">Kaishi 1.5k</a> in Anki — builds vocab and kanji recognition through words, no isolation study needed</li>
+        </ul>
+      </div>
+
+      <h3>Alongside or after</h3>
+      <div class="card">
+        <ul>
+          <li>Immerse in anime, YouTube, or light novels — see the <button class="faq-link-btn" onclick="go('setup')">tool setup guide</button> to get started</li>
+          <li>For pitch accent, reach 100% on <a href="https://kotu.io/" target="_blank">kotu.io</a> minimal pairs, then actively listen for pitch while immersing</li>
+        </ul>
+      </div>
+
+      <h3>Once you have enough input</h3>
+      <div class="card">
+        <ul>
+          <li>Write or type in Japanese and get corrections from natives on HelloTalk or Discord</li>
+          <li>Use chorusing to work on pronunciation</li>
+          <li>To speak, find a tutor or language partner — mistakes are fine, input self-corrects them over time</li>
+        </ul>
+      </div>
+
+      <h3>How to read</h3>
+      <div class="card">
+        <ul>
+          <li>Look at the sentence and search up unknown words and grammar</li>
+          <li>Try to understand it, then move on</li>
+          <li>If you can't figure it out after 1–2 minutes, move on anyway</li>
+        </ul>
+      </div>
+
+      <h3>How to listen</h3>
+      <div class="card">
+        <ul>
+          <li>If you can't catch sentences, listen for words. If you can't catch words, listen for sounds</li>
+          <li>Work your way up: sounds → words → sentences → full sections</li>
+          <li>Occasionally transcribe words by ear to look them up</li>
+        </ul>
+      </div>
+
+      <h3>How to output</h3>
+      <div class="card">
+        <ul>
+          <li>Write anything and get it corrected — HelloTalk, Tandem, or Discord servers</li>
+          <li>For speaking, find a tutor on iTalki or a language partner and just start</li>
+          <li>Use chorusing (speaking along with native audio) for pronunciation</li>
+        </ul>
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('welcome')">
+          <span class="page-nav-label">← Back</span>
+          <span class="page-nav-title">Home</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('basics')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Basics</span>
+        </button>
+      </div>
+    </div>
 
     <!-- 00 WELCOME -->
     <div id="v-welcome" class="view active">
@@ -4023,7 +4102,7 @@
 </div>
 
 <script>
-const views = ['welcome','basics','immersion','goal','setup','steps','mining','reading','listening','routine','speaking','jlpt','anki','resources','faq',
+const views = ['welcome','shortguide','basics','immersion','goal','setup','steps','mining','reading','listening','routine','speaking','jlpt','anki','resources','faq',
   'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
 
 const resCategories = [
