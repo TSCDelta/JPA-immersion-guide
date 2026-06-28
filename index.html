@@ -1393,7 +1393,7 @@
 
 <!-- ── TOP NAV ── -->
 <nav class="topnav">
-  <button class="topnav-brand" onclick="go('landing')">immersion guide</button>
+  <button class="topnav-brand" onclick="go('welcome')">immersion guide</button>
   <div class="topnav-sep"></div>
   <div class="topnav-links">
     <button class="topnav-link" data-nav="guide" onclick="go('guide-index')">Guide</button>
@@ -1408,7 +1408,7 @@
 </nav>
 
 <!-- ── LANDING ── -->
-<div id="v-landing" class="landing">
+<div id="v-welcome" class="landing">
   <span class="landing-eyebrow">日本語 · immersion method</span>
   <h1 class="landing-title">Learn Japanese<br>through <em>immersion</em></h1>
   <p class="landing-desc">A complete guide to acquiring Japanese the natural way — through reading, listening, and living in the language.</p>
@@ -3884,7 +3884,7 @@
 
     <!-- FAQ -->
     <div id="v-faq" class="section-page">
-  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('landing')">Home</button><span class="breadcrumb-sep"> / </span><span>FAQ</span></div>
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('welcome')">Home</button><span class="breadcrumb-sep"> / </span><span>FAQ</span></div>
     <div class="section-inner">
       <span class="view-tag tag-blue">help</span>
       <h2>FAQ</h2>
@@ -4711,7 +4711,7 @@
 
 <script>
 
-const views = ['landing','guide-index','res-index','welcome','basics','immersion','goal','setup','steps','mining','reading','listening','routine','speaking','jlpt','anki','resources','faq',
+const views = ['welcome','guide-index','res-index','basics','immersion','goal','setup','steps','mining','reading','listening','routine','speaking','jlpt','anki','resources','faq',
   'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
 
 const resCategories = [
@@ -4891,8 +4891,7 @@ window.addEventListener('popstate', (e) => {
 
 (function init() {
   const path = window.location.pathname.replace(/^\//, '').trim();
-  let id = views.includes(path) ? path : 'landing';
-  if (id === 'welcome') id = 'landing';
+  let id = views.includes(path) ? path : 'welcome';
   go(id, false);
 })();
 
