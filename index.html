@@ -1111,13 +1111,12 @@
   .guide-index-title { font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.4rem; }
   .guide-index-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; }
   .guide-stage { margin-bottom: 2.75rem; }
-  .guide-stage-label {
-    font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem;
-    display: flex; align-items: center; gap: 10px;
+  .guide-stage-title {
+    font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;
   }
-  .guide-stage-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-  .guide-stage-title { font-size: 19px; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
+  .guide-stage-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
   .guide-stage-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; }
   .guide-cards {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
@@ -1260,12 +1259,11 @@
 <div id="v-guide-index" class="guide-index">
   <span class="guide-index-eyebrow">immersion guide</span>
   <h2 class="guide-index-title">The Guide</h2>
-  <p class="guide-index-sub">Follow the stages in order. Each section builds on the last.</p>
+  <p class="guide-index-sub">Follow the sections in order. Each one builds on the last.</p>
 
   <div class="guide-stage">
-    <div class="guide-stage-label">Stage 0 · Foundation</div>
-    <h3 class="guide-stage-title">Prepare for immersion</h3>
-    <p class="guide-stage-desc">Understand the method, build the right mindset, and cover the basics before you dive in.</p>
+    <h3 class="guide-stage-title">Basics</h3>
+
     <div class="guide-cards">
       <button class="guide-card" onclick="go('basics')">
         <span class="guide-card-num">01</span>
@@ -1286,9 +1284,8 @@
   </div>
 
   <div class="guide-stage">
-    <div class="guide-stage-label">Stage 1 · Setup</div>
-    <h3 class="guide-stage-title">Build your toolkit</h3>
-    <p class="guide-stage-desc">Install the tools that turn anime into an immersion environment.</p>
+    <h3 class="guide-stage-title">Setup</h3>
+
     <div class="guide-cards">
       <button class="guide-card" onclick="go('setup')">
         <span class="guide-card-num">04</span>
@@ -1299,9 +1296,8 @@
   </div>
 
   <div class="guide-stage">
-    <div class="guide-stage-label">Stage 2 · Practice</div>
-    <h3 class="guide-stage-title">Build comprehension</h3>
-    <p class="guide-stage-desc">Learn directly from immersion. Every practice method you'll need.</p>
+    <h3 class="guide-stage-title">Immersion</h3>
+
     <div class="guide-cards">
       <button class="guide-card" onclick="go('steps')">
         <span class="guide-card-num">05</span>
@@ -1337,9 +1333,8 @@
   </div>
 
   <div class="guide-stage">
-    <div class="guide-stage-label">Stage 3 · Milestones</div>
-    <h3 class="guide-stage-title">Certify and track progress</h3>
-    <p class="guide-stage-desc">Formal milestones to benchmark your level.</p>
+    <h3 class="guide-stage-title">Misc</h3>
+    <p class="guide-stage-desc">Extra reference material that doesn't fit neatly into the flow above.</p>
     <div class="guide-cards">
       <button class="guide-card" onclick="go('jlpt')">
         <span class="guide-card-num">11</span>
@@ -2428,6 +2423,10 @@
         Anki only works if you do it every day. You cannot pause your reviews — memory doesn't pause either. If you skip days, reviews pile up fast. If that happens, lower your new cards per day temporarily until you clear the backlog, then raise it again.
       </div>
 
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/DcY2Svs3h8M" allowfullscreen></iframe>
+      </div>
+
       <hr>
       <h3>Installing the Kaishi 1.5k deck</h3>
       <p>Kaishi 1.5k is the recommended starter vocabulary deck. It covers the most common ~1,500 Japanese words with audio, example sentences, and kanji. Download the <code>.apkg</code> file from the link below, then open it — Anki will import it automatically.</p>
@@ -2464,10 +2463,10 @@
       <p>Go to Tools → Add-ons → Get Add-ons and paste each code below, one at a time. Restart Anki after installing all four.</p>
       <div class="card">
         <ul>
-          <li><strong>876946123</strong> — Review Heatmap</li>
-          <li><strong>1046608507</strong> — Advanced Browser</li>
-          <li><strong>1771074083</strong> — Batch Editing</li>
-          <li><strong>613684242</strong> — Pass/Fail (simplifies grading to two buttons)</li>
+          <li><strong>1771074083</strong> — Review Heatmap</li>
+          <li><strong>2055492159</strong> — AnkiConnect (required for sentence mining)</li>
+          <li><strong>876946123</strong> — Pass/Fail (simplifies grading to two buttons)</li>
+          <li><strong>1610304449</strong> — KanjiGrid</li>
         </ul>
       </div>
       <p>After restarting, open deck options again while holding <strong>Shift</strong> and clicking the cog — this opens the add-on settings tab. Under General:</p>
@@ -2500,10 +2499,6 @@
         </ul>
       </div>
       <p>You don't need to match the dictionary definition word for word. Close enough counts.</p>
-
-      <div class="callout tip">
-        <strong>How to use Anki video tutorial:</strong> <a href="https://www.youtube.com/watch?v=DcY2Svs3h8M" target="_blank" style="color:var(--text)">youtube.com/watch?v=DcY2Svs3h8M</a>
-      </div>
 
       <hr>
       <h3>When to start sentence mining</h3>
