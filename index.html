@@ -1207,6 +1207,113 @@
   [data-theme="light"] .page-nav-btn.next:hover { background: rgba(91,106,191,0.2); }
   [data-theme="light"] .basics-rec { background: rgba(42,8,56,0.12); color: #2a0838 !important; }
 
+  /* ── anki page: image placeholders + annotation cards ── */
+  :root { --red: #e07a6b; --red-dim: rgba(224,122,107,0.1); --ok-green: #6fbf73; --ok-green-dim: rgba(111,191,115,0.1); }
+  [data-theme="light"] { --red: #c0503f; --red-dim: rgba(192,80,63,0.1); --ok-green: #2d8a3e; --ok-green-dim: rgba(45,138,62,0.1); }
+
+  .shot {
+    background: var(--bg-2);
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-dim);
+    margin: 1rem 0;
+    max-width: 560px;
+  }
+  .shot-icon { font-size: 20px; opacity: 0.6; }
+  .shot-label { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.02em; text-align: center; padding: 0 1rem; }
+
+  .annotated {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 1.25rem;
+    align-items: stretch;
+    margin: 1rem 0;
+    max-width: 720px;
+  }
+  .annotated .shot { margin: 0; min-height: 220px; max-width: none; height: 100%; }
+  .annot-stack { display: flex; flex-direction: column; gap: 0.75rem; height: 100%; }
+  .annot-stack .note { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  .note {
+    border-radius: 0 6px 6px 0;
+    border-left: 2px solid;
+    padding: 0.7rem 0.9rem;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    background: var(--bg-2);
+  }
+  .note strong { display: block; color: var(--text); font-weight: 500; font-size: 13px; margin-bottom: 2px; }
+  .note p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--text-muted); max-width: none; }
+  .note code { display: inline; white-space: nowrap; }
+  .note.n-green { border-color: var(--green); background: var(--green-dim); }
+  .note.n-blue { border-color: var(--blue); background: var(--blue-dim); }
+  .note.n-amber { border-color: var(--amber); background: var(--amber-dim); }
+
+  @media (max-width: 680px) {
+    .annotated { grid-template-columns: 1fr; }
+  }
+
+  .grade-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin: 1.1rem 0;
+    max-width: 560px;
+  }
+  .grade-box { border-radius: 8px; padding: 0.85rem 1rem; border: 1px solid; }
+  .grade-box.fail { background: var(--red-dim); border-color: var(--red); }
+  .grade-box.pass { background: var(--ok-green-dim); border-color: var(--ok-green); }
+  .grade-label { display: flex; align-items: center; gap: 6px; font-weight: 500; font-size: 13.5px; margin-bottom: 0.5rem; }
+  .grade-box.fail .grade-label { color: var(--red); }
+  .grade-box.pass .grade-label { color: var(--ok-green); }
+  .grade-box p { font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.6; max-width: none; }
+
+  @media (max-width: 600px) {
+    .grade-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── anki page: internal sub-tabs ── */
+  .anki-subnav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0.25rem 0 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .anki-tab {
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 7px 13px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .anki-tab:hover { color: var(--text); background: var(--bg-2); }
+  .anki-tab.active {
+    color: var(--text);
+    background: var(--bg-3);
+    border-color: var(--border-strong);
+  }
+  .anki-panel { display: none; }
+  .anki-panel.active { display: block; }
+  .anki-panel h3:first-child { margin-top: 0; }
+
+  @media (max-width: 680px) {
+    .anki-subnav { gap: 3px; }
+    .anki-tab { font-size: 12px; padding: 6px 10px; }
+  }
+
 </style>
 </head>
 <body>
@@ -2393,116 +2500,286 @@
       <h2>Anki</h2>
       <p class="view-sub">A spaced repetition flashcard app. This page covers what it is, how it works, how to set it up, and how to use it effectively.</p>
 
-      <hr>
-      <h3>What is Anki?</h3>
-      <p>Anki is a free flashcard application built around spaced repetition. It schedules reviews at the optimal moment — right before your brain would forget something — so you spend almost no time on things you already know and focus entirely on things you don't. It's available on PC, Android (free), and iOS ($25 one-time purchase). AnkiWeb is a free browser alternative if you're on iOS.</p>
-
-      <div class="link-grid" style="grid-template-columns:1fr 1fr;">
-        <a class="link-card" href="https://apps.ankiweb.net/" target="_blank">
-          <p class="link-card-title">Download Anki</p>
-          <p class="link-card-desc">PC and Android — free</p>
-        </a>
-        <a class="link-card" href="https://ankiweb.net/" target="_blank">
-          <p class="link-card-title">AnkiWeb</p>
-          <p class="link-card-desc">Free browser version</p>
-        </a>
+      <div class="anki-subnav">
+        <button class="anki-tab active" data-anki="what" onclick="ankiGo('what')">What is Anki?</button>
+        <button class="anki-tab" data-anki="install" onclick="ankiGo('install')">Download &amp; Install</button>
+        <button class="anki-tab" data-anki="deck" onclick="ankiGo('deck')">Essential Deck</button>
+        <button class="anki-tab" data-anki="settings" onclick="ankiGo('settings')">Settings</button>
+        <button class="anki-tab" data-anki="addons" onclick="ankiGo('addons')">Addons</button>
+        <button class="anki-tab" data-anki="howto" onclick="ankiGo('howto')">How To Use</button>
       </div>
 
-      <hr>
-      <h3>How spaced repetition works</h3>
-      <p>Every card has an interval — the number of days until Anki shows it to you again. When you answer a card:</p>
-      <div class="card">
-        <ul>
-          <li><strong>Pass</strong> — the interval grows. You'll see it again further in the future.</li>
-          <li><strong>Fail</strong> — the interval resets. The card comes back soon.</li>
-        </ul>
-      </div>
-      <p>The result: cards you know well drift to weeks or months between reviews. Cards you keep failing come back daily. You never waste time drilling something you already have solid. Forgetting frequently early on is normal and expected — relearning is part of the process, and each relearn makes the memory stick longer.</p>
+      <!-- WHAT IS ANKI -->
+      <div class="anki-panel active" id="anki-what">
+        <h3>What is Anki?</h3>
+        <p>Anki is a free flashcard application built around spaced repetition. It schedules reviews at the optimal moment — right before your brain would forget something — so you spend almost no time on things you already know and focus entirely on things you don't. It's available on PC, Android (free), and iOS ($25 one-time purchase). AnkiWeb is a free browser alternative if you're on iOS.</p>
 
-      <div class="callout info">
-        Anki only works if you do it every day. You cannot pause your reviews — memory doesn't pause either. If you skip days, reviews pile up fast. If that happens, lower your new cards per day temporarily until you clear the backlog, then raise it again.
-      </div>
+        <div class="link-grid" style="grid-template-columns:1fr 1fr;">
+          <a class="link-card" href="https://apps.ankiweb.net/" target="_blank">
+            <p class="link-card-title">Download Anki</p>
+            <p class="link-card-desc">PC and Android — free</p>
+          </a>
+          <a class="link-card" href="https://ankiweb.net/" target="_blank">
+            <p class="link-card-title">AnkiWeb</p>
+            <p class="link-card-desc">Free browser version</p>
+          </a>
+        </div>
 
-      <div class="video-wrap">
-        <iframe src="https://www.youtube.com/embed/DcY2Svs3h8M" allowfullscreen></iframe>
-      </div>
+        <h3>How spaced repetition works</h3>
+        <p>Every card has an interval — the number of days until Anki shows it to you again. When you answer a card:</p>
+        <div class="card">
+          <ul>
+            <li><strong>Pass</strong> — the interval grows. You'll see it again further in the future.</li>
+            <li><strong>Fail</strong> — the interval resets. The card comes back soon.</li>
+          </ul>
+        </div>
+        <p>The result: cards you know well drift to weeks or months between reviews. Cards you keep failing come back daily. You never waste time drilling something you already have solid. Forgetting frequently early on is normal and expected — relearning is part of the process, and each relearn makes the memory stick longer.</p>
 
-      <hr>
-      <h3>Installing the Kaishi 1.5k deck</h3>
-      <p>Kaishi 1.5k is the recommended starter vocabulary deck. It covers the most common ~1,500 Japanese words with audio, example sentences, and kanji. Download the <code>.apkg</code> file from the link below, then open it — Anki will import it automatically.</p>
+        <div class="callout info">
+          Anki only works if you do it every day. You cannot pause your reviews — memory doesn't pause either. If you skip days, reviews pile up fast. If that happens, lower your new cards per day temporarily until you clear the backlog, then raise it again.
+        </div>
 
-      <div class="link-grid" style="grid-template-columns:1fr 1fr;">
-        <a class="link-card" href="https://github.com/donkuri/kaishi/releases" target="_blank">
-          <p class="link-card-title">Kaishi 1.5k deck</p>
-          <p class="link-card-desc">Download the latest .apkg release</p>
-        </a>
-        <a class="link-card" href="https://ankiweb.net/shared/info/1196762551" target="_blank">
-          <p class="link-card-title">Kaishi on AnkiWeb</p>
-          <p class="link-card-desc">Alternative download via AnkiWeb</p>
-        </a>
-      </div>
-
-      <hr>
-      <h3>Settings</h3>
-      <p>After importing, hover over the Kaishi deck and click the cog icon → Options. Apply these settings:</p>
-      <div class="card">
-        <ul>
-          <li><strong>Daily Limits → New cards/day:</strong> 20 (lower to 10 if reviews pile up)</li>
-          <li><strong>Daily Limits → Maximum reviews/day:</strong> 9999 (uncapped — don't let Anki cut off due reviews)</li>
-          <li><strong>New Cards → Learning steps:</strong> <code>1m 5m 10m</code></li>
-          <li><strong>Lapses → Leech threshold:</strong> 20</li>
-          <li><strong>Display Order → New/review order:</strong> Show before reviews</li>
-          <li><strong>Timer → Show answer timer:</strong> ON</li>
-          <li><strong>Advanced → FSRS:</strong> ON</li>
-        </ul>
-      </div>
-      <p>Also set the global learn-ahead limit: Tools → Preferences → Scheduling → Learn ahead limit → 999.</p>
-
-      <hr>
-      <h3>Recommended add-ons</h3>
-      <p>Go to Tools → Add-ons → Get Add-ons and paste each code below, one at a time. Restart Anki after installing all four.</p>
-      <div class="card">
-        <ul>
-          <li><strong>1771074083</strong> — Review Heatmap</li>
-          <li><strong>2055492159</strong> — AnkiConnect (required for sentence mining)</li>
-          <li><strong>876946123</strong> — Pass/Fail (simplifies grading to two buttons)</li>
-          <li><strong>1610304449</strong> — KanjiGrid</li>
-        </ul>
-      </div>
-      <p>After restarting, open deck options again while holding <strong>Shift</strong> and clicking the cog — this opens the add-on settings tab. Under General:</p>
-      <div class="card">
-        <ul>
-          <li><strong>Automatically play alert:</strong> 10</li>
-          <li><strong>Automatically show answer:</strong> 15</li>
-          <li><strong>Automatically rate Again:</strong> 60</li>
-        </ul>
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/DcY2Svs3h8M" allowfullscreen></iframe>
+        </div>
       </div>
 
+      <!-- DOWNLOAD & INSTALL -->
+      <div class="anki-panel" id="anki-install">
+        <h3>Download &amp; Install</h3>
+        <p>Choose your platform and get Anki installed.</p>
 
-      <h3>How to review cards</h3>
-      <p>Click the deck and press Study Now. Each card shows a word on the front. For new cards, press Show Answer immediately without guessing — you haven't seen it yet.</p>
-      <p>On the back you'll see the reading, meaning, an example sentence, and audio. Listen to the audio and try to match what you hear to the text. You only need to remember two things:</p>
-      <div class="card">
-        <ul>
-          <li>The <strong>reading</strong> (how to pronounce it)</li>
-          <li>The <strong>meaning</strong></li>
-        </ul>
-      </div>
-      <p>Use this to decide Pass or Fail:</p>
-      <div class="card">
-        <ul>
-          <li>Remember both reading and meaning → <strong>Pass</strong></li>
-          <li>Don't remember either → <strong>Fail</strong></li>
-          <li>Remember reading only → <strong>Fail</strong></li>
-          <li>Remember reading but not meaning at all → <strong>Fail</strong></li>
-          <li>Remember reading, meaning is close enough → <strong>Pass</strong></li>
-        </ul>
-      </div>
-      <p>You don't need to match the dictionary definition word for word. Close enough counts.</p>
+        <div class="link-grid" style="grid-template-columns:1fr 1fr 1fr;">
+          <a class="link-card" href="https://apps.ankiweb.net/" target="_blank">
+            <p class="link-card-title">Desktop</p>
+            <p class="link-card-desc">Windows, macOS, Linux — free</p>
+          </a>
+          <a class="link-card" href="https://apps.ankiweb.net/" target="_blank">
+            <p class="link-card-title">Android</p>
+            <p class="link-card-desc">AnkiDroid — free</p>
+          </a>
+          <a class="link-card" href="https://ankiweb.net/" target="_blank">
+            <p class="link-card-title">iOS</p>
+            <p class="link-card-desc">AnkiMobile — paid, or AnkiWeb free</p>
+          </a>
+        </div>
 
-      <hr>
-      <h3>When to start sentence mining</h3>
-      <p>Once you finish Kaishi 1.5k (~1,500 words), you have enough of a foundation to start sentence mining — pulling words directly from content you're watching or reading into your own Anki deck. At that point your immersion will start generating more vocabulary than any premade deck can. See the <button class="faq-link-btn" onclick="go('mining')">Sentence mining</button> page for how to set that up.</p>
+        <div class="shot">
+          <div class="shot-icon">⬇</div>
+          <div class="shot-label">screenshot — platform download buttons</div>
+        </div>
+      </div>
+
+      <!-- ESSENTIAL DECK -->
+      <div class="anki-panel" id="anki-deck">
+        <h3>Essential Deck</h3>
+        <p>Kaishi 1.5k is the recommended starter vocabulary deck. It covers the most common ~1,500 Japanese words with audio, example sentences, and kanji. Download the <code>.apkg</code> file from the link below, then open it — Anki will import it automatically.</p>
+
+        <div class="annotated">
+          <div class="shot">
+            <div class="shot-icon">🗂</div>
+            <div class="shot-label">screenshot — Kaishi 1.5k card example</div>
+          </div>
+          <div class="annot-stack">
+            <div class="note n-green">
+              <strong>1.5k cards</strong>
+              <p>The 1500 most common Japanese words, with images and native audio.</p>
+            </div>
+            <div class="note n-blue">
+              <strong>Importing</strong>
+              <p>Open the downloaded <code>.apkg</code> file directly — Anki opens and imports it for you.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="link-grid" style="grid-template-columns:1fr 1fr;">
+          <a class="link-card" href="https://github.com/donkuri/kaishi/releases" target="_blank">
+            <p class="link-card-title">Kaishi 1.5k deck</p>
+            <p class="link-card-desc">Download the latest .apkg release</p>
+          </a>
+          <a class="link-card" href="https://ankiweb.net/shared/info/1196762551" target="_blank">
+            <p class="link-card-title">Kaishi on AnkiWeb</p>
+            <p class="link-card-desc">Alternative download via AnkiWeb</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="anki-panel" id="anki-settings">
+        <h3>Settings</h3>
+        <p>After importing, hover over the Kaishi deck and click the cog icon → Options. Apply these settings:</p>
+
+        <div class="annotated">
+          <div class="shot">
+            <div class="shot-icon">⚙</div>
+            <div class="shot-label">screenshot — deck options panel</div>
+          </div>
+          <div class="annot-stack">
+            <div class="note n-green">
+              <strong>Daily Limits</strong>
+              <p>New cards/day: 20 (lower to 10 if reviews pile up). Maximum reviews/day: 9999 — uncapped, so all due reviews are shown.</p>
+            </div>
+            <div class="note n-blue">
+              <strong>New Cards</strong>
+              <p>Learning steps: <code>1m 5m 10m</code>. The interval and number of times you'll see a new card in a session until you finish it for the day.</p>
+            </div>
+            <div class="note n-amber">
+              <strong>Lapses</strong>
+              <p>Leech threshold: 20 — how many times you can fail a card before it's flagged as a leech.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <ul>
+            <li><strong>Daily Limits → New cards/day:</strong> 20 (lower to 10 if reviews pile up)</li>
+            <li><strong>Daily Limits → Maximum reviews/day:</strong> 9999 (uncapped — don't let Anki cut off due reviews)</li>
+            <li><strong>New Cards → Learning steps:</strong> <code>1m 5m 10m</code></li>
+            <li><strong>Lapses → Leech threshold:</strong> 20</li>
+            <li><strong>Display Order → New/review order:</strong> Show before reviews</li>
+            <li><strong>Timer → Show answer timer:</strong> ON</li>
+            <li><strong>Advanced → FSRS:</strong> ON</li>
+          </ul>
+        </div>
+
+        <h3>Display order and FSRS</h3>
+        <p>Still inside deck Options for Kaishi 1.5k, scroll down to Display Order and FSRS:</p>
+
+        <div class="annotated">
+          <div class="shot">
+            <div class="shot-icon">⚙</div>
+            <div class="shot-label">screenshot — Display Order and FSRS panel</div>
+          </div>
+          <div class="annot-stack">
+            <div class="note n-blue">
+              <strong>Display Order</strong>
+              <p>Set New/review order and Interday learning/review order to <code>Mix with reviews</code> (interleaving) — the recommended setting to introduce new cards.</p>
+            </div>
+            <div class="note n-green">
+              <strong>FSRS</strong>
+              <p>The algorithm Anki uses to schedule reviews based on your review history. Set it to on.</p>
+            </div>
+            <div class="note n-amber">
+              <strong>Desired retention</strong>
+              <p>85% is the sweet spot for high retention and frequency of reviews. A higher value means more reviews throughout the days.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <strong>FSRS parameters —</strong> leave the default values for now, but remember to press <strong>Optimize Current Preset</strong> once per month to update your FSRS parameters for the selected deck and improve the scheduling of your reviews based on your review history.
+        </div>
+
+        <h3>Anki preferences</h3>
+        <p>This is not in Deck Options, so close that window first. On the top of the screen go to <strong>Tools → Preferences → Review</strong>:</p>
+
+        <div class="annotated">
+          <div class="shot">
+            <div class="shot-icon">⚙</div>
+            <div class="shot-label">screenshot — Preferences, Review tab</div>
+          </div>
+          <div class="annot-stack">
+            <div class="note n-blue">
+              <strong>Learn ahead limit</strong>
+              <p>Set to <code>999</code> mins if you prefer finishing all your Anki in one daily session. For precise review intervals set this to <code>0</code> instead — this requires you to review multiple (re-)learning steps throughout the day.</p>
+            </div>
+            <div class="note n-green">
+              <strong>Answer hotkeys</strong>
+              <p>Instead of clicking the answer buttons, use the hotkeys — set <code>1</code> for Again and <code>2</code> for Good, or any keys you prefer.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ADDONS -->
+      <div class="anki-panel" id="anki-addons">
+        <h3>Recommended add-ons</h3>
+        <p>Go to Tools → Add-ons → Get Add-ons and paste each code below, one at a time. Restart Anki after installing all four.</p>
+
+        <div class="annotated">
+          <div class="shot">
+            <div class="shot-icon">≡</div>
+            <div class="shot-label">screenshot — Tools menu, Add-ons highlighted</div>
+          </div>
+          <div class="annot-stack">
+            <div class="note n-green">
+              <strong>Tools → Add-ons</strong>
+              <p>Opens the add-ons manager. Click "Get Add-ons" and paste each code below, one at a time.</p>
+            </div>
+            <div class="note n-blue">
+              <strong>Restart required</strong>
+              <p>Restart Anki after installing all four codes for them to take effect.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <ul>
+            <li><strong>1771074083</strong> — Review Heatmap</li>
+            <li><strong>2055492159</strong> — AnkiConnect (required for sentence mining)</li>
+            <li><strong>876946123</strong> — Pass/Fail (simplifies grading to two buttons)</li>
+            <li><strong>1610304449</strong> — KanjiGrid</li>
+          </ul>
+        </div>
+        <p>After restarting, open deck options again while holding <strong>Shift</strong> and clicking the cog — this opens the add-on settings tab. Under General:</p>
+        <div class="card">
+          <ul>
+            <li><strong>Automatically play alert:</strong> 10</li>
+            <li><strong>Automatically show answer:</strong> 15</li>
+            <li><strong>Automatically rate Again:</strong> 60</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- HOW TO USE -->
+      <div class="anki-panel" id="anki-howto">
+        <h3>How to review cards</h3>
+        <p>Click the deck and press Study Now. Each card shows a word on the front. For new cards, press Show Answer immediately without guessing — you haven't seen it yet.</p>
+
+        <div class="shot">
+          <div class="shot-icon">▶</div>
+          <div class="shot-label">gif placeholder — reviewing a card front to back</div>
+        </div>
+
+        <p>On the back you'll see the reading, meaning, an example sentence, and audio. Listen to the audio and try to match what you hear to the text. You only need to remember two things:</p>
+        <div class="card">
+          <ul>
+            <li>The <strong>reading</strong> (how to pronounce it)</li>
+            <li>The <strong>meaning</strong></li>
+          </ul>
+        </div>
+        <div class="callout info">
+          <strong>Example —</strong> the card shows <strong>新しい</strong>. The reading is <strong>あたらしい</strong> (atarashii), and the meaning is "new." If you can recall both, that's a pass.
+        </div>
+
+        <p style="font-weight:500; color:var(--text);">Grade cards only through:</p>
+        <div class="grade-grid">
+          <div class="grade-box fail">
+            <div class="grade-label">✕ Again</div>
+            <p>You couldn't recall the answer correctly. The card comes back soon in the same session, and more often in the days that follow.</p>
+          </div>
+          <div class="grade-box pass">
+            <div class="grade-label">✓ Good</div>
+            <p>You recalled the reading and meaning correctly. The card graduates for the day and is shown less frequently going forward.</p>
+          </div>
+        </div>
+
+        <p>Use this to decide Pass or Fail:</p>
+        <div class="card">
+          <ul>
+            <li>Remember both reading and meaning → <strong>Pass</strong></li>
+            <li>Don't remember either → <strong>Fail</strong></li>
+            <li>Remember reading only → <strong>Fail</strong></li>
+            <li>Remember reading but not meaning at all → <strong>Fail</strong></li>
+            <li>Remember reading, meaning is close enough → <strong>Pass</strong></li>
+          </ul>
+        </div>
+        <p>You don't need to match the dictionary definition word for word. Close enough counts.</p>
+
+        <h3>When to start sentence mining</h3>
+        <p>Once you finish Kaishi 1.5k (~1,500 words), you have enough of a foundation to start sentence mining — pulling words directly from content you're watching or reading into your own Anki deck. At that point your immersion will start generating more vocabulary than any premade deck can. See the <button class="faq-link-btn" onclick="go('mining')">Sentence mining</button> page for how to set that up.</p>
+      </div>
 
       <div class="page-nav">
         <button class="page-nav-btn" onclick="go('jlpt')">
@@ -4443,6 +4720,15 @@ function go(id, pushState = true) {
   if (pushState) {
     history.pushState({ view: id }, '', '/' + id);
   }
+}
+
+function ankiGo(id) {
+  document.querySelectorAll('.anki-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.anki-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('anki-' + id);
+  const tab = document.querySelector('.anki-tab[data-anki="' + id + '"]');
+  if (panel) panel.classList.add('active');
+  if (tab) tab.classList.add('active');
 }
 
 function openResourcePicker() {
