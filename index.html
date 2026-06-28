@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+
   :root {
     --bg: #1a1a19;
     --bg-2: #202020;
@@ -241,7 +242,7 @@
     line-height: 1.7;
     color: var(--text-muted);
     border-left: 2px solid;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 6px 6px 0;
     max-width: 560px;
   }
   .callout.info  { background: var(--blue-dim);  border-color: var(--blue); }
@@ -272,24 +273,20 @@
   .link-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
+    gap: 6px;
     margin: 0.75rem 0;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
     max-width: 560px;
   }
   .link-card {
     display: block;
-    background: var(--bg);
-    padding: 0.5rem 0.75rem;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.55rem 0.75rem;
     text-decoration: none;
-    transition: background 0.1s;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    transition: background 0.15s, border-color 0.15s;
   }
-  .link-card:last-child { border-right: none; }
-  .link-card:hover { background: var(--bg-2); }
+  .link-card:hover { background: var(--bg-3); border-color: var(--border-strong); }
   .link-card-title {
     font-size: 12px;
     font-weight: 500;
@@ -370,14 +367,14 @@
     flex: 1;
     padding: 12px 1rem;
     border: 1px solid var(--border);
-    border-radius: 4px;
-    background: none;
+    border-radius: 8px;
+    background: var(--bg-2);
     color: var(--text-muted);
     font-family: 'Geist', sans-serif;
     font-size: 13px;
     cursor: pointer;
     text-align: left;
-    transition: border-color 0.1s, color 0.1s;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
     display: flex;
     flex-direction: column;
     gap: 3px;
@@ -385,8 +382,18 @@
   .page-nav-btn:hover {
     border-color: var(--border-strong);
     color: var(--text);
+    background: var(--bg-3);
   }
-  .page-nav-btn.next { text-align: right; }
+  .page-nav-btn.next {
+    text-align: right;
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--text);
+  }
+  .page-nav-btn.next:hover {
+    background: rgba(184,159,240,0.18);
+    border-color: var(--green);
+  }
   .page-nav-label {
     font-family: 'Geist Mono', monospace;
     font-size: 10px;
@@ -575,23 +582,21 @@
   .basics-grid {
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
+    gap: 6px;
     margin: 0.75rem 0 1.25rem;
     max-width: 560px;
   }
   .basics-card {
-    background: var(--bg);
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
     padding: 1.1rem 1.15rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
-    transition: background 0.1s;
+    transition: background 0.15s, border-color 0.15s;
   }
-  .basics-card:hover { background: var(--bg-2); }
+  .basics-card:hover { background: var(--bg-3); border-color: var(--border-strong); }
   .basics-card-head {
     display: flex;
     align-items: baseline;
@@ -951,7 +956,6 @@
   letter-spacing: 0.06em;
   color: var(--text-dim);
   cursor: pointer;
-  margin-bottom: 1.5rem;
   transition: color 0.1s, border-color 0.1s;
 }
 .res-back-btn:hover { color: var(--text); border-color: var(--text-dim); }
@@ -1004,83 +1008,387 @@
   color: var(--text-dim);
   line-height: 1.4;
 }
+
+
+  /* ── TOP NAV ── */
+  header { display: none !important; }
+  .topnav {
+    border-bottom: 1px solid var(--border);
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    gap: 1.5rem;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 20;
+  }
+  .topnav-brand {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.15s;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .topnav-brand:hover { color: var(--green); }
+  .topnav-sep { width: 1px; height: 18px; background: var(--border-strong); flex-shrink: 0; }
+  .topnav-links { display: flex; align-items: center; gap: 2px; }
+  .topnav-link {
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: color 0.1s, background 0.1s;
+  }
+  .topnav-link:hover { color: var(--text); background: var(--bg-2); }
+  .topnav-link.active { color: var(--text); }
+  .topnav-right { margin-left: auto; }
+
+  /* ── LANDING ── */
+  .landing { display: none; max-width: 860px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+  .landing.active { display: block; }
+  .landing-eyebrow {
+    font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    color: var(--text-dim); margin-bottom: 1.5rem; display: block; text-transform: uppercase;
+  }
+  .landing-title {
+    font-size: clamp(36px, 6vw, 64px); font-weight: 300; letter-spacing: -0.035em;
+    color: var(--text); line-height: 1.1; margin-bottom: 1.5rem;
+  }
+  .landing-title em { font-style: normal; color: var(--green); }
+  .landing-desc {
+    font-size: 16px; color: var(--text-muted); line-height: 1.75;
+    max-width: 520px; margin-bottom: 2.5rem;
+  }
+  .landing-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+  .landing-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+    background: var(--green); color: var(--bg); font-family: 'Geist Mono', monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; border: none;
+    border-radius: 4px; cursor: pointer; transition: opacity 0.15s;
+  }
+  .landing-btn-primary:hover { opacity: 0.85; }
+  .landing-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+    background: none; color: var(--text-muted); font-family: 'Geist Mono', monospace;
+    font-size: 12px; letter-spacing: 0.04em; border: 1px solid var(--border-strong);
+    border-radius: 4px; cursor: pointer; transition: color 0.1s, border-color 0.1s;
+    text-decoration: none;
+  }
+  .landing-btn-secondary:hover { color: var(--text); border-color: var(--text-dim); }
+  .landing-pillars {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-top: 0.25rem;
+  }
+  .landing-pillar {
+    background: var(--bg-2); padding: 1.5rem 1.5rem 1.75rem; cursor: pointer;
+    transition: background 0.15s, border-color 0.15s; text-align: left; border: 1px solid var(--border); width: 100%;
+    border-radius: 8px;
+  }
+  .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); }
+  .landing-pillar-icon { font-size: 22px; margin-bottom: 0.85rem; display: block; }
+  .landing-pillar-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; display: block; }
+  .landing-pillar-desc { font-size: 12px; color: var(--text-dim); line-height: 1.55; display: block; }
+
+  /* ── GUIDE INDEX ── */
+  .guide-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
+  .guide-index.active { display: block; }
+  .guide-index-eyebrow {
+    font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+    color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.6rem; display: block;
+  }
+  .guide-index-title { font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.4rem; }
+  .guide-index-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; }
+  .guide-stage { margin-bottom: 2.75rem; }
+  .guide-stage-label {
+    font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .guide-stage-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .guide-stage-title { font-size: 19px; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
+  .guide-stage-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; }
+  .guide-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .guide-card {
+    background: var(--bg-2); padding: 1.1rem 1.2rem 1.25rem; cursor: pointer;
+    transition: background 0.15s, border-color 0.15s; border: 1px solid var(--border); text-align: left; width: 100%;
+    border-radius: 8px;
+  }
+  .guide-card:hover { background: var(--bg-3); border-color: var(--border-strong); }
+  .guide-card-num { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--green); margin-bottom: 0.45rem; display: block; }
+  .guide-card-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 0.3rem; display: block; line-height: 1.3; }
+  .guide-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; display: block; }
+
+  /* ── RES INDEX ── */
+  .res-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
+  .res-index.active { display: block; }
+  .res-index-title { font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.4rem; }
+  .res-index-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+  .res-search-bar { display: flex; gap: 8px; max-width: 480px; margin-bottom: 2rem; }
+  .res-search-input {
+    flex: 1; background: var(--bg-2); border: 1px solid var(--border-strong);
+    border-radius: 4px; padding: 9px 14px; font-family: 'Geist', sans-serif;
+    font-size: 13px; color: var(--text); outline: none; transition: border-color 0.15s;
+  }
+  .res-search-input::placeholder { color: var(--text-dim); }
+  .res-search-input:focus { border-color: var(--green); }
+  .res-category-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    margin-bottom: 1rem;
+  }
+  .res-cat-card {
+    background: var(--bg-2); padding: 1rem 1rem 1.1rem; cursor: pointer;
+    transition: background 0.15s, border-color 0.15s; border: 1px solid var(--border); text-align: left; width: 100%;
+    display: flex; flex-direction: column; gap: 0.5rem; border-radius: 8px;
+  }
+  .res-cat-card:hover { background: var(--bg-3); border-color: var(--border-strong); }
+  .res-cat-card-icon { font-size: 18px; line-height: 1; color: var(--text-muted); }
+  .res-cat-card-label { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.3; }
+  .res-inline-results { display: none; flex-direction: column; gap: 2px; margin-top: 0.5rem; }
+  .res-inline-results.visible { display: flex; }
+
+  /* ── SECTION PAGE ── */
+  .section-page { display: none; max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 3rem; }
+  .section-page.active { display: block; }
+  .section-inner { max-width: 640px; }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px; margin-bottom: 2rem;
+    font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-dim);
+    justify-content: space-between;
+  }
+  .breadcrumb-left { display: flex; align-items: center; gap: 6px; }
+  .breadcrumb-link {
+    background: none; border: none; cursor: pointer; font-family: 'Geist Mono', monospace;
+    font-size: 11px; color: var(--text-dim); padding: 0; transition: color 0.1s;
+  }
+  .breadcrumb-link:hover { color: var(--green); }
+  .breadcrumb-sep { color: var(--border-strong); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .topnav { padding: 0 1.25rem; gap: 0.75rem; }
+    .topnav-link { padding: 5px 8px; font-size: 12px; }
+    .landing { padding: 3rem 1.25rem 3rem; }
+    .landing-pillars { grid-template-columns: 1fr; }
+    .landing-title { font-size: 32px; }
+    .guide-index { padding: 2rem 1.25rem; }
+    .guide-cards { grid-template-columns: 1fr 1fr; }
+    .res-index { padding: 2rem 1.25rem; }
+    .res-category-grid { grid-template-columns: repeat(3, 1fr); }
+    .section-page { padding: 1.75rem 1.25rem 2.5rem; }
+    h2 { font-size: 20px; }
+    .video-wrap, .page-nav, .callout, p, .card ol, .card ul { max-width: 100%; }
+    .link-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+    .step-body { font-size: 13px; }
+  }
+  @media (max-width: 420px) {
+    .guide-cards { grid-template-columns: 1fr; }
+    .res-category-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* light theme */
+  [data-theme="light"] .landing-btn-primary { background: #5b6abf; color: #fff; }
+  [data-theme="light"] .guide-stage-label { color: var(--blue); }
+  [data-theme="light"] .guide-card-num { color: var(--blue); }
+  [data-theme="light"] .page-nav-btn.next { background: rgba(91,106,191,0.12); border-color: #5b6abf; color: #2a0838; }
+  [data-theme="light"] .page-nav-btn.next .page-nav-label { color: rgba(0,0,0,0.4); }
+  [data-theme="light"] .page-nav-btn.next:hover { background: rgba(91,106,191,0.2); }
+  [data-theme="light"] .basics-rec { background: rgba(42,8,56,0.12); color: #2a0838 !important; }
+
 </style>
+</head>
 <body>
 
-<header>
-  <span class="header-tag">immersion guide</span>
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
-    <span id="themeIcon">☀</span> <span id="themeLabel">light</span>
-  </button>
-  <button class="burger" id="burger" onclick="toggleSidebar()" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
-</header>
+<!-- ── TOP NAV ── -->
+<nav class="topnav">
+  <button class="topnav-brand" onclick="go('landing')">immersion guide</button>
+  <div class="topnav-sep"></div>
+  <div class="topnav-links">
+    <button class="topnav-link" data-nav="guide" onclick="go('guide-index')">Guide</button>
+    <button class="topnav-link" data-nav="resources" onclick="openResourcePicker()">Resources</button>
+    <button class="topnav-link" data-nav="faq" onclick="go('faq')">FAQ</button>
+  </div>
+  <div class="topnav-right">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <span id="themeIcon">☀</span> <span id="themeLabel">light</span>
+    </button>
+  </div>
+</nav>
 
-<div class="layout">
-  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
-  <aside id="sidebar">
-    <button class="nav-btn active" onclick="go('welcome')" style="margin-bottom:0.5rem;">
-      <span class="nav-num" style="color:var(--green);">✦</span> Home
+<!-- ── LANDING ── -->
+<div id="v-landing" class="landing">
+  <span class="landing-eyebrow">日本語 · immersion method</span>
+  <h1 class="landing-title">Learn Japanese<br>through <em>immersion</em></h1>
+  <p class="landing-desc">A complete guide to acquiring Japanese the natural way — through reading, listening, and living in the language.</p>
+  <div class="landing-actions">
+    <button class="landing-btn-primary" onclick="go('guide-index')">Start the guide →</button>
+    <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-secondary">Join the Discord ↗</a>
+  </div>
+  <div class="landing-pillars">
+    <button class="landing-pillar" onclick="go('guide-index')">
+      <span class="landing-pillar-icon">📖</span>
+      <span class="landing-pillar-title">The Guide</span>
+      <span class="landing-pillar-desc">Foundations, setup, practice methods — everything from day one to fluency.</span>
     </button>
+    <button class="landing-pillar" onclick="openResourcePicker()">
+      <span class="landing-pillar-icon">🔗</span>
+      <span class="landing-pillar-title">Resources</span>
+      <span class="landing-pillar-desc">Curated tools, apps, and sites for every aspect of study.</span>
+    </button>
+    <button class="landing-pillar" onclick="go('faq')">
+      <span class="landing-pillar-icon">❓</span>
+      <span class="landing-pillar-title">FAQ</span>
+      <span class="landing-pillar-desc">Common questions answered — search or browse them all.</span>
+    </button>
+  </div>
+</div>
 
-    <span class="nav-section-label">Foundation</span>
-    <button class="nav-btn" onclick="go('basics')">
-      <span class="nav-num">01</span> Basics
-    </button>
-    <button class="nav-btn" onclick="go('immersion')">
-      <span class="nav-num">02</span> What is immersion?
-    </button>
-    <button class="nav-btn" onclick="go('goal')">
-      <span class="nav-num">03</span> The goal
-    </button>
+<!-- ── GUIDE INDEX ── -->
+<div id="v-guide-index" class="guide-index">
+  <span class="guide-index-eyebrow">immersion guide</span>
+  <h2 class="guide-index-title">The Guide</h2>
+  <p class="guide-index-sub">Follow the stages in order. Each section builds on the last.</p>
 
-    <span class="nav-section-label">Setup</span>
-    <button class="nav-btn" onclick="go('setup')">
-      <span class="nav-num">04</span> Tool setup
-    </button>
+  <div class="guide-stage">
+    <div class="guide-stage-label">Stage 0 · Foundation</div>
+    <h3 class="guide-stage-title">Prepare for immersion</h3>
+    <p class="guide-stage-desc">Understand the method, build the right mindset, and cover the basics before you dive in.</p>
+    <div class="guide-cards">
+      <button class="guide-card" onclick="go('basics')">
+        <span class="guide-card-num">01</span>
+        <span class="guide-card-title">Basics</span>
+        <span class="guide-card-desc">Kana, grammar, vocab, and pitch — your starting checklist.</span>
+      </button>
+      <button class="guide-card" onclick="go('immersion')">
+        <span class="guide-card-num">02</span>
+        <span class="guide-card-title">What is immersion?</span>
+        <span class="guide-card-desc">The input hypothesis and why consuming real content works.</span>
+      </button>
+      <button class="guide-card" onclick="go('goal')">
+        <span class="guide-card-num">03</span>
+        <span class="guide-card-title">The goal</span>
+        <span class="guide-card-desc">What automaticity means and what you're building toward.</span>
+      </button>
+    </div>
+  </div>
 
-    <span class="nav-section-label">Practice</span>
-    <button class="nav-btn" onclick="go('steps')">
-      <span class="nav-num">05</span> How to immerse
-    </button>
-    <button class="nav-btn" onclick="go('mining')">
-      <span class="nav-num">06</span> Sentence mining
-    </button>
-    <button class="nav-btn" onclick="go('reading')">
-      <span class="nav-num">07</span> Improving reading
-    </button>
-    <button class="nav-btn" onclick="go('listening')">
-      <span class="nav-num">08</span> Improving listening
-    </button>
-    <button class="nav-btn" onclick="go('routine')">
-      <span class="nav-num">09</span> Daily routine
-    </button>
-    <button class="nav-btn" onclick="go('speaking')">
-      <span class="nav-num">10</span> Speaking
-    </button>
-    <button class="nav-btn" onclick="go('jlpt')">
-      <span class="nav-num">11</span> JLPT
-    </button>
+  <div class="guide-stage">
+    <div class="guide-stage-label">Stage 1 · Setup</div>
+    <h3 class="guide-stage-title">Build your toolkit</h3>
+    <p class="guide-stage-desc">Install the tools that turn anime into an immersion environment.</p>
+    <div class="guide-cards">
+      <button class="guide-card" onclick="go('setup')">
+        <span class="guide-card-num">04</span>
+        <span class="guide-card-title">Tool setup</span>
+        <span class="guide-card-desc">Yomitan, ASBPlayer, subtitle files — step-by-step.</span>
+      </button>
+    </div>
+  </div>
 
-    <span class="nav-section-label">Resources</span>
-    <button class="nav-btn" onclick="go('anki')">
-      <span class="nav-num">↯</span> Anki
-    </button>
-    <button class="nav-btn" onclick="openResourcePicker()">
-      <span class="nav-num">≡</span> Resources
-    </button>
+  <div class="guide-stage">
+    <div class="guide-stage-label">Stage 2 · Practice</div>
+    <h3 class="guide-stage-title">Build comprehension</h3>
+    <p class="guide-stage-desc">Learn directly from immersion. Every practice method you'll need.</p>
+    <div class="guide-cards">
+      <button class="guide-card" onclick="go('steps')">
+        <span class="guide-card-num">05</span>
+        <span class="guide-card-title">How to immerse</span>
+        <span class="guide-card-desc">The sentence process — when to look up, when to skip.</span>
+      </button>
+      <button class="guide-card" onclick="go('mining')">
+        <span class="guide-card-num">06</span>
+        <span class="guide-card-title">Sentence mining</span>
+        <span class="guide-card-desc">Build a personalised Anki deck from your own content.</span>
+      </button>
+      <button class="guide-card" onclick="go('reading')">
+        <span class="guide-card-num">07</span>
+        <span class="guide-card-title">Improving reading</span>
+        <span class="guide-card-desc">Manga, novels, visual novels, and games.</span>
+      </button>
+      <button class="guide-card" onclick="go('listening')">
+        <span class="guide-card-num">08</span>
+        <span class="guide-card-title">Improving listening</span>
+        <span class="guide-card-desc">Intensive listening techniques to close the audio gap.</span>
+      </button>
+      <button class="guide-card" onclick="go('routine')">
+        <span class="guide-card-num">09</span>
+        <span class="guide-card-title">Daily routine</span>
+        <span class="guide-card-desc">What a consistent study day looks like.</span>
+      </button>
+      <button class="guide-card" onclick="go('speaking')">
+        <span class="guide-card-num">10</span>
+        <span class="guide-card-title">Speaking</span>
+        <span class="guide-card-desc">Output activities and how to make them effective.</span>
+      </button>
+    </div>
+  </div>
 
-    <span class="nav-section-label">Help</span>
-    <button class="nav-btn" onclick="go('faq')">
-      <span class="nav-num">?</span> FAQ
-    </button>
-  </aside>
+  <div class="guide-stage">
+    <div class="guide-stage-label">Stage 3 · Milestones</div>
+    <h3 class="guide-stage-title">Certify and track progress</h3>
+    <p class="guide-stage-desc">Formal milestones to benchmark your level.</p>
+    <div class="guide-cards">
+      <button class="guide-card" onclick="go('jlpt')">
+        <span class="guide-card-num">11</span>
+        <span class="guide-card-title">JLPT</span>
+        <span class="guide-card-desc">Practice tests, prep books, Anki decks — N5 through N1.</span>
+      </button>
+      <button class="guide-card" onclick="go('anki')">
+        <span class="guide-card-num">↯</span>
+        <span class="guide-card-title">Anki deep dive</span>
+        <span class="guide-card-desc">Settings, add-ons, and how to review cards correctly.</span>
+      </button>
+    </div>
+  </div>
+</div>
 
-  <main>
+<!-- ── RESOURCES INDEX ── -->
+<div id="v-res-index" class="res-index">
+  <h2 class="res-index-title">Resources</h2>
+  <p class="res-index-sub">Every tool, app, and site — organised by category.</p>
+  <div class="res-search-bar">
+    <input class="res-search-input" type="text" placeholder="Search resources..." oninput="updateResIndexSearch(this.value)" />
+  </div>
+  <div class="res-category-grid" id="res-category-grid">
+    <button class="res-cat-card" onclick="go('res-kana')"><span class="res-cat-card-icon">あ</span><span class="res-cat-card-label">Kana</span></button>
+    <button class="res-cat-card" onclick="go('res-anki')"><span class="res-cat-card-icon">🃏</span><span class="res-cat-card-label">Anki</span></button>
+    <button class="res-cat-card" onclick="go('res-dictionaries')"><span class="res-cat-card-icon">📖</span><span class="res-cat-card-label">Dictionary Tools</span></button>
+    <button class="res-cat-card" onclick="go('res-grammar')"><span class="res-cat-card-icon">文</span><span class="res-cat-card-label">Grammar</span></button>
+    <button class="res-cat-card" onclick="go('res-anime')"><span class="res-cat-card-icon">📺</span><span class="res-cat-card-label">Anime</span></button>
+    <button class="res-cat-card" onclick="go('res-drama')"><span class="res-cat-card-icon">📡</span><span class="res-cat-card-label">TV Shows</span></button>
+    <button class="res-cat-card" onclick="go('res-manga')"><span class="res-cat-card-icon">漫</span><span class="res-cat-card-label">OCR &amp; Manga</span></button>
+    <button class="res-cat-card" onclick="go('res-novels')"><span class="res-cat-card-icon">📕</span><span class="res-cat-card-label">Novels</span></button>
+    <button class="res-cat-card" onclick="go('res-vn')"><span class="res-cat-card-icon">🎮</span><span class="res-cat-card-label">VNs &amp; Games</span></button>
+    <button class="res-cat-card" onclick="go('res-mining')"><span class="res-cat-card-icon">⛏</span><span class="res-cat-card-label">Mining Setup</span></button>
+    <button class="res-cat-card" onclick="go('res-podcasts')"><span class="res-cat-card-icon">🎧</span><span class="res-cat-card-label">Podcasts &amp; YT</span></button>
+    <button class="res-cat-card" onclick="go('res-subs')"><span class="res-cat-card-icon">💬</span><span class="res-cat-card-label">Subtitles</span></button>
+    <button class="res-cat-card" onclick="go('res-kanji')"><span class="res-cat-card-icon">漢</span><span class="res-cat-card-label">Kanji</span></button>
+    <button class="res-cat-card" onclick="go('res-pitch')"><span class="res-cat-card-icon">♩</span><span class="res-cat-card-label">Pitch Accent</span></button>
+    <button class="res-cat-card" onclick="go('res-audio')"><span class="res-cat-card-icon">🎵</span><span class="res-cat-card-label">Condensed Audio</span></button>
+    <button class="res-cat-card" onclick="go('res-immersion')"><span class="res-cat-card-icon">🔍</span><span class="res-cat-card-label">Sentence Search</span></button>
+    <button class="res-cat-card" onclick="go('res-mobile')"><span class="res-cat-card-icon">📱</span><span class="res-cat-card-label">Mobile Apps</span></button>
+    <button class="res-cat-card" onclick="go('res-tracking')"><span class="res-cat-card-icon">📊</span><span class="res-cat-card-label">Tracking &amp; Stats</span></button>
+    <button class="res-cat-card" onclick="go('res-textbooks')"><span class="res-cat-card-icon">📄</span><span class="res-cat-card-label">Guides &amp; Textbooks</span></button>
+    <button class="res-cat-card" onclick="go('res-all')" style="background:var(--green-dim)"><span class="res-cat-card-icon" style="color:var(--green)">✦</span><span class="res-cat-card-label" style="color:var(--green)">All Resources</span></button>
+  </div>
+  <div class="res-inline-results" id="res-inline-results"></div>
+</div>
 
-    <!-- 00 WELCOME -->
-    <div id="v-welcome" class="view active">
+<!-- 00 WELCOME -->
+    <div id="v-welcome" class="view" style="display:none">
       <div class="welcome-wrap">
         <span class="welcome-eyebrow">日本語</span>
         <h2 class="welcome-title">Learn Japanese<br>through <em>immersion</em></h2>
@@ -1093,10 +1401,12 @@
           Join the Discord <span style="font-size: 13px;">↗</span>
         </a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 01 WHAT IS IMMERSION -->
-    <div id="v-immersion" class="view">
+    <div id="v-immersion" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>What is immersion?</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">foundation</span>
       <h2>What is immersion?</h2>
       <p class="view-sub">Immersion means consuming real Japanese: watching, reading, listening, so you build a natural feel for how the language works.</p>
@@ -1132,10 +1442,12 @@
           <span class="page-nav-title">The goal</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 02 THE GOAL -->
-    <div id="v-goal" class="view">
+    <div id="v-goal" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>The goal</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">foundation</span>
       <h2>The goal: automaticity</h2>
       <p class="view-sub">Understanding Japanese without translating it in your head first.</p>
@@ -1157,10 +1469,12 @@
           <span class="page-nav-title">Tool setup</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 01 BASICS -->
-    <div id="v-basics" class="view">
+    <div id="v-basics" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Basics</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">foundation</span>
       <h2>Basics</h2>
       <p class="view-sub">Before immersing, you need a foundation. Work through Step 1 first, then move on. Steps 2-4 can be done at the same time.</p>
@@ -1266,7 +1580,7 @@
       </div>
 
       <div class="page-nav">
-        <button class="page-nav-btn" onclick="go('welcome')">
+        <button class="page-nav-btn" onclick="go('guide-index')">
           <span class="page-nav-label">← Back</span>
           <span class="page-nav-title">Home</span>
         </button>
@@ -1275,11 +1589,13 @@
           <span class="page-nav-title">What is immersion?</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
 
     <!-- 04 SETUP -->
-    <div id="v-setup" class="view">
+    <div id="v-setup" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Tool setup</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">setup</span>
       <h2>Tool setup</h2>
       <p class="view-sub">For the purpose of this guide, we will be using anime. Here are a few tools that turn anime into an immersion environment. Follow the video below, then use the written steps alongside it.</p>
@@ -1377,10 +1693,12 @@
           <span class="page-nav-title">How to immerse</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 04 HOW TO IMMERSE -->
-    <div id="v-steps" class="view">
+    <div id="v-steps" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>How to immerse</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">practice</span>
       <h2>How to immerse</h2>
       <p class="view-sub">Think of each sentence as a small puzzle. Your job is to fit the pieces together, look things up when needed, use context when you can, and move on. Below is an example process for beginners to follow.</p>
@@ -1448,10 +1766,12 @@
           <span class="page-nav-title">Sentence mining</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 05 SENTENCE MINING -->
-    <div id="v-mining" class="view">
+    <div id="v-mining" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Sentence mining</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">practice</span>
       <h2>Sentence mining</h2>
       <p class="view-sub">Saving words from your immersion directly into Anki, so you study vocab that's actually useful to you.</p>
@@ -1497,10 +1817,12 @@
           <span class="page-nav-title">Improving reading</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 07 OTHER MEDIA -->
-    <div id="v-reading" class="view">
+    <div id="v-reading" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Improving reading</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">reading</span>
       <p class="view-sub">Reading is one of the most powerful ways to grow your Japanese. Manga, novels, and visual novels each offer a different experience — pick whatever keeps you coming back.</p>
 
@@ -1645,10 +1967,12 @@
           <span class="page-nav-title">Improving listening</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 06 LISTENING -->
-    <div id="v-listening" class="view">
+    <div id="v-listening" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Improving listening</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">practice</span>
       <h2>Improving listening</h2>
       <p class="view-sub">Subtitles carry a lot of the load. Once your reading is comfortable, it's time to train your ears directly.</p>
@@ -1707,10 +2031,12 @@
           <span class="page-nav-title">Daily routine</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 07 ROUTINE -->
-    <div id="v-routine" class="view">
+    <div id="v-routine" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Daily routine</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">practice</span>
       <h2>Daily routine</h2>
       <p class="view-sub">Consistency matters more than volume. A steady hour every day beats a seven-hour session once a week.</p>
@@ -1774,10 +2100,12 @@
           <span class="page-nav-title">Speaking</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- 09 SPEAKING -->
-    <div id="v-speaking" class="view">
+    <div id="v-speaking" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Speaking</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">practice</span>
       <h2>Speaking</h2>
       <p class="view-sub">Output is a skill on top of input; you still need to practice it separately. The more you've immersed, the easier it gets.</p>
@@ -1861,11 +2189,13 @@
           <span class="page-nav-title">JLPT</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
 
     <!-- 11 JLPT -->
-    <div id="v-jlpt" class="view">
+    <div id="v-jlpt" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>JLPT</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">exam prep</span>
       <h2>JLPT</h2>
       <p class="view-sub">The Japanese Language Proficiency Test runs N5 (beginner) to N1 (advanced). It's the most widely recognised certification for Japanese, useful for work, visas, and university admissions in Japan.</p>
@@ -2056,12 +2386,14 @@
           <span class="page-nav-title">Anki</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
 
 
     <!-- ANKI -->
-    <div id="v-anki" class="view">
+    <div id="v-anki" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Anki</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Anki</h2>
       <p class="view-sub">A spaced repetition flashcard app. This page covers what it is, how it works, how to set it up, and how to use it effectively.</p>
@@ -2187,10 +2519,12 @@
           <span class="page-nav-title">Resources</span>
         </button>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCES -->
-    <div id="v-resources" class="view">
+    <div id="v-resources" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Resources</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">resources</span>
       <h2>Resources</h2>
       <p class="view-sub">Everything you need, organized by category.</p>
@@ -3214,10 +3548,12 @@
           <a class="res-toc-link" href="#res-textbooks">Textbooks</a>
         </div>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- FAQ -->
-    <div id="v-faq" class="view">
+    <div id="v-faq" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('landing')">Home</button><span class="breadcrumb-sep"> / </span><span>FAQ</span></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">help</span>
       <h2>FAQ</h2>
       <p class="view-sub">Common questions from the community. Type anything below and the search will find the most relevant answer.</p>
@@ -3467,11 +3803,12 @@
         </button>
         <div></div>
       </div>
-    </div><!-- /v-faq -->
+    </div></div><!-- /inner --><!-- /v-faq -->
 
     <!-- RESOURCE CATEGORY: KANA -->
-    <div id="v-res-kana" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-kana" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Kana</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Kana</h2>
       <p class="view-sub">Hiragana and katakana practice tools. Learn the syllabaries before everything else.</p>
@@ -3487,11 +3824,12 @@
         <a class="link-card" href="http://japanese-lesson.com/characters/hiragana/hiragana_writing.html" target="_blank"><p class="link-card-title">Hiragana writing practice</p><p class="link-card-desc">Printable PDF sheets with stroke order</p></a>
         <a class="link-card" href="http://japanese-lesson.com/characters/katakana/katakana_writing.html" target="_blank"><p class="link-card-title">Katakana writing practice</p><p class="link-card-desc">Printable PDF sheets with stroke order</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: ANKI -->
-    <div id="v-res-anki" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-anki" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Anki</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Anki</h2>
       <p class="view-sub">Free spaced-repetition flashcard app. The standard for vocab, sentence mining, and grammar review.</p>
@@ -3507,11 +3845,12 @@
         <a class="link-card" href="https://ankiweb.net/shared/info/1771074083" target="_blank"><p class="link-card-title">Review Heatmap add-on</p><p class="link-card-desc">GitHub-style heatmap of your review activity</p></a>
         <a class="link-card" href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md#step-2-configure-fsrs-settings" target="_blank"><p class="link-card-title">FSRS setup guide</p><p class="link-card-desc">Configure FSRS scheduler for better retention</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: DICTIONARIES -->
-    <div id="v-res-dictionaries" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-dictionaries" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Dictionary Tools</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">resources</span>
       <h2>Dictionary Tools</h2>
       <p class="view-sub">Look up words, parse sentences, and hear native pronunciation.</p>
@@ -3537,11 +3876,12 @@
         <a class="link-card" href="https://ichi.moe/" target="_blank"><p class="link-card-title">Ichi.moe</p><p class="link-card-desc">Sentence parser — breaks down grammar into components</p></a>
         <a class="link-card" href="https://jotoba.de/" target="_blank"><p class="link-card-title">Jotoba</p><p class="link-card-desc">Multilingual dictionary with autocomplete, kanji radical tree, and inflection display</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: GRAMMAR -->
-    <div id="v-res-grammar" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-grammar" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Grammar</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Grammar</h2>
       <p class="view-sub">Guides, references, and courses for Japanese grammar at every level.</p>
@@ -3569,11 +3909,12 @@
         <a class="link-card" href="https://blob-static.studyclix.ie/static/content/file/uploads/2/2e97e290-9290-4858-bd30-a5e2652a54b1/Japanese+Particles+In+Action.pdf" target="_blank"><p class="link-card-title">Japanese Particles in Action (PDF)</p><p class="link-card-desc">In-depth breakdown of how Japanese particles actually work</p></a>
         <a class="link-card" href="https://www.scribd.com/document/854215209/Japanese-the-Manga-Way-An-Illustrated-Guide-to-Grammar-and-Structure" target="_blank"><p class="link-card-title">Japanese the Manga Way</p><p class="link-card-desc">Grammar explained through real manga excerpts — good for intermediate beginners</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: ANIME -->
-    <div id="v-res-anime" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-anime" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Anime</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">resources</span>
       <h2>Anime</h2>
       <p class="view-sub">Where to stream, download, and find anime ordered by difficulty.</p>
@@ -3588,11 +3929,12 @@
         <a class="link-card" href="https://www.immersionkit.com/" target="_blank"><p class="link-card-title">ImmersionKit</p><p class="link-card-desc">Search native sentences and audio from anime</p></a>
         <a class="link-card" href="https://nadeshiko.co/" target="_blank"><p class="link-card-title">Nadeshiko</p><p class="link-card-desc">Anime sentence search with audio clips</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: TV SHOWS / J-DRAMA -->
-    <div id="v-res-drama" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-drama" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>TV Shows</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">resources</span>
       <h2>TV Shows &amp; J-Drama</h2>
       <p class="view-sub">Live action Japanese drama, variety shows, and live TV streams.</p>
@@ -3602,11 +3944,12 @@
         <a class="link-card" href="https://www.netflix.com/gb/" target="_blank"><p class="link-card-title">Netflix</p><p class="link-card-desc">Stream Anime and J-Dramas! (costs money, VPN recommended)</p></a>
         <a class="link-card" href="https://www.youtube.com/watch?v=9rcC22KADWc" target="_blank"><p class="link-card-title">SoftEther VPN tutorial</p><p class="link-card-desc">Free Netflix Japanese VPN + Tutorial</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: OCR & MANGA -->
-    <div id="v-res-manga" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-manga" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>OCR & Manga</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>OCR &amp; Manga</h2>
       <p class="view-sub">Read raw manga online and use OCR tools to hover over text with Yomitan.</p>
@@ -3633,11 +3976,12 @@
         <a class="link-card" href="https://jiten.moe/" target="_blank"><p class="link-card-title">Jiten.moe</p><p class="link-card-desc">Manga and books ranked by difficulty</p></a>
         <a class="link-card" href="https://learnnatively.com/" target="_blank"><p class="link-card-title">LearnNatively</p><p class="link-card-desc">Community-rated difficulty for manga and books</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: NOVELS -->
-    <div id="v-res-novels" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-novels" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Novels</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Novels &amp; Light Novels</h2>
       <p class="view-sub">Web novels, ebooks, and readers for native Japanese prose.</p>
@@ -3661,11 +4005,12 @@
         <a class="link-card" href="https://discord.gg/tmw" target="_blank"><p class="link-card-title">TheMoeWay Discord</p><p class="link-card-desc">LN resources — student role required</p></a>
       </div>
       <div class="callout warn"><strong>Note:</strong> Anna's Archive may be blocked in some regions — use a VPN if you can't access it.</div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: VNs & GAMES -->
-    <div id="v-res-vn" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-vn" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>VNs & Games</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">resources</span>
       <h2>Visual Novels &amp; Games</h2>
       <p class="view-sub">VN databases, downloads, text hookers, and game mining tools.</p>
@@ -3694,11 +4039,12 @@
         <a class="link-card" href="https://store.steampowered.com/app/1632490/Shashingo_Learn_Japanese_with_Photography/" target="_blank"><p class="link-card-title">Shashingo</p><p class="link-card-desc">Wander a Japanese city taking photos to learn vocab — paid, ~$20</p></a>
         <a class="link-card" href="https://www.youtube.com/watch?v=h1NfF4yiaWE" target="_blank"><p class="link-card-title">Game Gengo — Tier List</p><p class="link-card-desc">Top 100+ games for Japanese learners (2025)</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: MINING SETUP -->
-    <div id="v-res-mining" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-mining" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Mining Setup</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Mining Setup</h2>
       <p class="view-sub">Tools for extracting sentences from anime, manga, VNs, and games into Anki.</p>
@@ -3714,11 +4060,12 @@
         <a class="link-card" href="https://donkuri.github.io/learn-japanese/mining/" target="_blank"><p class="link-card-title">Donkuri's Mining Setup</p><p class="link-card-desc">Mining setup guide for various media</p></a>
         <a class="link-card" href="https://www.youtube.com/watch?v=PAUYnp5wOE0" target="_blank"><p class="link-card-title">Mining Tutorial (JouzuJuls)</p><p class="link-card-desc">Sentence mining video walkthrough</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: PODCASTS -->
-    <div id="v-res-podcasts" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-podcasts" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Podcasts & YouTube</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">resources</span>
       <h2>Podcasts &amp; YouTube</h2>
       <p class="view-sub">Listening immersion for every level — from beginner monologues to native-speed variety content.</p>
@@ -3769,11 +4116,12 @@
       <div class="link-grid">
         <a class="link-card" href="https://open.spotify.com/show/1tHH40EmOge2Ale4nlYWTq" target="_blank"><p class="link-card-title">Let's Learn Japanese from Small Talk</p><p class="link-card-desc">Natural casual conversations by two native speakers with vocab lists</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: SUBTITLES -->
-    <div id="v-res-subs" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-subs" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Subtitles</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">resources</span>
       <h2>Subtitles</h2>
       <p class="view-sub">Japanese subtitle files for anime — use with asbplayer or MPV for immersion.</p>
@@ -3781,11 +4129,12 @@
         <a class="link-card" href="https://jimaku.cc/" target="_blank"><p class="link-card-title">Jimaku.cc</p><p class="link-card-desc">Japanese subtitle files for anime — sync with asbplayer</p></a>
         <a class="link-card" href="https://kitsunekko.net/dirlst.php?dir=subtitles%2Fjapanese%2F" target="_blank"><p class="link-card-title">Kitsunekko</p><p class="link-card-desc">Large archive of Japanese anime subtitle files</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: KANJI -->
-    <div id="v-res-kanji" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-kanji" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Kanji</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Kanji</h2>
       <p class="view-sub">Learn kanji through vocabulary — not in isolation. Resources for recognition, radicals, and writing.</p>
@@ -3804,11 +4153,12 @@
         <a class="link-card" href="https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/ijidokun_140221.pdf" target="_blank"><p class="link-card-title">Ijidokun (異字同訓) PDF</p><p class="link-card-desc">Official list of kanji with the same reading but different meanings — entirely in Japanese</p></a>
         <a class="link-card" href="https://www.loecsen.com/en/learn-japanese" target="_blank"><p class="link-card-title">Loecsen Japanese Phrasebook</p><p class="link-card-desc">Interactive phrasebook with audio — from basic greetings to medical phrases. No furigana</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: PITCH ACCENT -->
-    <div id="v-res-pitch" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-pitch" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Pitch Accent</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">resources</span>
       <h2>Pitch Accent</h2>
       <p class="view-sub">Understand, train, and acquire Japanese pitch accent patterns.</p>
@@ -3819,11 +4169,12 @@
         <a class="link-card" href="https://www.youtube.com/@yudaisensei2020" target="_blank"><p class="link-card-title">Yudai Sensei</p><p class="link-card-desc">YouTube channel focused on pitch accent training</p></a>
         <a class="link-card" href="https://docs.google.com/document/d/1ReBf08JFK4n0PXdOxThAfWuiK9UWVZEWWzeKSECWTQo/edit" target="_blank"><p class="link-card-title">Usagi Chan Pronunciation Guide</p><p class="link-card-desc">Comprehensive pitch accent primer and how-to</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: CONDENSED AUDIO -->
-    <div id="v-res-audio" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-audio" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Condensed Audio</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">resources</span>
       <h2>Condensed Audio</h2>
       <p class="view-sub">Audio with silences removed — maximizes listening exposure per hour. Good for passive immersion.</p>
@@ -3831,11 +4182,12 @@
         <a class="link-card" href="https://condensedaudiocatalog.com/" target="_blank"><p class="link-card-title">Condensed Audio Catalog</p><p class="link-card-desc">Searchable catalog of condensed anime audio</p></a>
         <a class="link-card" href="https://ercanserteli.com/condenser/" target="_blank"><p class="link-card-title">Condenser</p><p class="link-card-desc">Condense your own audio — remove silences from any video/audio</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: SENTENCE SEARCH -->
-    <div id="v-res-immersion" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-immersion" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Sentence Search</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>Sentence Search</h2>
       <p class="view-sub">Search for any word used in context with audio from anime, novels, and YouTube.</p>
@@ -3848,11 +4200,12 @@
         <a class="link-card" href="https://sentencesearch.neocities.org/" target="_blank"><p class="link-card-title">SentenceSearch</p><p class="link-card-desc">Sentences from multiple learning resources with audio</p></a>
         <a class="link-card" href="https://kotu.io/" target="_blank"><p class="link-card-title">コツ</p><p class="link-card-desc">Search sentence audio from anime, audiobooks, news, YouTube — with pitch accent graph</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: MOBILE APPS -->
-    <div id="v-res-mobile" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-mobile" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Mobile Apps</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">resources</span>
       <h2>Mobile Apps</h2>
       <p class="view-sub">Essential apps for Anki, reading, and dictionary lookup on Android and iOS.</p>
@@ -3869,11 +4222,12 @@
         <a class="link-card" href="https://apps.apple.com/us/app/hoshi-reader/id6758244332" target="_blank"><p class="link-card-title">Hoshi Reader</p><p class="link-card-desc">Beautiful EPUB reader with popup dictionary and Anki support</p></a>
         <a class="link-card" href="https://apps.apple.com/us/app/shirabe-jisho/id1005203380" target="_blank"><p class="link-card-title">Shirabe Jisho</p><p class="link-card-desc">Best bilingual dictionary app for iOS</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: TRACKING & STATS -->
-    <div id="v-res-tracking" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-tracking" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Tracking & Stats</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-blue">resources</span>
       <h2>Tracking &amp; Stats</h2>
       <p class="view-sub">Track your anime, manga, VNs, books, and vocabulary progress.</p>
@@ -3883,11 +4237,12 @@
         <a class="link-card" href="https://jpdb.io/" target="_blank"><p class="link-card-title">JPDB</p><p class="link-card-desc">Track known vocabulary synced to your immersion content</p></a>
         <a class="link-card" href="https://vndb.org/" target="_blank"><p class="link-card-title">VNDB</p><p class="link-card-desc">Track visual novels — lists, votes, release info</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: GUIDES & TEXTBOOKS -->
-    <div id="v-res-textbooks" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-textbooks" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>Guides & Textbooks</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-amber">resources</span>
       <h2>Guides &amp; Textbooks</h2>
       <p class="view-sub">PDFs, structured courses, and textbook resources. You didn't find them here though. 🤫</p>
@@ -3910,19 +4265,17 @@
         <a class="link-card" href="https://happylilac.net/syogaku.html" target="_blank"><p class="link-card-title">ちびむすドリル</p><p class="link-card-desc">Japanese school worksheets used by actual teachers — all subjects, all grades. N4+</p></a>
         <a class="link-card" href="https://drive.google.com/drive/folders/1lFvmBAVPLB_t-g3l-jR1BVWFIiZbEgdO?usp=sharing" target="_blank"><p class="link-card-title">Kanji Kentei Deck (Google Drive)</p><p class="link-card-desc">Anki deck for all jōyō kanji by Kanken level</p></a>
       </div>
-    </div>
+    </div></div><!-- /inner -->
 
     <!-- RESOURCE CATEGORY: ALL -->
-    <div id="v-res-all" class="view">
-      <button class="res-back-btn" onclick="openResourcePicker()">← All Resources</button>
+    <div id="v-res-all" class="section-page">
+  <div class="breadcrumb"><div class="breadcrumb-left"><button class="breadcrumb-link" onclick="openResourcePicker()">Resources</button><span class="breadcrumb-sep"> / </span><span>All Resources</span></div><button class="res-back-btn" onclick="openResourcePicker()">← Resources</button></div>
+    <div class="section-inner">
       <span class="view-tag tag-green">resources</span>
       <h2>All Resources</h2>
       <p class="view-sub">Every resource in one scrollable page.</p>
       <div id="res-all-content"></div>
-    </div>
-
-  </main>
-</div><!-- /layout -->
+    </div></div><!-- /inner -->
 
 <!-- ── RESOURCE PICKER OVERLAY ── -->
 <div id="res-picker" class="res-picker-overlay" onclick="closeResourcePicker(event)">
@@ -4022,8 +4375,11 @@
   </div>
 </div>
 
+
+
 <script>
-const views = ['welcome','basics','immersion','goal','setup','steps','mining','reading','listening','routine','speaking','jlpt','anki','resources','faq',
+
+const views = ['landing','guide-index','res-index','welcome','basics','immersion','goal','setup','steps','mining','reading','listening','routine','speaking','jlpt','anki','resources','faq',
   'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
 
 const resCategories = [
@@ -4066,19 +4422,28 @@ function buildResAll() {
 }
 
 function go(id, pushState = true) {
+  // Deactivate all pages
+  document.querySelectorAll('.landing, .guide-index, .res-index, .section-page').forEach(el => {
+    el.classList.remove('active');
+  });
   views.forEach(v => {
     const el = document.getElementById('v-' + v);
     if (el) el.classList.remove('active');
-    const btn = document.querySelectorAll('.nav-btn')[views.indexOf(v)];
-    if (btn) btn.classList.remove('active');
   });
   const target = document.getElementById('v-' + id);
   if (target) target.classList.add('active');
   if (id === 'res-all') buildResAll();
-  const activeBtn = document.querySelectorAll('.nav-btn')[views.indexOf(id)];
-  if (activeBtn) activeBtn.classList.add('active');
+  // Nav active state
+  const guideIds = ['guide-index','basics','immersion','goal','setup','steps','mining','reading','listening','routine','speaking','jlpt'];
+  const resIds = ['res-index','anki','resources','res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
+  document.querySelectorAll('.topnav-link[data-nav]').forEach(btn => {
+    btn.classList.remove('active');
+    const nav = btn.getAttribute('data-nav');
+    if (nav === 'guide' && guideIds.includes(id)) btn.classList.add('active');
+    if (nav === 'resources' && resIds.includes(id)) btn.classList.add('active');
+    if (nav === 'faq' && id === 'faq') btn.classList.add('active');
+  });
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  closeSidebar();
   closeResourcePickerBtn();
   if (pushState) {
     history.pushState({ view: id }, '', '/' + id);
@@ -4185,7 +4550,8 @@ window.addEventListener('popstate', (e) => {
 
 (function init() {
   const path = window.location.pathname.replace(/^\//, '').trim();
-  const id = views.includes(path) ? path : 'welcome';
+  let id = views.includes(path) ? path : 'landing';
+  if (id === 'welcome') id = 'landing';
   go(id, false);
 })();
 
@@ -4210,14 +4576,7 @@ function toggleTheme() {
   applyTheme(next);
 }
 
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
-}
+function toggleSidebar() {} function closeSidebar() {}
 
 
 function toggleFaq(btn) {
@@ -4297,6 +4656,48 @@ async function runFaqSearch() {
   const saved = localStorage.getItem('theme');
   if (saved && themes.includes(saved)) applyTheme(saved);
 })();
+
+function updateResIndexSearch(query) {
+  const q = (query || '').toLowerCase().trim();
+  const resultsEl = document.getElementById('res-inline-results');
+  const grid = document.getElementById('res-category-grid');
+  if (!resultsEl) return;
+  if (!q) {
+    if (grid) grid.style.display = '';
+    resultsEl.classList.remove('visible');
+    resultsEl.innerHTML = '';
+    return;
+  }
+  if (grid) grid.style.display = 'none';
+  const catNames = {
+    'res-kana':'Kana','res-anki':'Anki','res-dictionaries':'Dictionary Tools',
+    'res-grammar':'Grammar','res-anime':'Anime','res-drama':'TV Shows',
+    'res-manga':'OCR & Manga','res-novels':'Novels','res-vn':'VNs & Games',
+    'res-mining':'Mining Setup','res-podcasts':'Podcasts','res-subs':'Subtitles',
+    'res-kanji':'Kanji','res-pitch':'Pitch Accent','res-audio':'Condensed Audio',
+    'res-immersion':'Sentence Search','res-mobile':'Mobile Apps',
+    'res-tracking':'Tracking & Stats','res-textbooks':'Guides & Textbooks',
+  };
+  const matches = [];
+  for (const [viewId, catName] of Object.entries(catNames)) {
+    const view = document.getElementById('v-' + viewId);
+    if (!view) continue;
+    view.querySelectorAll('.link-card').forEach(card => {
+      const title = card.querySelector('.link-card-title')?.textContent || '';
+      const desc = card.querySelector('.link-card-desc')?.textContent || '';
+      if ((title+' '+desc).toLowerCase().includes(q)) {
+        matches.push({ catId: viewId, catName, title: title.trim(), desc: desc.trim() });
+      }
+    });
+  }
+  if (!matches.length) {
+    resultsEl.innerHTML = '<div class="res-search-empty">No results for \"' + query.replace(/</g,'&lt;') + '\"</div>';
+  } else {
+    resultsEl.innerHTML = matches.map(m => `<button class="res-result-item" onclick="go('${m.catId}')"><span class="res-result-cat">${m.catName}</span><span class="res-result-name">${m.title}</span>${m.desc?`<span class="res-result-desc">${m.desc}</span>`:''}</button>`).join('');
+  }
+  resultsEl.classList.add('visible');
+}
+
 </script>
 </body>
 </html>
