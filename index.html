@@ -1315,6 +1315,78 @@
     .anki-tab { font-size: 12px; padding: 6px 10px; }
   }
 
+  /* ── LIGHTBOX ── */
+  .img-wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  .img-wrap img {
+    cursor: zoom-in;
+  }
+  .img-expand-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 5px;
+    color: var(--text-muted);
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 4px 8px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+  }
+  .img-wrap:hover .img-expand-btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.82);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    padding: 2rem;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: min(90vw, 960px);
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    cursor: default;
+  }
+  .lightbox-close {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.5rem;
+    background: none;
+    border: 1px solid var(--border-strong);
+    border-radius: 5px;
+    color: var(--text-dim);
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.1s, border-color 0.1s;
+  }
+  .lightbox-close:hover { color: var(--text); border-color: var(--text-dim); }
 </style>
 </head>
 <body>
@@ -4967,6 +5039,41 @@ function updateResIndexSearch(query) {
   resultsEl.classList.add('visible');
 }
 
+</script>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">esc / close</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+</div>
+
+<script>
+function openLightbox(src, alt) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = src;
+  img.alt = alt || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// Wrap all annotated images and the standalone gif with the img-wrap + button
+document.querySelectorAll('.annotated img, img[src="Animation2.gif"]').forEach(img => {
+  const wrap = document.createElement('div');
+  wrap.className = 'img-wrap';
+  img.parentNode.insertBefore(wrap, img);
+  wrap.appendChild(img);
+  const btn = document.createElement('button');
+  btn.className = 'img-expand-btn';
+  btn.textContent = 'click to expand';
+  btn.onclick = (e) => { e.stopPropagation(); openLightbox(img.src, img.alt); };
+  wrap.appendChild(btn);
+  img.onclick = () => openLightbox(img.src, img.alt);
+});
 </script>
 </body>
 </html>
