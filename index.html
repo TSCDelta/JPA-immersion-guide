@@ -1482,7 +1482,7 @@
   }
   .lightbox.open { display: flex; }
   .lightbox img {
-    max-width: min(90vw, 960px);
+    max-width: 90vw;
     max-height: 88vh;
     width: auto;
     height: auto;
@@ -5812,10 +5812,19 @@ function updateResIndexSearch(query) {
 function openLightbox(src, alt) {
   const lb = document.getElementById('lightbox');
   const img = document.getElementById('lightbox-img');
+  img.style.width = '';
   img.src = src;
   img.alt = alt || '';
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
+  function setSize() {
+    const natural = img.naturalWidth;
+    if (natural) {
+      img.style.width = Math.min(natural * 1.5, window.innerWidth * 0.9) + 'px';
+    }
+  }
+  if (img.complete && img.naturalWidth) setSize();
+  else img.onload = setSize;
 }
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
