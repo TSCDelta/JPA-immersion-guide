@@ -1346,6 +1346,94 @@
     .annotated { grid-template-columns: 1fr; }
   }
 
+  /* ── SETTINGS SLIDER ── */
+  .settings-slider { margin: 1rem 0; max-width: 720px; }
+  .slider-track-wrap { position: relative; overflow: hidden; }
+  .slider-track {
+    display: flex;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .slider-slide {
+    flex: 0 0 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .slider-slide img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); display: block; }
+  .slider-slide .annot-stack { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .slider-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 1rem;
+  }
+  .slider-arrow {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-2);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.12s, border-color 0.12s, background 0.12s;
+  }
+  .slider-arrow:hover { color: var(--text); border-color: var(--green); background: var(--bg-3); }
+  .slider-arrow svg { width: 13px; height: 13px; }
+
+  .slider-range {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border-strong);
+    outline: none;
+    cursor: pointer;
+  }
+  .slider-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--green);
+    cursor: pointer;
+    transition: transform 0.12s;
+  }
+  .slider-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  .slider-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--green);
+    cursor: pointer;
+  }
+
+  .slider-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    min-width: 88px;
+    text-align: right;
+  }
+  .slider-label strong { color: var(--green); font-weight: 500; }
+
+  @media (max-width: 680px) {
+    .slider-slide { grid-template-columns: 1fr; }
+    .slider-label { display: none; }
+  }
+
   .grade-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3418,23 +3506,69 @@
       <!-- SETTINGS -->
       <div class="anki-panel" id="anki-settings">
         <h3>Settings</h3>
-        <p>After importing, hover over the Kaishi deck and click the cog icon → Options. Apply these settings:</p>
+        <p>After importing, hover over the Kaishi deck and click the cog icon → Options. These three screens cover everything that matters, drag the slider or use the arrows to move between them:</p>
 
-        <div class="annotated">
-          <img src="Setting_1.png" alt="Deck options panel">
-          <div class="annot-stack">
-            <div class="note n-green">
-              <strong>Daily Limits</strong>
-              <p>New cards/day: 20 (lower to 10 if reviews pile up). Maximum reviews/day: 9999, uncapped, so all due reviews are shown.</p>
+        <div class="settings-slider" id="settingsSlider">
+          <div class="slider-track-wrap">
+            <div class="slider-track" id="settingsTrack">
+              <div class="slider-slide">
+                <img src="Setting_1.png" alt="Deck options panel">
+                <div class="annot-stack">
+                  <div class="note n-green">
+                    <strong>Daily Limits</strong>
+                    <p>New cards/day: 20 (lower to 10 if reviews pile up). Maximum reviews/day: 9999, uncapped, so all due reviews are shown.</p>
+                  </div>
+                  <div class="note n-blue">
+                    <strong>New Cards</strong>
+                    <p>Learning steps: <code>1m 5m 10m</code>. The interval and number of times you'll see a new card in a session until you finish it for the day.</p>
+                  </div>
+                  <div class="note n-amber">
+                    <strong>Lapses</strong>
+                    <p>Leech threshold: 20, how many times you can fail a card before it's flagged as a leech.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slider-slide">
+                <img src="Setting_2.png" alt="Display Order and FSRS panel">
+                <div class="annot-stack">
+                  <div class="note n-blue">
+                    <strong>Display Order</strong>
+                    <p>Set New/review order and Interday learning/review order to <code>Mix with reviews</code> (interleaving), the recommended setting to introduce new cards.</p>
+                  </div>
+                  <div class="note n-green">
+                    <strong>FSRS</strong>
+                    <p>The algorithm Anki uses to schedule reviews based on your review history. Set it to on.</p>
+                  </div>
+                  <div class="note n-amber">
+                    <strong>Desired retention</strong>
+                    <p>85% is the sweet spot for high retention and frequency of reviews. A higher value means more reviews throughout the days.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slider-slide">
+                <img src="Setting_3.png" alt="Preferences, Review tab">
+                <div class="annot-stack">
+                  <div class="note n-blue">
+                    <strong>Learn ahead limit</strong>
+                    <p>Set to <code>999</code> mins if you prefer finishing all your Anki in one daily session. For precise review intervals set this to <code>0</code> instead. This requires you to review multiple (re-)learning steps throughout the day.</p>
+                  </div>
+                  <div class="note n-green">
+                    <strong>Answer hotkeys</strong>
+                    <p>Instead of clicking the answer buttons, use the hotkeys: set <code>1</code> for Again and <code>2</code> for Good, or any keys you prefer.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="note n-blue">
-              <strong>New Cards</strong>
-              <p>Learning steps: <code>1m 5m 10m</code>. The interval and number of times you'll see a new card in a session until you finish it for the day.</p>
-            </div>
-            <div class="note n-amber">
-              <strong>Lapses</strong>
-              <p>Leech threshold: 20, how many times you can fail a card before it's flagged as a leech.</p>
-            </div>
+          </div>
+          <div class="slider-controls">
+            <button class="slider-arrow" id="settingsPrev" aria-label="Previous setting" onclick="settingsSliderGo(-1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <input type="range" class="slider-range" id="settingsRange" min="0" max="2" step="1" value="0" oninput="settingsSliderSet(this.value)">
+            <button class="slider-arrow" id="settingsNext" aria-label="Next setting" onclick="settingsSliderGo(1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <span class="slider-label" id="settingsLabel"><strong>1</strong> / 3 · Deck Options</span>
           </div>
         </div>
 
@@ -3450,49 +3584,14 @@
           </ul>
         </div>
 
-        <h3>Display order and FSRS</h3>
-        <p>Still inside deck Options for Kaishi 1.5k, scroll down to Display Order and FSRS:</p>
-
-        <div class="annotated">
-          <img src="Setting_2.png" alt="Display Order and FSRS panel">
-          <div class="annot-stack">
-            <div class="note n-blue">
-              <strong>Display Order</strong>
-              <p>Set New/review order and Interday learning/review order to <code>Mix with reviews</code> (interleaving), the recommended setting to introduce new cards.</p>
-            </div>
-            <div class="note n-green">
-              <strong>FSRS</strong>
-              <p>The algorithm Anki uses to schedule reviews based on your review history. Set it to on.</p>
-            </div>
-            <div class="note n-amber">
-              <strong>Desired retention</strong>
-              <p>85% is the sweet spot for high retention and frequency of reviews. A higher value means more reviews throughout the days.</p>
-            </div>
-          </div>
-        </div>
-
         <div class="callout info">
           <strong>FSRS parameters:</strong> leave the default values for now, but remember to press <strong>Optimize Current Preset</strong> once per month to update your FSRS parameters for the selected deck and improve the scheduling of your reviews based on your review history.
         </div>
 
-        <h3>Anki preferences</h3>
-        <p>This is not in Deck Options, so close that window first. On the top of the screen go to <strong>Tools → Preferences → Review</strong>:</p>
-
-        <div class="annotated">
-          <img src="Setting_3.png" alt="Preferences, Review tab">
-          <div class="annot-stack">
-            <div class="note n-blue">
-              <strong>Learn ahead limit</strong>
-              <p>Set to <code>999</code> mins if you prefer finishing all your Anki in one daily session. For precise review intervals set this to <code>0</code> instead. This requires you to review multiple (re-)learning steps throughout the day.</p>
-            </div>
-            <div class="note n-green">
-              <strong>Answer hotkeys</strong>
-              <p>Instead of clicking the answer buttons, use the hotkeys: set <code>1</code> for Again and <code>2</code> for Good, or any keys you prefer.</p>
-            </div>
-          </div>
-        </div>
+        <p>The third slide above (Learn ahead limit, Answer hotkeys) lives outside Deck Options, so close that window first. On the top of the screen go to <strong>Tools → Preferences → Review</strong> to find it.</p>
 
       </div>
+
 
       <!-- ADDONS -->
       <div class="anki-panel" id="anki-addons">
@@ -5803,6 +5902,29 @@ function updateResIndexSearch(query) {
 }
 
 </script>
+<script>
+// ── Anki settings slider ──
+(function () {
+  const labels = ['Deck Options', 'Display Order &amp; FSRS', 'Preferences'];
+  let current = 0;
+
+  window.settingsSliderSet = function (index) {
+    const track = document.getElementById('settingsTrack');
+    const range = document.getElementById('settingsRange');
+    const label = document.getElementById('settingsLabel');
+    if (!track) return;
+    current = Math.max(0, Math.min(2, parseInt(index, 10)));
+    track.style.transform = `translateX(-${current * 100}%)`;
+    range.value = current;
+    label.innerHTML = `<strong>${current + 1}</strong> / 3 · ${labels[current]}`;
+  };
+
+  window.settingsSliderGo = function (delta) {
+    window.settingsSliderSet(current + delta);
+  };
+})();
+</script>
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">esc / close</button>
@@ -5814,14 +5936,23 @@ function openLightbox(src, alt) {
   const lb = document.getElementById('lightbox');
   const img = document.getElementById('lightbox-img');
   img.style.width = '';
+  img.style.height = '';
   img.src = src;
   img.alt = alt || '';
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
   function setSize() {
     const natural = img.naturalWidth;
-    if (natural) {
-      img.style.width = Math.min(natural * 1.5, window.innerWidth * 0.9) + 'px';
+    const naturalH = img.naturalHeight;
+    if (natural && naturalH) {
+      // Scale up to 1.5x natural size, but never beyond what fits the
+      // viewport, and apply the same scale factor to both dimensions so
+      // the aspect ratio is preserved exactly.
+      const maxW = window.innerWidth * 0.9;
+      const maxH = window.innerHeight * 0.88;
+      const scale = Math.min(1.5, maxW / natural, maxH / naturalH);
+      img.style.width = (natural * scale) + 'px';
+      img.style.height = (naturalH * scale) + 'px';
     }
   }
   if (img.complete && img.naturalWidth) setSize();
@@ -5834,7 +5965,7 @@ function closeLightbox() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
 // Wrap all annotated images and the standalone gif with the img-wrap + button
-document.querySelectorAll('.annotated img, img[src="Animation2.gif"]').forEach(img => {
+document.querySelectorAll('.annotated img, .slider-slide img, img[src="Animation2.gif"]').forEach(img => {
   const wrap = document.createElement('div');
   wrap.className = 'img-wrap';
   img.parentNode.insertBefore(wrap, img);
