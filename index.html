@@ -5841,20 +5841,12 @@ document.querySelectorAll('.annotated img, img[src="Animation2.gif"]').forEach(i
 document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   const img = container.querySelector('img');
   if (img) {
-    // Create a wrapper div for the button with proper positioning
-    const btnWrapper = document.createElement('div');
-    btnWrapper.style.position = 'relative';
-    btnWrapper.style.display = 'inline-block';
-    btnWrapper.style.width = '100%';
-    
-    img.parentNode.insertBefore(btnWrapper, img);
-    btnWrapper.appendChild(img);
-    
+    // Container is already position:relative — just append button directly to it
     const btn = document.createElement('button');
     btn.className = 'img-container-btn';
     btn.textContent = 'click to expand';
     btn.onclick = (e) => { e.stopPropagation(); openLightbox(img.src, img.alt); };
-    btnWrapper.appendChild(btn);
+    container.appendChild(btn);
     img.onclick = () => openLightbox(img.src, img.alt);
     img.style.cursor = 'pointer';
   }
