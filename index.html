@@ -5800,7 +5800,7 @@ function closeLightbox() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
 // Wrap all annotated images and the standalone gif with the img-wrap + button
-document.querySelectorAll('.annotated img, img[src="Animation2.gif"]').forEach(img => {
+document.querySelectorAll('.annotated img, img[src="Animation2.gif"], .gif-wrap img, .img-figure img').forEach(img => {
   const wrap = document.createElement('div');
   wrap.className = 'img-wrap';
   img.parentNode.insertBefore(wrap, img);
