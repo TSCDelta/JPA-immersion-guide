@@ -6,7 +6,7 @@
 <title>Immersion Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
   :root {
@@ -192,24 +192,28 @@
   .view-tag {
     font-family: 'Geist Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 0.75rem;
-    padding: 3px 8px;
-    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 1rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
   }
-  .tag-green { color: var(--green); background: var(--green-dim); }
-  .tag-blue  { color: var(--blue);  background: var(--blue-dim); }
-  .tag-amber { color: var(--amber); background: var(--amber-dim); }
+  .view-tag::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.7; }
+  .tag-green { color: var(--green); background: var(--green-dim); border: 1px solid rgba(157,143,239,0.25); }
+  .tag-blue  { color: var(--blue);  background: var(--blue-dim);  border: 1px solid rgba(82,174,200,0.25); }
+  .tag-amber { color: var(--amber); background: var(--amber-dim); border: 1px solid rgba(212,184,62,0.25); }
 
   h2 {
-    font-size: 24px;
-    font-weight: 400;
+    font-size: 26px;
+    font-weight: 600;
     color: var(--text);
     margin-bottom: 0.35rem;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
   }
   .view-sub {
     font-size: 14px;
@@ -417,7 +421,7 @@
     text-transform: uppercase;
   }
   .page-nav-btn:hover .page-nav-label { color: var(--green); }
-  .page-nav-title { font-size: 13px; font-weight: 400; }
+  .page-nav-title { font-size: 13px; font-weight: 600; }
 
   /* ── ROUTINE ── */
   .routine-row {
@@ -559,10 +563,10 @@
   }
   .welcome-title {
     font-size: 34px;
-    font-weight: 300;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    letter-spacing: -0.04em;
     color: var(--text);
-    line-height: 1.15;
+    line-height: 1.1;
     margin-bottom: 1.25rem;
   }
   .welcome-title em {
@@ -1044,13 +1048,14 @@
     font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-dim);
+    color: var(--text-muted);
     background: none;
     border: none;
     cursor: pointer;
     transition: color 0.15s;
     flex-shrink: 0;
     padding: 0;
+    font-weight: 500;
   }
   .topnav-brand:hover { color: var(--green); }
   .topnav-sep { width: 1px; height: 18px; background: var(--border-strong); flex-shrink: 0; }
@@ -1067,19 +1072,21 @@
     transition: color 0.1s, background 0.1s;
   }
   .topnav-link:hover { color: var(--text); background: var(--bg-2); }
-  .topnav-link.active { color: var(--text); }
+  .topnav-link.active { color: var(--green); font-weight: 500; }
   .topnav-right { margin-left: auto; }
 
   /* ── LANDING ── */
   .landing { display: none; max-width: 860px; margin: 0 auto; padding: 5rem 2rem 4rem; }
   .landing.active { display: block; }
   .landing-eyebrow {
-    font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
-    color: var(--text-dim); margin-bottom: 1.5rem; display: block; text-transform: uppercase;
+    font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: 500;
+    color: var(--green); margin-bottom: 1.5rem; display: inline-block; text-transform: uppercase;
+    background: var(--green-dim); padding: 4px 12px; border-radius: 20px;
+    border: 1px solid rgba(157,143,239,0.25);
   }
   .landing-title {
-    font-size: clamp(36px, 6vw, 64px); font-weight: 300; letter-spacing: -0.035em;
-    color: var(--text); line-height: 1.1; margin-bottom: 1.5rem;
+    font-size: clamp(36px, 6vw, 64px); font-weight: 700; letter-spacing: -0.04em;
+    color: var(--text); line-height: 1.05; margin-bottom: 1.5rem;
   }
   .landing-title em { font-style: normal; color: var(--green); }
   .landing-desc {
@@ -1108,42 +1115,45 @@
   }
   .landing-pillar {
     background: var(--bg-2); padding: 1.5rem 1.5rem 1.75rem; cursor: pointer;
-    transition: background 0.15s, border-color 0.15s; text-align: left; border: 1px solid var(--border); width: 100%;
-    border-radius: 8px;
+    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; text-align: left; border: 1px solid var(--border); width: 100%;
+    border-radius: 10px;
   }
-  .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); }
+  .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); box-shadow: 0 4px 20px rgba(0,0,0,0.2); transform: translateY(-2px); }
   .landing-pillar-icon { font-size: 22px; margin-bottom: 0.85rem; display: block; }
-  .landing-pillar-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; display: block; }
+  .landing-pillar-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; }
   .landing-pillar-desc { font-size: 12px; color: var(--text-dim); line-height: 1.55; display: block; }
 
   /* ── GUIDE INDEX ── */
   .guide-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
   .guide-index.active { display: block; }
   .guide-index-eyebrow {
-    font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
-    color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.6rem; display: block;
+    font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: 500;
+    color: var(--green); text-transform: uppercase; margin-bottom: 0.75rem; display: inline-block;
+    background: var(--green-dim); padding: 4px 10px; border-radius: 20px;
+    border: 1px solid rgba(157,143,239,0.25);
   }
-  .guide-index-title { font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.4rem; }
+  .guide-index-title { font-size: 30px; font-weight: 600; letter-spacing: -0.03em; color: var(--text); margin-bottom: 0.4rem; }
   .guide-index-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; }
   .guide-stage { margin-bottom: 2.75rem; }
   .guide-stage-title {
-    font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 500;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--green);
-    margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;
+    font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px;
+    padding: 4px 10px; background: var(--green-dim); border-radius: 20px;
+    border: 1px solid rgba(157,143,239,0.25); width: fit-content;
   }
-  .guide-stage-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
   .guide-stage-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; }
   .guide-cards {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
   }
   .guide-card {
-    background: var(--bg-2); padding: 1.1rem 1.2rem 1.25rem; cursor: pointer;
-    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s; border: 1px solid var(--border); text-align: left; width: 100%;
-    border-radius: 8px;
+    background: var(--bg-2); padding: 1.25rem 1.35rem 1.4rem; cursor: pointer;
+    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; border: 1px solid var(--border); text-align: left; width: 100%;
+    border-radius: 10px;
   }
-  .guide-card:hover { background: var(--bg-3); box-shadow: 0 0 18px rgba(157,143,239,0.1); }
+  .guide-card:hover { background: var(--bg-3); box-shadow: 0 4px 24px rgba(157,143,239,0.12); transform: translateY(-1px); }
   .guide-card-num { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--green); margin-bottom: 0.45rem; display: block; }
-  .guide-card-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 0.3rem; display: block; line-height: 1.3; }
+  .guide-card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; line-height: 1.3; }
   .guide-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; display: block; }
 
   /* ── RES INDEX ── */
@@ -2418,64 +2428,79 @@
       <!-- PITCH ACCENT -->
       <div class="group-panel" id="bsc-pitch">
         <h3>Pitch Accent</h3>
-        <p class="view-sub" style="margin-top:0.25rem;">Train your ear to hear pitch differences. 10 minutes a day is enough at this stage.</p>
+        <p class="view-sub" style="margin-top:0.25rem;">Japanese pitch is about melody, not volume. Train your ear now and immersion does the rest.</p>
 
-        <p>Japanese is a <strong>pitch accent language</strong>, not a stress accent language like English. In English, one syllable in a word is louder and longer (CAR-rot, not car-ROT). In Japanese, the distinction is between high and low pitch. The word 橋 (bridge) and 箸 (chopsticks) are pronounced identically except for their pitch pattern.</p>
+        <p>Japanese is a <strong>pitch accent language</strong>. Every mora — the rhythmic unit Japanese is built on, roughly one kana character — is spoken at either a high or low pitch, and where that pitch drops defines the word. This is completely different from English stress, where you make a syllable louder, longer, and higher all at once. In Japanese, every mora gets roughly the same length and volume. Only the pitch changes.</p>
 
-        <p>You don't need to produce correct pitch accent right away — that takes years and massive amounts of immersion. But training your ear now means you'll start picking up patterns unconsciously during immersion instead of ignoring them entirely.</p>
+        <p>Mora and syllable aren't the same thing. Each kana counts as one mora, including long vowels, っ, and ん. So おかあさん (mother) is five mora: お-か-あ-さ-ん. Pitch patterns are counted in mora, so squashing words into English-style syllables will put your pitch timing off.</p>
+
+        <p>The clearest proof that pitch matters: 雨 (あめ, rain) and 飴 (あめ, candy) use identical sounds. 橋 (はし, bridge) and 箸 (はし, chopsticks) are the same. The only thing that separates them is pitch.</p>
 
         <div class="callout info">
-          Pitch accent isn't critical to being understood. Native speakers understand learners with flat pitch just fine. But it matters for how natural you eventually sound, and the earlier you train your ear, the more you absorb through immersion.
+          <strong>You don't need perfect pitch to be understood.</strong> Context usually fills the gap and native speakers handle flat-pitched learners fine. But training your ear early means you absorb correct patterns through immersion rather than ingraining wrong ones. The longer you leave it, the more you have to unlearn.
         </div>
 
-        <h3>How to train</h3>
-        <ol class="steps">
-          <li class="step"><span class="step-n">01</span><span class="step-body">Watch the <strong>pitch accent explanation video</strong> to understand what pitch accent is and why it matters. It's not long.</span></li>
-          <li class="step"><span class="step-n">02</span><span class="step-body">Read the <strong>pitch accent how-to guide</strong> (Usagi Chan's primer) to understand the four pattern types: heiban, atamadaka, nakadaka, and odaka.</span></li>
-          <li class="step"><span class="step-n">03</span><span class="step-body">Do <strong>10 minutes of minimal pairs</strong> on Kuuube's site every day. Minimal pairs trains you to hear the difference between high and low pitch — the core skill.</span></li>
-        </ol>
+        <h3>The four patterns</h3>
+        <p>Standard Tokyo Japanese has four pitch accent patterns. Every word falls into one of them. The key rule underlying all four: <strong>the first two mora always have different pitch</strong> — you can never start high-high or low-low. And once pitch drops, it never rises again within that word.</p>
 
-        <h3>Understanding the four patterns</h3>
         <div class="card">
           <ul>
-            <li><strong>Heiban (平板)</strong> — flat. First mora low, rest high. Pitch stays high with a particle. Most common pattern.</li>
-            <li><strong>Atamadaka (頭高)</strong> — head high. First mora high, rest low. e.g. あめ (rain).</li>
-            <li><strong>Nakadaka (中高)</strong> — middle high. Rises then drops somewhere in the middle. e.g. こころ.</li>
-            <li><strong>Odaka (尾高)</strong> — tail high. Rises to the end and drops on the particle. e.g. はな (flower) + が → はな↓が.</li>
+            <li style="margin-bottom:0.9rem;"><strong>Heiban 平板 [0]</strong> — mora 1 is low, mora 2 jumps high and everything stays high — including any following particle. No drop anywhere. This is the most common pattern by far, covering roughly 55% of the 10,000 most useful words. さかな (fish): L-H-H-H. If you have no idea what pattern a word is, guess heiban.</li>
+            <li style="margin-bottom:0.9rem;"><strong>Atamadaka 頭高 [1]</strong> — mora 1 is high, mora 2 drops immediately and everything stays low, including particles. The pitch peak is right at the start. About 25% of common words. あめ (rain): H-L. いぬ (dog): H-L.</li>
+            <li style="margin-bottom:0.9rem;"><strong>Nakadaka 中高 [2,3…]</strong> — mora 1 low, mora 2 rises, then the pitch drops somewhere in the middle before the end of the word. The exact drop position varies by word, which is why dictionary notation matters. About 15% of common words. こころ (heart): L-H-L.</li>
+            <li><strong>Odaka 尾高 [n]</strong> — mora 1 low, rises on mora 2, stays high through the last mora of the word — then drops on any following particle. In isolation, odaka and heiban sound nearly identical. The difference only shows up with a particle. はし (bridge) + が: L-H↓L. Contrast with heiban はし + が: L-H-H.</li>
           </ul>
         </div>
 
         <div class="callout tip">
-          Minimal pairs doesn't teach you how to say words — it teaches your ear to notice pitch differences at all. That awareness is what lets immersion do the rest of the work.
+          <strong>The odaka/heiban trick:</strong> say the word with が after it. If the が drops low, it's odaka. If it stays high, it's heiban. This is the only reliable way to tell them apart in speech.
+        </div>
+
+        <h3>Dictionary notation</h3>
+        <p>Yomitan (with the pitch accent dictionary installed) shows a number in brackets: <strong>[0]</strong> means heiban, <strong>[1]</strong> means atamadaka, and higher numbers indicate which mora the pitch drops after. So <strong>[2]</strong> on a four-mora word means: low, high, drop, low, low. Once you know this system, every dictionary entry tells you exactly how to pitch the word.</p>
+
+        <h3>What not to do</h3>
+        <p>The most common mistake English speakers make is applying stress to Japanese — pushing air and making one mora louder or longer to "emphasise" it. That's the wrong instinct entirely. Keep every mora roughly equal in length and volume; only the pitch changes. The difference between high and low pitch in Japanese is also more subtle than the big melodic swings English uses for questions and exclamations — aim for a gentle step up or down, not a dramatic sweep.</p>
+
+        <h3>How to train</h3>
+        <ol class="steps">
+          <li class="step"><span class="step-n">01</span><span class="step-body">Watch a <strong>pitch accent intro video</strong> — even 10 minutes gives you the mental model you need before doing any ear training.</span></li>
+          <li class="step"><span class="step-n">02</span><span class="step-body">Read a short <strong>pattern primer</strong> to cement the four types. Usagi Chan's guide is the most learner-friendly written explanation.</span></li>
+          <li class="step"><span class="step-n">03</span><span class="step-body">Do <strong>minimal pairs daily</strong> on Kuuube's trainer. This is pure ear training — you hear two words and decide which pattern they follow. Start with 10 minutes a day. You're not learning to produce pitch yet, just to hear it.</span></li>
+          <li class="step"><span class="step-n">04</span><span class="step-body">When you set up Yomitan, install the <strong>アクセント辞典 dictionary</strong>. From that point on, every word you look up shows its pitch pattern. Passive exposure adds up fast.</span></li>
+        </ol>
+
+        <div class="callout warn">
+          Don't let pitch accent become a roadblock. Spend a couple of weeks building ear awareness, then move on to immersion. You'll keep absorbing pitch patterns naturally as long as you've trained your ear to notice them.
         </div>
 
         <h3>Resources</h3>
         <div class="link-grid">
           <a class="link-card" href="https://www.youtube.com/watch?v=aOxRYmWDaF4" target="_blank">
-            <p class="link-card-title">Pitch Accent Explanation</p>
+            <p class="link-card-title">Pitch Accent Intro Video</p>
             <p class="link-card-desc">What pitch accent is and why it matters</p>
           </a>
           <a class="link-card" href="https://docs.google.com/document/d/1ReBf08JFK4n0PXdOxThAfWuiK9UWVZEWWzeKSECWTQo/edit#heading=h.p1aowci5qgxr" target="_blank">
-            <p class="link-card-title">Pitch Accent How-To Guide</p>
-            <p class="link-card-desc">Usagi Chan's pitch accent primer — patterns explained</p>
+            <p class="link-card-title">Usagi Chan's Primer</p>
+            <p class="link-card-desc">Clear written breakdown of the four patterns</p>
           </a>
           <a class="link-card" href="https://kuuuube.github.io/minimal-pairs/" target="_blank">
             <p class="link-card-title">Kuuube's Minimal Pairs</p>
-            <p class="link-card-desc">Ear training — tell high from low pitch</p>
+            <p class="link-card-desc">Daily ear training — high vs low pitch</p>
           </a>
           <a class="link-card" href="https://kotu.io/" target="_blank">
             <p class="link-card-title">KOTU.io</p>
-            <p class="link-card-desc">Pitch accent recognition trainer</p>
+            <p class="link-card-desc">Pattern recognition trainer with audio</p>
           </a>
           <a class="link-card" href="https://www.youtube.com/watch?v=I-dRbTnLmBY" target="_blank">
-            <p class="link-card-title">Darius — Notes on Pitch Acquisition</p>
-            <p class="link-card-desc">How to actually acquire pitch through immersion</p>
+            <p class="link-card-title">Darius — Pitch Acquisition</p>
+            <p class="link-card-desc">How pitch gets absorbed through immersion</p>
           </a>
         </div>
 
         <hr>
         <h3>Goal</h3>
-        <p>Pass minimal pairs — you should be able to reliably distinguish high from low pitch in test conditions. You don't need to produce correct pitch yet. That comes later through immersion and deliberate output practice.</p>
+        <p>Be able to reliably tell high from low pitch in minimal pairs. You're not aiming to produce correct pitch at this stage — that comes through immersion and output practice much later. You're just training your ear to notice pitch at all, so it can do its job passively from here on.</p>
       </div>
 
       <div class="page-nav">
