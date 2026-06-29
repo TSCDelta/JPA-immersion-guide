@@ -5800,7 +5800,7 @@ function closeLightbox() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
 // Wrap all annotated images and the standalone gif with the img-wrap + button
-document.querySelectorAll('.annotated img, img[src="Animation2.gif"], .gif-wrap img, .img-figure img').forEach(img => {
+document.querySelectorAll('.annotated img, img[src="Animation2.gif"]').forEach(img => {
   const wrap = document.createElement('div');
   wrap.className = 'img-wrap';
   img.parentNode.insertBefore(wrap, img);
@@ -5811,6 +5811,20 @@ document.querySelectorAll('.annotated img, img[src="Animation2.gif"], .gif-wrap 
   btn.onclick = (e) => { e.stopPropagation(); openLightbox(img.src, img.alt); };
   wrap.appendChild(btn);
   img.onclick = () => openLightbox(img.src, img.alt);
+});
+
+// Handle gif-wrap and img-figure containers separately
+document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
+  const img = container.querySelector('img');
+  if (img) {
+    const btn = document.createElement('button');
+    btn.className = 'img-expand-btn';
+    btn.textContent = 'click to expand';
+    btn.onclick = (e) => { e.stopPropagation(); openLightbox(img.src, img.alt); };
+    container.appendChild(btn);
+    img.onclick = () => openLightbox(img.src, img.alt);
+    img.style.cursor = 'pointer';
+  }
 });
 </script>
 </body>
