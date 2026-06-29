@@ -1445,6 +1445,29 @@
     opacity: 1 !important;
     pointer-events: auto !important;
   }
+
+  /* Separate button for gif-wrap and img-figure containers */
+  .img-container-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 5px;
+    color: var(--text-muted);
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 4px 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+  }
+  .img-container-btn:hover {
+    color: var(--text);
+    background: rgba(0,0,0,0.75);
+  }
   .lightbox {
     display: none;
     position: fixed;
@@ -5828,7 +5851,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     btnWrapper.appendChild(img);
     
     const btn = document.createElement('button');
-    btn.className = 'img-expand-btn';
+    btn.className = 'img-container-btn';
     btn.textContent = 'click to expand';
     btn.onclick = (e) => { e.stopPropagation(); openLightbox(img.src, img.alt); };
     btnWrapper.appendChild(btn);
