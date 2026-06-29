@@ -1377,9 +1377,39 @@
   .anki-panel.active { display: block; }
   .anki-panel h3:first-child { margin-top: 0; }
 
+  /* ── yomitan page: internal sub-tabs ── */
+  .yomitan-subnav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0.25rem 0 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .yomitan-tab {
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 7px 13px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .yomitan-tab:hover { color: var(--text); background: var(--bg-2); }
+  .yomitan-tab.active {
+    color: var(--text);
+    background: var(--bg-3);
+    border-color: var(--border-strong);
+  }
+  .yomitan-panel { display: none; }
+  .yomitan-panel.active { display: block; }
+  .yomitan-panel h3:first-child { margin-top: 0; }
+
   @media (max-width: 680px) {
-    .anki-subnav { gap: 3px; }
-    .anki-tab { font-size: 12px; padding: 6px 10px; }
+    .yomitan-subnav { gap: 3px; }
+    .yomitan-tab { font-size: 12px; padding: 6px 10px; }
   }
 
   /* ── LIGHTBOX ── */
@@ -1922,10 +1952,10 @@
           <div class="reading-panel active" id="rp-manga">
             <p>Manga is one of the best complements to anime. It builds reading speed, exposes you to more kanji in context, and the visual storytelling makes it easy to follow even at lower levels. The same 0–2 unknown rule applies: look up what you can, skip what's overwhelming, and keep moving.</p>
 
-            <div class="img-placeholder">
-              <span class="img-placeholder-icon">🖼</span>
-              <span class="img-placeholder-label">Image placeholder — e.g. Mokuro or Manatan in action on a manga page</span>
-            </div>
+            <figure class="img-figure">
+              <img src="manga.png" alt="Manga reading with Yomitan">
+              <figcaption>Reading manga with Yomitan OCR support</figcaption>
+            </figure>
 
             <p>To get Yomitan working on manga you need OCR, since the text is part of the image. <strong>Manatan</strong> is the easiest all-in-one option — it handles OCR automatically and works on desktop, iOS, and Android. <strong>Mokuro</strong> pre-processes manga into hoverable HTML pages for desktop use.</p>
             <div class="link-grid">
@@ -1960,10 +1990,10 @@
           <div class="reading-panel" id="rp-ln">
             <p>Prose is harder than manga — no pictures to fill in the gaps, denser vocabulary, and more complex grammar. That said, web novels on Syosetu and Kakuyomu are written for casual reading and tend to be more accessible than retail books.</p>
 
-            <div class="img-placeholder">
-              <span class="img-placeholder-icon">🖼</span>
-              <span class="img-placeholder-label">Image placeholder — e.g. ッツ Reader with Yomitan popup visible</span>
-            </div>
+            <figure class="img-figure">
+              <img src="ranobe.png" alt="Light novel reading">
+              <figcaption>Reading light novels with vertical text support</figcaption>
+            </figure>
 
             <p>For ebooks, the <strong>ッツ Reader</strong> renders Japanese text vertically in-browser and is compatible with Yomitan. On mobile, <strong>Hoshi Reader</strong> (iOS) has first-class support for vertical text and dictionary lookups.</p>
             <div class="link-grid">
@@ -2001,10 +2031,10 @@
           <div class="reading-panel" id="rp-vn">
             <p>Visual novels sit somewhere between reading and watching: voiced dialogue means you're training your ears at the same time as your reading, which makes them one of the most efficient immersion formats once you have some foundation.</p>
 
-            <div class="img-placeholder">
-              <span class="img-placeholder-icon">🖼</span>
-              <span class="img-placeholder-label">Image placeholder — e.g. Textractor or JL with a VN in the background</span>
-            </div>
+            <figure class="img-figure">
+              <img src="visual_novel.png" alt="Visual novel with text hooking">
+              <figcaption>Text hooking setup for visual novels with dictionary support</figcaption>
+            </figure>
 
             <p>Text hooking with <strong>Textractor</strong> or <strong>JL</strong> lets you hover over any line with Yomitan, making lookups just as smooth as with anime subtitles. Ryuugames has a large catalogue of VNs available for download.</p>
             <div class="link-grid">
@@ -2042,10 +2072,10 @@
           <div class="reading-panel" id="rp-games">
             <p>Games are harder to set up than VNs but extremely good for immersion — particularly RPGs, adventure games, and story-driven titles where you're reading a lot and the gameplay holds your attention.</p>
 
-            <div class="img-placeholder">
-              <span class="img-placeholder-icon">🖼</span>
-              <span class="img-placeholder-label">Image placeholder — e.g. YomiNinja overlay on a game screen</span>
-            </div>
+            <figure class="img-figure">
+              <img src="game.png" alt="Game with text hooking">
+              <figcaption>Text extraction and Yomitan dictionary support in games</figcaption>
+            </figure>
 
             <p>Text extraction varies by engine. <strong>Agent</strong> covers many emulator and PC game engines with script-based hooking, and <strong>GameSentenceMiner</strong> makes mining from games straightforward once you have it running.</p>
             <div class="link-grid">
@@ -2512,6 +2542,12 @@
       <h3>Reading: manga</h3>
       <p>Manga is one of the best complements to anime! It builds reading speed, exposes you to more kanji in context, and the visual storytelling makes it easy to follow even at lower levels. The same 0–2 unknown rule applies: look up what you can, skip what's overwhelming, and keep moving.</p>
       <p>To get Yomitan working on manga you need OCR, since the text is part of the image. <strong>Manatan</strong> is the easiest all-in-one option. It handles OCR automatically and works on desktop, iOS, and Android. <strong>Mokuro</strong> pre-processes manga into hoverable HTML pages for desktop use.</p>
+      
+      <figure class="img-figure">
+        <img src="manga.png" alt="Manga reading">
+        <figcaption>Reading manga with Yomitan OCR support</figcaption>
+      </figure>
+
       <div class="link-grid">
         <a class="link-card" href="https://github.com/KolbyML/Manatan" target="_blank">
           <p class="link-card-title">Manatan</p>
@@ -2542,6 +2578,12 @@
       <hr>
       <h3>Reading: novels &amp; light novels</h3>
       <p>Prose is harder than manga, no pictures to fill in the gaps, denser vocabulary, and more complex grammar. That said, web novels on Syosetu and Kakuyomu are written for casual reading and tend to be more accessible than retail books. For ebooks, the <strong>ッツ Reader</strong> renders Japanese text vertically in-browser and is compatible with Yomitan. If you're on mobile, <strong>Hoshi Reader</strong> (iOS) and <strong>Hoshi Reader Android</strong> both have first-class support for vertical text and dictionary lookups.</p>
+      
+      <figure class="img-figure">
+        <img src="ranobe.png" alt="Light novel reading">
+        <figcaption>Reading light novels with vertical text support</figcaption>
+      </figure>
+
       <div class="link-grid">
         <a class="link-card" href="https://reader.ttsu.app/" target="_blank">
           <p class="link-card-title">ッツ Ebook Reader</p>
@@ -2575,6 +2617,12 @@
       <hr>
       <h3>Visual novels</h3>
       <p>Visual novels sit somewhere between reading and watching: voiced dialogue means you're training your ears at the same time as your reading, which makes them one of the most efficient immersion formats once you have some foundation. Text hooking with <strong>Textractor</strong> or <strong>JL</strong> lets you hover over any line with Yomitan, making lookups just as smooth as with anime subtitles. Ryuugames has a large catalogue of VNs available for download, and TheMoeWay has a full setup guide to get everything running.</p>
+      
+      <figure class="img-figure">
+        <img src="visual_novel.png" alt="Visual novel with text hooking">
+        <figcaption>Text hooking setup for visual novels with dictionary support</figcaption>
+      </figure>
+
       <div class="link-grid">
         <a class="link-card" href="https://www.ryuugames.com/" target="_blank">
           <p class="link-card-title">Ryuugames</p>
@@ -2887,97 +2935,135 @@
         Yomitan is the single most important tool in this guide. Everything from immersion to sentence mining depends on it. Set it up before you start immersing.
       </div>
 
-      <h3>Install the extension</h3>
-      <div class="link-grid">
-        <a class="link-card" href="https://chromewebstore.google.com/detail/yomitan-popup-dictionary/likgccmbimhjbgkjambclfkhldnlhbnn" target="_blank">
-          <p class="link-card-title">Yomitan — Chrome / Edge</p>
-          <p class="link-card-desc">Install from the Chrome Web Store</p>
-        </a>
-        <a class="link-card" href="https://addons.mozilla.org/en-US/firefox/addon/yomitan/" target="_blank">
-          <p class="link-card-title">Yomitan — Firefox</p>
-          <p class="link-card-desc">Install from Firefox Add-ons</p>
-        </a>
-        <a class="link-card" href="https://yomitan.wiki/" target="_blank">
-          <p class="link-card-title">Yomitan Wiki</p>
-          <p class="link-card-desc">Official documentation and advanced setup guides</p>
-        </a>
+      <div class="yomitan-subnav">
+        <button class="yomitan-tab active" data-yomitan="intro" onclick="yomitanGo('intro')">What is Yomitan?</button>
+        <button class="yomitan-tab" data-yomitan="install" onclick="yomitanGo('install')">Installation</button>
+        <button class="yomitan-tab" data-yomitan="dictionaries" onclick="yomitanGo('dictionaries')">Dictionary Installation</button>
+        <button class="yomitan-tab" data-yomitan="audio" onclick="yomitanGo('audio')">Local Audio</button>
+        <button class="yomitan-tab" data-yomitan="anki" onclick="yomitanGo('anki')">Connecting to Anki</button>
       </div>
 
-      <figure class="img-figure">
-        <div class="img-figure-placeholder">image — yomitan settings popup</div>
-        <figcaption>The Yomitan settings page — accessed by clicking the extension icon then the cog ⚙</figcaption>
-      </figure>
+      <!-- INTRO -->
+      <div class="yomitan-panel active" id="yomitan-intro">
+        <h3>What is Yomitan?</h3>
+        <p>Yomitan is a free browser extension that lets you hover over any Japanese text to instantly see readings, definitions, pitch accent, and example sentences. It's available on Chrome, Edge, and Firefox. Once you learn kanji naturally through immersion, Yomitan lets you look up unfamiliar words instantly without breaking the flow.</p>
 
-      <hr>
-      <h3>Step 1 — Install dictionaries</h3>
-      <p>Yomitan does nothing without dictionaries loaded into it. Dictionaries come as <code>.zip</code> files — do not extract them. Download the ones below and import them directly.</p>
+        <p>The best part? You can connect it directly to Anki. Find a word you want to remember, and with one keypress you've saved it as a flashcard — sentence, audio, images and all. This is called sentence mining, and it's how serious learners build their personal vocabulary deck.</p>
 
-      <div class="callout tip">
-        <strong>Get the dictionaries</strong> — grab shoui's collection <a href="https://learnjapanese.link/dictionaries" target="_blank" style="color:var(--text)">here</a> and MarvNC's collection <a href="https://github.com/MarvNC/yomitan-dictionaries" target="_blank" style="color:var(--text)">here</a>. Between them they have everything you'll need.
+        <div class="gif-wrap"><img src="Animation4.gif" alt="Yomitan popup in action"></div>
+
+        <h3>Setup video</h3>
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/mjxshJATvi0" allowfullscreen loading="lazy" title="Yomitan Introduction"></iframe>
+        </div>
       </div>
 
-      <p>Install these five to start:</p>
-      <div class="card">
-        <ul>
-          <li><strong>JMdict (Bilingual)</strong> — the core Japanese–English dictionary, used by Jisho and most apps</li>
-          <li><strong>新和英 (Shinwaei)</strong> — Japanese–English dictionary aimed at native speakers, with many example sentences</li>
-          <li><strong>KANJIDIC (Kanji)</strong> — lets you click individual kanji in a word to see readings and meanings</li>
-          <li><strong>Dictionary of Japanese Grammar</strong> — look up grammar patterns directly from the popup</li>
-          <li><strong>アクセント辞典 v2 (Pitch Accent)</strong> — shows the pitch accent pattern for every word</li>
-        </ul>
+      <!-- INSTALLATION -->
+      <div class="yomitan-panel" id="yomitan-install">
+        <h3>Install the extension</h3>
+        <p>Choose your browser and install Yomitan from the official store. It's free and available on all major browsers.</p>
+        <div class="link-grid">
+          <a class="link-card" href="https://chromewebstore.google.com/detail/yomitan-popup-dictionary/likgccmbimhjbgkjambclfkhldnlhbnn" target="_blank">
+            <p class="link-card-title">Yomitan — Chrome / Edge</p>
+            <p class="link-card-desc">Install from the Chrome Web Store</p>
+          </a>
+          <a class="link-card" href="https://addons.mozilla.org/en-US/firefox/addon/yomitan/" target="_blank">
+            <p class="link-card-title">Yomitan — Firefox</p>
+            <p class="link-card-desc">Install from Firefox Add-ons</p>
+          </a>
+          <a class="link-card" href="https://yomitan.wiki/" target="_blank">
+            <p class="link-card-title">Yomitan Wiki</p>
+            <p class="link-card-desc">Official documentation and advanced setup guides</p>
+          </a>
+        </div>
+
+        <figure class="img-figure">
+          <img src="yomi_set.png" alt="Yomitan settings popup">
+          <figcaption>The Yomitan settings page — accessed by clicking the extension icon then the cog ⚙</figcaption>
+        </figure>
       </div>
 
-      <h3>Step 2 — Import dictionaries into Yomitan</h3>
-      <ol class="steps">
-        <li class="step"><span class="step-n">01</span><span class="step-body">Click the <strong>Yomitan icon</strong> in your browser toolbar, then click the <strong>cog ⚙</strong> to open settings.</span></li>
-        <li class="step"><span class="step-n">02</span><span class="step-body">In the left sidebar, click <strong>Dictionaries</strong>, then click <strong>"Configure installed and enabled dictionaries…"</strong></span></li>
-        <li class="step"><span class="step-n">03</span><span class="step-body">Click the <strong>Import</strong> button. Select all five <code>.zip</code> files at once. Wait for them to finish importing — it takes a minute.</span></li>
-        <li class="step"><span class="step-n">04</span><span class="step-body">Test it: hold <kbd>Shift</kbd> and hover over this — 日本語. A popup should appear with the reading and definition.</span></li>
-      </ol>
+      <!-- DICTIONARY INSTALLATION -->
+      <div class="yomitan-panel" id="yomitan-dictionaries">
+        <h3>Dictionary Installation</h3>
+        <p>Yomitan does nothing without dictionaries loaded into it. Dictionaries come as <code>.zip</code> files — do not extract them. Download the ones below and import them directly.</p>
 
-      <div class="gif-wrap">gif — importing dictionaries</div>
+        <div class="callout tip">
+          <strong>Get the dictionaries</strong> — grab shoui's collection <a href="https://learnjapanese.link/dictionaries" target="_blank" style="color:var(--text)">here</a> and MarvNC's collection <a href="https://github.com/MarvNC/yomitan-dictionaries" target="_blank" style="color:var(--text)">here</a>. Between them they have everything you'll need.
+        </div>
 
-      <div class="callout info">
-        If the popup doesn't appear, make sure the extension is enabled and the page isn't restricted (browser settings pages, PDF files, and extension pages block it). Try hovering over text on a regular website.
+        <p>Install these five to start:</p>
+        <div class="card">
+          <ul>
+            <li><strong>JMdict (Bilingual)</strong> — the core Japanese–English dictionary, used by Jisho and most apps</li>
+            <li><strong>新和英 (Shinwaei)</strong> — Japanese–English dictionary aimed at native speakers, with many example sentences</li>
+            <li><strong>KANJIDIC (Kanji)</strong> — lets you click individual kanji in a word to see readings and meanings</li>
+            <li><strong>Dictionary of Japanese Grammar</strong> — look up grammar patterns directly from the popup</li>
+            <li><strong>アクセント辞典 v2 (Pitch Accent)</strong> — shows the pitch accent pattern for every word</li>
+          </ul>
+        </div>
+
+        <h3>Import dictionaries into Yomitan</h3>
+        <ol class="steps">
+          <li class="step"><span class="step-n">01</span><span class="step-body">Click the <strong>Yomitan icon</strong> in your browser toolbar, then click the <strong>cog ⚙</strong> to open settings.</span></li>
+          <li class="step"><span class="step-n">02</span><span class="step-body">In the left sidebar, click <strong>Dictionaries</strong>, then click <strong>"Configure installed and enabled dictionaries…"</strong></span></li>
+          <li class="step"><span class="step-n">03</span><span class="step-body">Click the <strong>Import</strong> button. Select all five <code>.zip</code> files at once. Wait for them to finish importing — it takes a minute.</span></li>
+          <li class="step"><span class="step-n">04</span><span class="step-body">Test it: hold <kbd>Shift</kbd> and hover over this — 日本語. A popup should appear with the reading and definition.</span></li>
+        </ol>
+
+        <div class="gif-wrap"><img src="Animation3.gif" alt="Importing dictionaries into Yomitan"></div>
+
+        <div class="callout info">
+          If the popup doesn't appear, make sure the extension is enabled and the page isn't restricted (browser settings pages, PDF files, and extension pages block it). Try hovering over text on a regular website.
+        </div>
+
+        <h3>Add frequency dictionaries (optional)</h3>
+        <p>Frequency dictionaries show you how common a word is — useful for knowing whether it's worth mining. Install one or both:</p>
+        <div class="card">
+          <ul>
+            <li><strong>JPDB</strong> — frequency based on anime, light novels, and visual novels. Good for immersion learners.</li>
+            <li><strong>CC100</strong> — frequency based on Japanese internet text. Formal and written words rank higher here.</li>
+          </ul>
+        </div>
+        <p>A rough guide to what frequency numbers mean: 1–10k is very common, 10–20k is common, 20–30k is fairly common, 30–50k is getting uncommon, above 50k is rare.</p>
       </div>
 
-      <hr>
-      <h3>Step 3 — Add frequency dictionaries (optional)</h3>
-      <p>Frequency dictionaries show you how common a word is — useful for knowing whether it's worth mining. Install one or both:</p>
-      <div class="card">
-        <ul>
-          <li><strong>JPDB</strong> — frequency based on anime, light novels, and visual novels. Good for immersion learners.</li>
-          <li><strong>CC100</strong> — frequency based on Japanese internet text. Formal and written words rank higher here.</li>
-        </ul>
-      </div>
-      <p>A rough guide to what frequency numbers mean: 1–10k is very common, 10–20k is common, 20–30k is fairly common, 30–50k is getting uncommon, above 50k is rare.</p>
-
-      <hr>
-      <h3>Step 4 — Local audio (recommended)</h3>
-      <p>The default audio source in Yomitan (JapanesePod101) sometimes has wrong pitch and many missing words. Local audio uses a curated native speaker database stored on your machine — faster, more accurate, and works offline.</p>
-      <div class="link-grid">
-        <a class="link-card" href="https://learnjapanese.moe/yomichan/#bonus-local-audio" target="_blank">
-          <p class="link-card-title">Local audio setup guide</p>
-          <p class="link-card-desc">TheMoeWay's step-by-step local audio setup</p>
-        </a>
-        <a class="link-card" href="https://github.com/yomidevs/local-audio-yomichan" target="_blank">
-          <p class="link-card-title">Local Audio Server (GitHub)</p>
-          <p class="link-card-desc">The local audio server for Yomitan</p>
-        </a>
+      <!-- LOCAL AUDIO -->
+      <div class="yomitan-panel" id="yomitan-audio">
+        <h3>Local Audio (recommended)</h3>
+        <p>The default audio source in Yomitan (JapanesePod101) sometimes has wrong pitch and many missing words. Local audio uses a curated native speaker database stored on your machine — faster, more accurate, and works offline.</p>
+        <div class="link-grid">
+          <a class="link-card" href="https://learnjapanese.moe/yomichan/#bonus-local-audio" target="_blank">
+            <p class="link-card-title">Local audio setup guide</p>
+            <p class="link-card-desc">TheMoeWay's step-by-step local audio setup</p>
+          </a>
+          <a class="link-card" href="https://github.com/yomidevs/local-audio-yomichan" target="_blank">
+            <p class="link-card-title">Local Audio Server (GitHub)</p>
+            <p class="link-card-desc">The local audio server for Yomitan</p>
+          </a>
+        </div>
       </div>
 
-      <hr>
-      <h3>Connecting Yomitan to Anki</h3>
-      <p>Once you're set up and immersing, you can connect Yomitan to Anki so that looking up a word and saving it to a flashcard is a single keypress. This is covered in the sentence mining section.</p>
-      <div class="link-grid">
-        <a class="link-card" href="https://yomitan.wiki/anki/" target="_blank">
-          <p class="link-card-title">Yomitan × Anki — official guide</p>
-          <p class="link-card-desc">How to configure the Anki integration</p>
-        </a>
-        <a class="link-card" href="https://learnjapanese.moe/yomichan/" target="_blank">
-          <p class="link-card-title">Full setup guide (TheMoeWay)</p>
-          <p class="link-card-desc">Yomitan + dictionaries + Anki in one walkthrough</p>
-        </a>
+      <!-- CONNECTING TO ANKI -->
+      <div class="yomitan-panel" id="yomitan-anki">
+        <h3>Connecting Yomitan to Anki</h3>
+        <p>Once you're set up and immersing, you can connect Yomitan to Anki so that looking up a word and saving it to a flashcard is a single keypress. This is sentence mining — it builds your personal vocabulary deck from content you actually encounter.</p>
+
+        <h3>Sentence mining setup</h3>
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/PAUYnp5wOE0" allowfullscreen loading="lazy" title="Connecting Yomitan to Anki"></iframe>
+        </div>
+
+        <div class="link-grid">
+          <a class="link-card" href="https://yomitan.wiki/anki/" target="_blank">
+            <p class="link-card-title">Yomitan × Anki — official guide</p>
+            <p class="link-card-desc">How to configure the Anki integration</p>
+          </a>
+          <a class="link-card" href="https://learnjapanese.moe/yomichan/" target="_blank">
+            <p class="link-card-title">Full setup guide (TheMoeWay)</p>
+            <p class="link-card-desc">Yomitan + dictionaries + Anki in one walkthrough</p>
+          </a>
+        </div>
       </div>
 
       <div class="page-nav">
@@ -5412,6 +5498,15 @@ function ankiGo(id) {
   document.querySelectorAll('.anki-tab').forEach(t => t.classList.remove('active'));
   const panel = document.getElementById('anki-' + id);
   const tab = document.querySelector('.anki-tab[data-anki="' + id + '"]');
+  if (panel) panel.classList.add('active');
+  if (tab) tab.classList.add('active');
+}
+
+function yomitanGo(id) {
+  document.querySelectorAll('.yomitan-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.yomitan-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('yomitan-' + id);
+  const tab = document.querySelector('.yomitan-tab[data-yomitan="' + id + '"]');
   if (panel) panel.classList.add('active');
   if (tab) tab.classList.add('active');
 }
