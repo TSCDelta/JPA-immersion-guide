@@ -2020,6 +2020,7 @@
   }
   .reading-panel { display: none; }
   .reading-panel.active { display: block; }
+  .reading-panel > * { transition: opacity 0.28s ease, transform 0.28s ease; }
 
   /* Image placeholder */
   .img-placeholder {
@@ -3775,176 +3776,195 @@
       </div>
 
       <hr>
-      <h3>Practice tests</h3>
-      <p>Doing timed mock tests under real conditions is the most effective way to prepare. The JLPT format is specific. Knowing how questions are structured saves time on the day.</p>
-      <div class="link-grid">
-        <a class="link-card" href="https://ten-jlpt-site.vercel.app/" target="_blank">
-          <p class="link-card-title">Ten.Guide JLPT Practice Tests</p>
-          <p class="link-card-desc">Practice tests for all levels (Made by Ten.Guide)</p>
-        </a>
-        <a class="link-card" href="https://www.jlptpracticetest.com/" target="_blank">
-          <p class="link-card-title">JLPT Practice Test</p>
-          <p class="link-card-desc">105 past exam tests, N1–N5, with instant feedback</p>
-        </a>
-        <a class="link-card" href="https://www.jlpt.jp/e/samples/sampleindex.html" target="_blank">
-          <p class="link-card-title">Official Practice Workbooks</p>
-          <p class="link-card-desc">Free downloadable past papers from the JLPT body</p>
-        </a>
+
+      <div id="jlpt-tabs">
+      <div class="reading-subnav">
+        <button class="reading-tab active" onclick="subTabGo('jlpt-tabs','jlpt-tests',this)">Practice tests</button>
+        <button class="reading-tab" onclick="subTabGo('jlpt-tabs','jlpt-reading',this)">Reading material</button>
+        <button class="reading-tab" onclick="subTabGo('jlpt-tabs','jlpt-books',this)">Study books</button>
+        <button class="reading-tab" onclick="subTabGo('jlpt-tabs','jlpt-decks',this)">Anki decks</button>
+        <button class="reading-tab" onclick="subTabGo('jlpt-tabs','jlpt-grammar',this)">Grammar resources</button>
+        <button class="reading-tab" onclick="subTabGo('jlpt-tabs','jlpt-platforms',this)">Study platforms</button>
       </div>
 
-      <hr>
-      <h3>Reading material</h3>
-      <p>The N2 and N1 reading sections pull heavily from formal written Japanese: essays, editorials, informational texts. Note.com (personal essays and commentary) and NHK Web (news articles) are good sources of level-appropriate native reading material you can mine with Yomitan.</p>
-      <div class="link-grid">
-        <a class="link-card" href="https://note.com/" target="_blank">
-          <p class="link-card-title">Note.com</p>
-          <p class="link-card-desc">Japanese essays and opinion pieces</p>
-        </a>
-        <a class="link-card" href="https://www.nhk.or.jp/news/" target="_blank">
-          <p class="link-card-title">NHK Web News</p>
-          <p class="link-card-desc">Formal news Japanese, good for N2–N1</p>
-        </a>
-        <a class="link-card" href="https://www3.nhk.or.jp/news/easy/" target="_blank">
-          <p class="link-card-title">NHK Web Easy</p>
-          <p class="link-card-desc">Simplified news articles for N4–N3</p>
-        </a>
-        <a class="link-card" href="https://nihongoyokozuna.site/" target="_blank">
-          <p class="link-card-title">Nihongo Yokozuna</p>
-          <p class="link-card-desc">Reading comprehension articles with questions, answers, commentary, and vocab lists, entirely in Japanese. N1</p>
-        </a>
+      <div class="reading-panel active" id="jlpt-tests">
+        <h3>Practice tests</h3>
+        <p>Doing timed mock tests under real conditions is the most effective way to prepare. The JLPT format is specific. Knowing how questions are structured saves time on the day.</p>
+        <div class="link-grid">
+          <a class="link-card" href="https://ten-jlpt-site.vercel.app/" target="_blank">
+            <p class="link-card-title">Ten.Guide JLPT Practice Tests</p>
+            <p class="link-card-desc">Practice tests for all levels (Made by Ten.Guide)</p>
+          </a>
+          <a class="link-card" href="https://www.jlptpracticetest.com/" target="_blank">
+            <p class="link-card-title">JLPT Practice Test</p>
+            <p class="link-card-desc">105 past exam tests, N1–N5, with instant feedback</p>
+          </a>
+          <a class="link-card" href="https://www.jlpt.jp/e/samples/sampleindex.html" target="_blank">
+            <p class="link-card-title">Official Practice Workbooks</p>
+            <p class="link-card-desc">Free downloadable past papers from the JLPT body</p>
+          </a>
+        </div>
       </div>
 
-      <hr>
-      <h3>Study books</h3>
-      <p>The two dominant prep series approach the exam differently. Most serious learners combine them. Sou Matome for an accessible first pass, Kanzen Master to consolidate weak areas closer to the exam.</p>
+      <div class="reading-panel" id="jlpt-reading">
+        <h3>Reading material</h3>
+        <p>The N2 and N1 reading sections pull heavily from formal written Japanese: essays, editorials, informational texts. Note.com (personal essays and commentary) and NHK Web (news articles) are good sources of level-appropriate native reading material you can mine with Yomitan.</p>
+        <div class="link-grid">
+          <a class="link-card" href="https://note.com/" target="_blank">
+            <p class="link-card-title">Note.com</p>
+            <p class="link-card-desc">Japanese essays and opinion pieces</p>
+          </a>
+          <a class="link-card" href="https://www.nhk.or.jp/news/" target="_blank">
+            <p class="link-card-title">NHK Web News</p>
+            <p class="link-card-desc">Formal news Japanese, good for N2–N1</p>
+          </a>
+          <a class="link-card" href="https://www3.nhk.or.jp/news/easy/" target="_blank">
+            <p class="link-card-title">NHK Web Easy</p>
+            <p class="link-card-desc">Simplified news articles for N4–N3</p>
+          </a>
+          <a class="link-card" href="https://nihongoyokozuna.site/" target="_blank">
+            <p class="link-card-title">Nihongo Yokozuna</p>
+            <p class="link-card-desc">Reading comprehension articles with questions, answers, commentary, and vocab lists, entirely in Japanese. N1</p>
+          </a>
+        </div>
+      </div>
 
-      <div class="basics-grid">
+      <div class="reading-panel" id="jlpt-books">
+        <h3>Study books</h3>
+        <p>The two dominant prep series approach the exam differently. Most serious learners combine them. Sou Matome for an accessible first pass, Kanzen Master to consolidate weak areas closer to the exam.</p>
 
-        <div class="basics-card">
-          <div class="basics-card-head">
-            <span class="basics-num" style="color:var(--blue);">新</span>
-            <div>
-              <div class="basics-card-title">Shin Kanzen Master</div>
-              <div class="basics-card-sub">新完全マスター · N4–N1 · thorough</div>
+        <div class="basics-grid">
+
+          <div class="basics-card">
+            <div class="basics-card-head">
+              <span class="basics-num" style="color:var(--blue);">新</span>
+              <div>
+                <div class="basics-card-title">Shin Kanzen Master</div>
+                <div class="basics-card-sub">新完全マスター · N4–N1 · thorough</div>
+              </div>
+            </div>
+            <p class="basics-card-body">Separate books per skill (grammar, vocab, kanji, reading, listening). Mostly in Japanese, demanding, and the go-to for people aiming to pass with a solid score rather than scrape by. Best from N3 upwards. Does not cover N5.</p>
+            <div class="basics-links">
+              <a href="https://www.amazon.com/dp/B08WS4MHXM" target="_blank">N4 set <span>↗</span></a>
+              <a href="https://www.amazon.com/dp/B092QMNMY7" target="_blank">N3 set <span>↗</span></a>
+              <a href="https://www.amazon.com/dp/B092QN1B8W" target="_blank">N2 set <span>↗</span></a>
+              <a href="https://www.amazon.com/dp/B07B2N1XGN" target="_blank">N1 set <span>↗</span></a>
             </div>
           </div>
-          <p class="basics-card-body">Separate books per skill (grammar, vocab, kanji, reading, listening). Mostly in Japanese, demanding, and the go-to for people aiming to pass with a solid score rather than scrape by. Best from N3 upwards. Does not cover N5.</p>
-          <div class="basics-links">
-            <a href="https://www.amazon.com/dp/B08WS4MHXM" target="_blank">N4 set <span>↗</span></a>
-            <a href="https://www.amazon.com/dp/B092QMNMY7" target="_blank">N3 set <span>↗</span></a>
-            <a href="https://www.amazon.com/dp/B092QN1B8W" target="_blank">N2 set <span>↗</span></a>
-            <a href="https://www.amazon.com/dp/B07B2N1XGN" target="_blank">N1 set <span>↗</span></a>
-          </div>
-        </div>
 
-        <div class="basics-card">
-          <div class="basics-card-head">
-            <span class="basics-num" style="color:var(--amber);">総</span>
-            <div>
-              <div class="basics-card-title">Nihongo Sou Matome</div>
-              <div class="basics-card-sub">日本語総まとめ · N5–N1 · accessible</div>
+          <div class="basics-card">
+            <div class="basics-card-head">
+              <span class="basics-num" style="color:var(--amber);">総</span>
+              <div>
+                <div class="basics-card-title">Nihongo Sou Matome</div>
+                <div class="basics-card-sub">日本語総まとめ · N5–N1 · accessible</div>
+              </div>
+            </div>
+            <p class="basics-card-body">Each level covered in six weeks, one lesson per day, with English explanations. Goes all the way from N5 to N1. Better paced for beginners and good for building familiarity with the format before tackling Kanzen Master.</p>
+            <div class="basics-links">
+              <a href="https://www.amazon.com/dp/486639076X" target="_blank">N5 <span>↗</span></a>
+              <a href="https://www.amazon.com/dp/B08WRCPS3S" target="_blank">N4+N5 set <span>↗</span></a>
+              <a href="https://www.amazon.com/dp/B092QM44YZ" target="_blank">N3 set <span>↗</span></a>
+              <a href="https://www.amazon.com/dp/B092QS5873" target="_blank">N2 set <span>↗</span></a>
+              <a href="https://www.amazon.com/dp/B092QWNN6C" target="_blank">N1 set <span>↗</span></a>
             </div>
           </div>
-          <p class="basics-card-body">Each level covered in six weeks, one lesson per day, with English explanations. Goes all the way from N5 to N1. Better paced for beginners and good for building familiarity with the format before tackling Kanzen Master.</p>
-          <div class="basics-links">
-            <a href="https://www.amazon.com/dp/486639076X" target="_blank">N5 <span>↗</span></a>
-            <a href="https://www.amazon.com/dp/B08WRCPS3S" target="_blank">N4+N5 set <span>↗</span></a>
-            <a href="https://www.amazon.com/dp/B092QM44YZ" target="_blank">N3 set <span>↗</span></a>
-            <a href="https://www.amazon.com/dp/B092QS5873" target="_blank">N2 set <span>↗</span></a>
-            <a href="https://www.amazon.com/dp/B092QWNN6C" target="_blank">N1 set <span>↗</span></a>
-          </div>
+
         </div>
-
       </div>
 
-      <hr>
-      <h3>JLPT Anki decks (DoJG & Tango)</h3>
-      <p><strong>The Dictionary of Japanese Grammar (DoJG)</strong> is a Three-volume grammar reference covering Basic, Intermediate, and Advanced. The Anki deck has 629 grammar points, the front shows example sentences, back reveals the point, English equivalent, and usage.</p>
-      <div class="link-grid" style="grid-template-columns: 1fr;">
-        <a class="link-card" href="https://ankiweb.net/shared/info/1013111837" target="_blank">
-          <p class="link-card-title">DoJG Anki Deck</p>
-          <p class="link-card-desc">629 grammar points from all three Dictionary of Japanese Grammar volumes</p>
-        </a>
-      </div>
-      <p><strong>The Tango Vocabulary Decks</strong> are graded vocab decks built around the most common words at each JLPT level. Cards include example sentences and audio. Run alongside your prep books to cover vocabulary systematically without having to mine it yourself.</p>
-      <div class="link-grid">
-        <a class="link-card" href="https://ankiweb.net/shared/info/90990052" target="_blank">
-          <p class="link-card-title">Tango N5</p>
-          <p class="link-card-desc">~1000 beginner vocab with audio</p>
-        </a>
-        <a class="link-card" href="https://ankiweb.net/shared/info/670249799" target="_blank">
-          <p class="link-card-title">Tango N4</p>
-          <p class="link-card-desc">~1500 upper-beginner vocab with audio</p>
-        </a>
-        <a class="link-card" href="https://drive.google.com/file/d/1ezBS0fE9PJTp_YjALNtAjUYisGcFdXJ_/view" target="_blank">
-          <p class="link-card-title">Tango N3</p>
-          <p class="link-card-desc">~2000 intermediate vocab with audio</p>
-        </a>
-        <a class="link-card" href="https://ankiweb.net/shared/info/451845258" target="_blank">
-          <p class="link-card-title">Tango N2</p>
-          <p class="link-card-desc">~2500 upper-intermediate vocab with audio</p>
-        </a>
-        <a class="link-card" href="https://tatsumoto.neocities.org/blog/jlpt-tango-n1-anki-deck" target="_blank">
-          <p class="link-card-title">Tango N1</p>
-          <p class="link-card-desc">~3000 advanced vocab with audio</p>
-        </a>
-        <a class="link-card" href="https://ankiweb.net/shared/info/1550984460" target="_blank">
-          <p class="link-card-title">JLPT N5–N1 Vocabulary</p>
-          <p class="link-card-desc">All levels in one deck with clickable kanji</p>
-        </a>
-      </div>
-
-      <hr>
-      <h3>Grammar resources</h3>
-      <p>Grammar is the section most learners underestimate going into the JLPT. These tools cover every level from N5 to N1, with explanations in both English and Japanese.</p>
-      <div class="link-grid">
-        <a class="link-card" href="https://nihongokyoshi-net.com/jlpt-grammars/" target="_blank">
-          <p class="link-card-title">NihongoKyoshi JLPT Grammar</p>
-          <p class="link-card-desc">Every JLPT grammar point explained in Japanese, N5 to N1, free</p>
-        </a>
-        <a class="link-card" href="https://drive.google.com/file/d/1tDBaabwgZMO8nxkcwcw4qBXayuk_513T/view" target="_blank">
-          <p class="link-card-title">NihongoKyoshi grammar deck</p>
-          <p class="link-card-desc">Anki deck for JLPT grammar, Japanese definitions only</p>
-        </a>
-        <a class="link-card" href="https://bunpro.jp/grammar_points" target="_blank">
-          <p class="link-card-title">Bunpro grammar list</p>
-          <p class="link-card-desc">Grammar reference with SRS reviews, free to browse, $5/mo for full access</p>
-        </a>
-        <a class="link-card" href="https://mainichi-nonbiri.com/" target="_blank">
-          <p class="link-card-title">Mainichi Nonbiri</p>
-          <p class="link-card-desc">All JLPT grammar in Japanese, includes 敬語 and onomatopoeia. N4+</p>
-        </a>
-        <a class="link-card" href="https://dojglite.github.io/main/index.html" target="_blank">
-          <p class="link-card-title">DoJG Lite</p>
-          <p class="link-card-desc">Free online Dictionary of Japanese Grammar, essential reference for N3+</p>
-        </a>
-        <a class="link-card" href="https://www.youtube.com/watch?v=JIZ49pjJmR8" target="_blank">
-          <p class="link-card-title">JLPT N1 Grammar: 1 Hour Review</p>
-          <p class="link-card-desc">日本語の森 video covering N1 grammar points in full. Not for beginners</p>
-        </a>
+      <div class="reading-panel" id="jlpt-decks">
+        <h3>JLPT Anki decks (DoJG & Tango)</h3>
+        <p><strong>The Dictionary of Japanese Grammar (DoJG)</strong> is a Three-volume grammar reference covering Basic, Intermediate, and Advanced. The Anki deck has 629 grammar points, the front shows example sentences, back reveals the point, English equivalent, and usage.</p>
+        <div class="link-grid" style="grid-template-columns: 1fr;">
+          <a class="link-card" href="https://ankiweb.net/shared/info/1013111837" target="_blank">
+            <p class="link-card-title">DoJG Anki Deck</p>
+            <p class="link-card-desc">629 grammar points from all three Dictionary of Japanese Grammar volumes</p>
+          </a>
+        </div>
+        <p><strong>The Tango Vocabulary Decks</strong> are graded vocab decks built around the most common words at each JLPT level. Cards include example sentences and audio. Run alongside your prep books to cover vocabulary systematically without having to mine it yourself.</p>
+        <div class="link-grid">
+          <a class="link-card" href="https://ankiweb.net/shared/info/90990052" target="_blank">
+            <p class="link-card-title">Tango N5</p>
+            <p class="link-card-desc">~1000 beginner vocab with audio</p>
+          </a>
+          <a class="link-card" href="https://ankiweb.net/shared/info/670249799" target="_blank">
+            <p class="link-card-title">Tango N4</p>
+            <p class="link-card-desc">~1500 upper-beginner vocab with audio</p>
+          </a>
+          <a class="link-card" href="https://drive.google.com/file/d/1ezBS0fE9PJTp_YjALNtAjUYisGcFdXJ_/view" target="_blank">
+            <p class="link-card-title">Tango N3</p>
+            <p class="link-card-desc">~2000 intermediate vocab with audio</p>
+          </a>
+          <a class="link-card" href="https://ankiweb.net/shared/info/451845258" target="_blank">
+            <p class="link-card-title">Tango N2</p>
+            <p class="link-card-desc">~2500 upper-intermediate vocab with audio</p>
+          </a>
+          <a class="link-card" href="https://tatsumoto.neocities.org/blog/jlpt-tango-n1-anki-deck" target="_blank">
+            <p class="link-card-title">Tango N1</p>
+            <p class="link-card-desc">~3000 advanced vocab with audio</p>
+          </a>
+          <a class="link-card" href="https://ankiweb.net/shared/info/1550984460" target="_blank">
+            <p class="link-card-title">JLPT N5–N1 Vocabulary</p>
+            <p class="link-card-desc">All levels in one deck with clickable kanji</p>
+          </a>
+        </div>
       </div>
 
-      <hr>
-      <h3>Study platforms</h3>
-      <p>Full-featured tools that combine grammar, kanji, and vocab in a structured SRS environment, useful if you want a single platform rather than assembling individual resources.</p>
-      <div class="link-grid">
-        <a class="link-card" href="https://www.renshuu.org/" target="_blank">
-          <p class="link-card-title">Renshuu</p>
-          <p class="link-card-desc">Grammar, kanji, and vocab quizzes with explanations, free with paid tier</p>
-        </a>
-        <a class="link-card" href="https://marumori.io/" target="_blank">
-          <p class="link-card-title">MaruMori</p>
-          <p class="link-card-desc">All-in-one grammar/kanji/vocab SRS with a guided "adventure" path, N5–N1, paid</p>
-        </a>
-        <a class="link-card" href="https://minato-jf.jp/Home/Index" target="_blank">
-          <p class="link-card-title">Minato</p>
-          <p class="link-card-desc">Free Japan Foundation courses across multiple levels and languages</p>
-        </a>
-        <a class="link-card" href="https://minato-jf.jp/Home/JapaneseApplication" target="_blank">
-          <p class="link-card-title">Minato: App Portal</p>
-          <p class="link-card-desc">Japanese learning apps from the Japan Foundation</p>
-        </a>
+      <div class="reading-panel" id="jlpt-grammar">
+        <h3>Grammar resources</h3>
+        <p>Grammar is the section most learners underestimate going into the JLPT. These tools cover every level from N5 to N1, with explanations in both English and Japanese.</p>
+        <div class="link-grid">
+          <a class="link-card" href="https://nihongokyoshi-net.com/jlpt-grammars/" target="_blank">
+            <p class="link-card-title">NihongoKyoshi JLPT Grammar</p>
+            <p class="link-card-desc">Every JLPT grammar point explained in Japanese, N5 to N1, free</p>
+          </a>
+          <a class="link-card" href="https://drive.google.com/file/d/1tDBaabwgZMO8nxkcwcw4qBXayuk_513T/view" target="_blank">
+            <p class="link-card-title">NihongoKyoshi grammar deck</p>
+            <p class="link-card-desc">Anki deck for JLPT grammar, Japanese definitions only</p>
+          </a>
+          <a class="link-card" href="https://bunpro.jp/grammar_points" target="_blank">
+            <p class="link-card-title">Bunpro grammar list</p>
+            <p class="link-card-desc">Grammar reference with SRS reviews, free to browse, $5/mo for full access</p>
+          </a>
+          <a class="link-card" href="https://mainichi-nonbiri.com/" target="_blank">
+            <p class="link-card-title">Mainichi Nonbiri</p>
+            <p class="link-card-desc">All JLPT grammar in Japanese, includes 敬語 and onomatopoeia. N4+</p>
+          </a>
+          <a class="link-card" href="https://dojglite.github.io/main/index.html" target="_blank">
+            <p class="link-card-title">DoJG Lite</p>
+            <p class="link-card-desc">Free online Dictionary of Japanese Grammar, essential reference for N3+</p>
+          </a>
+          <a class="link-card" href="https://www.youtube.com/watch?v=JIZ49pjJmR8" target="_blank">
+            <p class="link-card-title">JLPT N1 Grammar: 1 Hour Review</p>
+            <p class="link-card-desc">日本語の森 video covering N1 grammar points in full. Not for beginners</p>
+          </a>
+        </div>
       </div>
+
+      <div class="reading-panel" id="jlpt-platforms">
+        <h3>Study platforms</h3>
+        <p>Full-featured tools that combine grammar, kanji, and vocab in a structured SRS environment, useful if you want a single platform rather than assembling individual resources.</p>
+        <div class="link-grid">
+          <a class="link-card" href="https://www.renshuu.org/" target="_blank">
+            <p class="link-card-title">Renshuu</p>
+            <p class="link-card-desc">Grammar, kanji, and vocab quizzes with explanations, free with paid tier</p>
+          </a>
+          <a class="link-card" href="https://marumori.io/" target="_blank">
+            <p class="link-card-title">MaruMori</p>
+            <p class="link-card-desc">All-in-one grammar/kanji/vocab SRS with a guided "adventure" path, N5–N1, paid</p>
+          </a>
+          <a class="link-card" href="https://minato-jf.jp/Home/Index" target="_blank">
+            <p class="link-card-title">Minato</p>
+            <p class="link-card-desc">Free Japan Foundation courses across multiple levels and languages</p>
+          </a>
+          <a class="link-card" href="https://minato-jf.jp/Home/JapaneseApplication" target="_blank">
+            <p class="link-card-title">Minato: App Portal</p>
+            <p class="link-card-desc">Japanese learning apps from the Japan Foundation</p>
+          </a>
+        </div>
+      </div>
+      </div><!-- /jlpt-tabs -->
 
       <div class="page-nav">
         <button class="page-nav-btn" onclick="go('speaking')">
@@ -6331,30 +6351,70 @@ function groupGo(pageId, prefix, panelId, btn) {
   btn.classList.add('active');
 }
 
+function staggeredPanelSwitch(oldPanel, newPanel, tabsScope, newTab) {
+  if (oldPanel === newPanel) return;
+  const STEP = 220, DUR = 220;
+
+  // switch tab highlight immediately
+  if (tabsScope) {
+    tabsScope.querySelectorAll('.reading-tab').forEach(t => t.classList.remove('active'));
+  }
+  if (newTab) newTab.classList.add('active');
+
+  const outItems = oldPanel ? Array.from(oldPanel.children) : [];
+  outItems.forEach((el, i) => {
+    el.style.transitionDelay = (i * STEP) + 'ms';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(-6px)';
+  });
+  const outTotal = outItems.length ? (outItems.length - 1) * STEP + DUR : 0;
+
+  setTimeout(() => {
+    if (oldPanel) {
+      oldPanel.classList.remove('active');
+      outItems.forEach(el => { el.style.transitionDelay = ''; el.style.opacity = ''; el.style.transform = ''; });
+    }
+    if (!newPanel) return;
+    newPanel.classList.add('active');
+    const inItems = Array.from(newPanel.children);
+    inItems.forEach(el => {
+      el.style.transitionDelay = '0ms';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(6px)';
+    });
+    void newPanel.offsetHeight; // force reflow so the next change animates
+    inItems.forEach((el, i) => {
+      el.style.transitionDelay = (i * STEP) + 'ms';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+    const inTotal = inItems.length ? (inItems.length - 1) * STEP + DUR : 0;
+    setTimeout(() => {
+      inItems.forEach(el => { el.style.transitionDelay = ''; el.style.opacity = ''; el.style.transform = ''; });
+    }, inTotal + 30);
+  }, outTotal);
+}
+
 function readingGo(panelId, btn) {
-  // switch reading sub-panel
-  document.querySelectorAll('#sg-reading .reading-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(panelId).classList.add('active');
-  // switch reading tab highlight
-  document.querySelectorAll('#sg-reading .reading-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
+  const scope = document.getElementById('sg-reading');
+  const oldPanel = scope.querySelector('.reading-panel.active');
+  const newPanel = document.getElementById(panelId);
+  staggeredPanelSwitch(oldPanel, newPanel, scope, btn);
 }
 
 function listeningGo(panelId, btn) {
-  document.querySelectorAll('#sg-listening .reading-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(panelId).classList.add('active');
-  document.querySelectorAll('#sg-listening .reading-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
+  const scope = document.getElementById('sg-listening');
+  const oldPanel = scope.querySelector('.reading-panel.active');
+  const newPanel = document.getElementById(panelId);
+  staggeredPanelSwitch(oldPanel, newPanel, scope, btn);
 }
 
 function subTabGo(scopeId, panelId, btn) {
   const scope = document.getElementById(scopeId);
   if (!scope) return;
-  scope.querySelectorAll('.reading-panel').forEach(p => p.classList.remove('active'));
-  const panel = document.getElementById(panelId);
-  if (panel) panel.classList.add('active');
-  scope.querySelectorAll('.reading-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
+  const oldPanel = scope.querySelector('.reading-panel.active');
+  const newPanel = document.getElementById(panelId);
+  staggeredPanelSwitch(oldPanel, newPanel, scope, btn);
 }
 
 
