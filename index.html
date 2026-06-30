@@ -235,6 +235,13 @@
     margin-bottom: 0.35rem;
     letter-spacing: -0.03em;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  h2::before {
+    content: ""; width: 8px; height: 28px; border-radius: 4px; flex-shrink: 0;
+    background: linear-gradient(180deg, var(--green), var(--blue));
   }
   .view-sub {
     font-size: 14px;
@@ -278,13 +285,14 @@
     font-size: 13px;
     line-height: 1.7;
     color: var(--text-muted);
-    border-left: 2px solid;
-    border-radius: 0 6px 6px 0;
+    border: 1px solid;
+    border-left-width: 3px;
+    border-radius: 0 8px 8px 0;
     max-width: 560px;
   }
-  .callout.info  { background: var(--blue-dim);  border-color: var(--blue); }
-  .callout.warn  { background: var(--amber-dim); border-color: var(--amber); }
-  .callout.tip   { background: var(--green-dim); border-color: var(--green); }
+  .callout.info  { background: var(--blue-dim);  border-color: rgba(82,174,200,0.35); border-left-color: var(--blue); }
+  .callout.warn  { background: var(--amber-dim); border-color: rgba(212,184,62,0.35); border-left-color: var(--amber); }
+  .callout.tip   { background: var(--green-dim); border-color: rgba(157,143,239,0.35); border-left-color: var(--green); }
   .callout strong { color: var(--text); font-weight: 500; }
 
   /* ── CARDS ── */
@@ -1061,7 +1069,9 @@
     gap: 1.5rem;
     position: sticky;
     top: 0;
-    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 20;
   }
   .topnav-brand {
@@ -1093,7 +1103,11 @@
     transition: color 0.1s, background 0.1s;
   }
   .topnav-link:hover { color: var(--text); background: var(--bg-2); }
-  .topnav-link.active { color: var(--green); font-weight: 500; }
+  .topnav-link.active { color: var(--text); font-weight: 500; background: var(--green-dim); position: relative; }
+  .topnav-link.active::after {
+    content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+  }
   .topnav-right { margin-left: auto; }
 
   /* ── LANDING ── */
@@ -1109,27 +1123,33 @@
     font-size: clamp(36px, 6vw, 64px); font-weight: 700; letter-spacing: -0.04em;
     color: var(--text); line-height: 1.05; margin-bottom: 1.5rem;
   }
-  .landing-title em { font-style: normal; color: var(--green); }
+  .landing-title em {
+    font-style: normal;
+    background: linear-gradient(90deg, #b8a6ff 0%, var(--green) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
   .landing-desc {
     font-size: 16px; color: var(--text-muted); line-height: 1.75;
-    max-width: 520px; margin-bottom: 2.5rem;
+    max-width: 520px; margin-bottom: 2rem;
   }
   .landing-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
   .landing-btn-primary {
-    display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
-    background: var(--green); color: var(--bg); font-family: 'Geist Mono', monospace;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; border: none;
-    border-radius: 4px; cursor: pointer; transition: opacity 0.15s;
+    display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
+    background: linear-gradient(135deg, #b8a6ff, var(--green)); color: var(--bg); font-family: 'Geist', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 0; border: none;
+    border-radius: 8px; cursor: pointer; transition: opacity 0.15s, transform 0.15s;
+    box-shadow: 0 4px 20px -4px var(--green-dim);
   }
-  .landing-btn-primary:hover { opacity: 0.85; }
+  .landing-btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
   .landing-btn-secondary {
-    display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
-    background: none; color: var(--text-muted); font-family: 'Geist Mono', monospace;
-    font-size: 12px; letter-spacing: 0.04em; border: 1px solid var(--border-strong);
-    border-radius: 4px; cursor: pointer; transition: color 0.1s, border-color 0.1s;
+    display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
+    background: none; color: var(--text-muted); font-family: 'Geist', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 0; border: 1px solid var(--border-strong);
+    border-radius: 8px; cursor: pointer; transition: color 0.1s, border-color 0.1s, background 0.1s;
     text-decoration: none;
   }
-  .landing-btn-secondary:hover { color: var(--text); border-color: var(--text-dim); }
+  .landing-btn-secondary:hover { color: var(--text); border-color: var(--text-dim); background: var(--bg-2); }
+
   .landing-pillars {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
     margin-top: 0.25rem;
@@ -1137,10 +1157,19 @@
   .landing-pillar {
     background: var(--bg-2); padding: 1.5rem 1.5rem 1.75rem; cursor: pointer;
     transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; text-align: left; border: 1px solid var(--border); width: 100%;
-    border-radius: 10px;
+    border-radius: 10px; position: relative; overflow: hidden;
   }
-  .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); }
-  .landing-pillar-icon { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 0.85rem; display: block; }
+  .landing-pillar::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); box-shadow: 0 8px 30px -10px var(--green-dim); transform: translateY(-2px); }
+  .landing-pillar:hover::before { opacity: 1; }
+  .landing-pillar-icon {
+    font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.85rem; display: block;
+  }
   .landing-pillar-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; }
   .landing-pillar-desc { font-size: 12px; color: var(--text-dim); line-height: 1.55; display: block; }
 
@@ -1170,9 +1199,14 @@
   .guide-card {
     background: var(--bg-2); padding: 1.25rem 1.35rem 1.4rem; cursor: pointer;
     transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; border: 1px solid var(--border); text-align: left; width: 100%;
-    border-radius: 10px;
+    border-radius: 10px; position: relative; overflow: hidden;
   }
-  .guide-card:hover { background: var(--bg-3); box-shadow: 0 4px 24px rgba(157,143,239,0.12); transform: translateY(-1px); }
+  .guide-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue)); opacity: 0; transition: opacity 0.2s;
+  }
+  .guide-card:hover::before { opacity: 0.9; }
+  .guide-card:hover { background: var(--bg-3); box-shadow: 0 10px 30px -8px rgba(157,143,239,0.18); transform: translateY(-2px); }
   .guide-card-num { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--green); margin-bottom: 0.45rem; display: block; }
   .guide-card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; line-height: 1.3; }
   .guide-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; display: block; }
@@ -1344,24 +1378,49 @@
   }
   .annotated .shot { margin: 0; min-height: 220px; max-width: none; height: 100%; }
   .annotated img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); display: block; }
-  .annot-stack { display: flex; flex-direction: column; gap: 0.75rem; }
+  .annot-stack { display: flex; flex-direction: column; gap: 1rem; position: relative; padding-left: 20px; }
+  .annot-stack::before {
+    content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 1px;
+    background: linear-gradient(180deg, var(--border-strong), transparent);
+  }
   .annot-stack .note { display: flex; flex-direction: column; justify-content: center; }
 
   .note {
-    border-radius: 0 6px 6px 0;
-    border-left: 2px solid;
-    padding: 0.7rem 0.9rem;
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 0.8rem 1rem;
     font-size: 12.5px;
     line-height: 1.6;
     color: var(--text-muted);
     background: var(--bg-2);
+    box-shadow: 0 8px 24px -12px rgba(0,0,0,0.45);
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
   }
-  .note strong { display: block; color: var(--text); font-weight: 500; font-size: 13px; margin-bottom: 2px; }
+  .note:hover { transform: translateX(3px); }
+  .note::before {
+    content: ""; position: absolute; left: -20px; top: 19px; width: 16px; height: 1px;
+    background: var(--border-strong);
+  }
+  .note::after {
+    content: ""; position: absolute; left: -24px; top: 15px; width: 9px; height: 9px;
+    border-radius: 50%; border: 2px solid var(--bg);
+  }
+  .note strong {
+    display: flex; align-items: center; gap: 7px; color: var(--text); font-weight: 600;
+    font-size: 12px; letter-spacing: 0.02em; text-transform: uppercase; margin-bottom: 4px;
+  }
   .note p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--text-muted); max-width: none; }
   .note code { display: inline; white-space: nowrap; }
-  .note.n-green { border-color: var(--green); background: var(--green-dim); }
-  .note.n-blue { border-color: var(--blue); background: var(--blue-dim); }
-  .note.n-amber { border-color: var(--amber); background: var(--amber-dim); }
+  .note.n-green { border-color: rgba(157,143,239,0.35); background: var(--green-dim); }
+  .note.n-green::after { background: var(--green); }
+  .note.n-green strong::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--green); flex-shrink: 0; }
+  .note.n-blue  { border-color: rgba(82,174,200,0.35); background: var(--blue-dim); }
+  .note.n-blue::after { background: var(--blue); }
+  .note.n-blue strong::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--blue); flex-shrink: 0; }
+  .note.n-amber { border-color: rgba(212,184,62,0.35); background: var(--amber-dim); }
+  .note.n-amber::after { background: var(--amber); }
+  .note.n-amber strong::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--amber); flex-shrink: 0; }
 
   @media (max-width: 680px) {
     .annotated { grid-template-columns: 1fr; }
@@ -1390,20 +1449,35 @@
     display: block;
   }
   .card-flow.revealed .card-flow-shot:first-child { opacity: 1; transform: none; }
-  .card-flow.revealed .card-flow-shot:last-child { opacity: 1; transform: none; transition-delay: 0.9s; }
+  .card-flow.revealed .card-flow-shot:last-child { opacity: 1; transform: none; transition-delay: 1.05s; }
 
-  .card-flow-arrow { width: 48px; height: 32px; flex-shrink: 0; }
-  .card-flow-arrow path {
+  .card-flow-arrow { width: 48px; height: 32px; flex-shrink: 0; overflow: visible; }
+  .card-flow-arrow .flow-dot {
+    fill: var(--green);
+    opacity: 0;
+    transform: scale(0.3);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .card-flow-arrow .flow-arrowhead {
     stroke: var(--green);
     stroke-width: 2.5;
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-dasharray: 140;
-    stroke-dashoffset: 140;
-    transition: stroke-dashoffset 0.5s ease 0.45s;
+    opacity: 0;
+    transform: translateX(-4px);
+    transform-box: fill-box;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
-  .card-flow.revealed .card-flow-arrow path { stroke-dashoffset: 0; }
+  .card-flow.revealed .card-flow-arrow .flow-dot { opacity: 1; transform: scale(1); }
+  .card-flow.revealed .card-flow-arrow .flow-dot:nth-child(1) { transition-delay: 0.45s; }
+  .card-flow.revealed .card-flow-arrow .flow-dot:nth-child(2) { transition-delay: 0.56s; }
+  .card-flow.revealed .card-flow-arrow .flow-dot:nth-child(3) { transition-delay: 0.67s; }
+  .card-flow.revealed .card-flow-arrow .flow-dot:nth-child(4) { transition-delay: 0.78s; }
+  .card-flow.revealed .card-flow-arrow .flow-dot:nth-child(5) { transition-delay: 0.89s; }
+  .card-flow.revealed .card-flow-arrow .flow-arrowhead { opacity: 1; transform: none; transition-delay: 1.0s; }
 
   @media (max-width: 560px) {
     .card-flow { flex-direction: column; }
@@ -2072,8 +2146,8 @@
   <h1 class="landing-title">Learn Japanese<br>through <em>immersion</em></h1>
   <p class="landing-desc">A complete guide to acquiring Japanese the natural way, through reading, listening, and living in the language.</p>
   <div class="landing-actions">
-    <button class="landing-btn-primary" onclick="go('guide-index')">Start the guide →</button>
-    <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-secondary">Join the Discord ↗</a>
+    <button class="landing-btn-primary" onclick="go('guide-index')">Start the guide</button>
+    <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-secondary">Join the Discord</a>
   </div>
   <div class="landing-pillars">
     <button class="landing-pillar" onclick="go('guide-index')">
@@ -2940,7 +3014,12 @@
               <img src="anki1.png" alt="Anki card front, showing just the kanji and example sentence">
             </div>
             <svg class="card-flow-arrow" viewBox="0 0 120 40" preserveAspectRatio="none">
-              <path d="M5 20 L100 20 M88 8 L100 20 L88 32" />
+              <circle class="flow-dot" cx="10" cy="20" r="2.5"/>
+              <circle class="flow-dot" cx="28" cy="20" r="2.5"/>
+              <circle class="flow-dot" cx="46" cy="20" r="2.5"/>
+              <circle class="flow-dot" cx="64" cy="20" r="2.5"/>
+              <circle class="flow-dot" cx="82" cy="20" r="2.5"/>
+              <path class="flow-arrowhead" d="M88 8 L100 20 L88 32" />
             </svg>
             <div class="card-flow-shot">
               <img src="anki2.png" alt="Anki card back, showing reading, meaning, audio, and example sentence">
@@ -4001,6 +4080,24 @@
       <div class="anki-panel active" id="anki-what">
         <h3>What is Anki?</h3>
         <p>Anki is a free flashcard application built around spaced repetition. It schedules reviews at the optimal moment, right before your brain would forget something, so you spend almost no time on things you already know and focus entirely on things you don't. It's available on PC, Android (free), and iOS ($25 one-time purchase). AnkiWeb is a free browser alternative if you're on iOS.</p>
+
+        <div class="card-flow reveal">
+          <div class="card-flow-shot">
+            <img src="anki1.png" alt="Anki card front, showing just the kanji and example sentence">
+          </div>
+          <svg class="card-flow-arrow" viewBox="0 0 120 40" preserveAspectRatio="none">
+            <circle class="flow-dot" cx="10" cy="20" r="2.5"/>
+            <circle class="flow-dot" cx="28" cy="20" r="2.5"/>
+            <circle class="flow-dot" cx="46" cy="20" r="2.5"/>
+            <circle class="flow-dot" cx="64" cy="20" r="2.5"/>
+            <circle class="flow-dot" cx="82" cy="20" r="2.5"/>
+            <path class="flow-arrowhead" d="M88 8 L100 20 L88 32" />
+          </svg>
+          <div class="card-flow-shot">
+            <img src="anki2.png" alt="Anki card back, showing reading, meaning, audio, and example sentence">
+          </div>
+        </div>
+        <p class="view-sub" style="margin-bottom:1.5rem;">Front of the card, then the back: the answer is revealed once you try to recall it yourself.</p>
 
         <div class="link-grid" style="grid-template-columns:1fr 1fr;">
           <a class="link-card" href="https://apps.ankiweb.net/" target="_blank">
