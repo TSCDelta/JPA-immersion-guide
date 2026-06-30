@@ -6613,6 +6613,14 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
 (function () {
   const POINTS = [
     {
+      jp: '関係節（修飾節）', level: 'N5',
+      meaning: 'Japanese has no separate relative pronoun like "who" or "which". Instead, an entire clause is placed directly before a noun, in plain form, to modify it, similar to "the book [that] I bought" in English.',
+      examples: [
+        { jp: '昨日買った本はおもしろい。', en: 'The book [that] I bought yesterday is interesting.' },
+        { jp: 'あそこに立っている人は田中さんです。', en: 'The person standing over there is Mr. Tanaka.' }
+      ]
+    },
+    {
       jp: 'て形', level: 'N5',
       meaning: 'The て form links actions or descriptions together, roughly meaning "and" or "and then". It\u2019s the single most useful conjugation in Japanese, the base for requests, ongoing states, and dozens of other patterns.',
       examples: [
@@ -6621,59 +6629,51 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
       ]
     },
     {
-      jp: '〜たい', level: 'N5',
-      meaning: 'Attaches to the stem of a verb to express that the speaker (or someone whose feelings they can speak for) wants to do something.',
+      jp: '〜ではなく', level: 'N4',
+      meaning: 'Attaches after a noun to mean "not X, but..." — it rules out one option before the real one is given, similar to "instead of" or "rather than" in English.',
       examples: [
-        { jp: '日本語を勉強したい。', en: 'I want to study Japanese.' },
-        { jp: '今日は何も食べたくない。', en: 'I don\u2019t want to eat anything today.' }
+        { jp: '今日は電車ではなく、バスで行く。', en: 'Today I\u2019ll go by bus, not by train.' },
+        { jp: '彼は学生ではなく、先生です。', en: 'He\u2019s not a student, he\u2019s a teacher.' }
       ]
     },
     {
-      jp: '〜なければならない', level: 'N4',
-      meaning: 'Expresses obligation, "must do" something. Literally built from "if (you) don\u2019t do, it won\u2019t become (acceptable)".',
+      jp: '〜てもらう', level: 'N4',
+      meaning: 'Expresses that the speaker receives a favor in the form of an action done by someone else, framing things from the receiver\u2019s point of view, with a nuance of gratitude.',
       examples: [
-        { jp: '明日までにレポートを書かなければならない。', en: 'I have to write the report by tomorrow.' },
-        { jp: '薬を毎日飲まなければならない。', en: 'I have to take this medicine every day.' }
+        { jp: '友達に手伝ってもらった。', en: 'I had my friend help me (and was grateful for it).' },
+        { jp: '先生に作文を直してもらいました。', en: 'I had the teacher correct my essay.' }
       ]
     },
     {
-      jp: '〜そうだ', level: 'N4',
-      meaning: 'Attached to the stem of a verb or adjective, expresses that something looks like it\u2019s about to happen or appears to be the case based on what the speaker can see.',
+      jp: '〜ばいい', level: 'N3',
+      meaning: 'Used to give suggestions or advice, meaning "it would be good if..." or "all you have to do is...". Often used to soften advice or reassure someone about what to do.',
       examples: [
-        { jp: '雨が降りそうだ。', en: 'It looks like it\u2019s going to rain.' },
-        { jp: 'このケーキはおいしそうですね。', en: 'This cake looks delicious, doesn\u2019t it.' }
+        { jp: 'わからなければ、先生に聞けばいい。', en: 'If you don\u2019t understand, you can just ask the teacher.' },
+        { jp: 'もっと野菜を食べればいいよ。', en: 'You should just eat more vegetables.' }
       ]
     },
     {
-      jp: '〜のに', level: 'N3',
-      meaning: 'Connects two clauses where the second is unexpected or contrary to what the first would suggest, similar to "even though" or "despite".',
+      jp: '〜させてもらう', level: 'N3',
+      meaning: 'A humble way to say the speaker is being allowed or permitted to do something, often used to politely state an intention while showing consideration for the other person.',
       examples: [
-        { jp: '一生懸命勉強したのに、試験に落ちた。', en: 'Even though I studied hard, I failed the exam.' },
-        { jp: '安いのに、品質がいい。', en: 'Despite being cheap, the quality is good.' }
+        { jp: '今日は早く帰らせてもらいます。', en: 'I\u2019ll be heading home early today, if that\u2019s alright.' },
+        { jp: 'すみませんが、ここで少し休ませてもらえますか。', en: 'Sorry, but could I rest here for a bit?' }
       ]
     },
     {
-      jp: '〜ばかり', level: 'N3',
-      meaning: 'Following the た form of a verb, means an action just finished. Following a noun, means "only" or "nothing but".',
+      jp: '〜なくはない', level: 'N3',
+      meaning: 'A double-negative construction meaning "it\u2019s not that... not", used to give a hedged, lukewarm affirmation — admitting something is true to some degree without fully committing.',
       examples: [
-        { jp: '日本に着いたばかりです。', en: 'I just arrived in Japan.' },
-        { jp: '彼はゲームばかりしている。', en: 'He does nothing but play games.' }
+        { jp: '高いが、買えなくはない。', en: 'It\u2019s expensive, but it\u2019s not like I can\u2019t buy it.' },
+        { jp: '彼の気持ちもわからなくはない。', en: 'It\u2019s not that I don\u2019t understand how he feels.' }
       ]
     },
     {
-      jp: '〜について', level: 'N3',
-      meaning: 'Marks the topic being discussed, thought about, or written about, similar to "about" or "concerning" in English.',
+      jp: '〜ようがない', level: 'N2',
+      meaning: 'Attaches to the stem of a verb to mean there is no way to do something — the means or method simply doesn\u2019t exist, often used to express helplessness or resignation.',
       examples: [
-        { jp: '日本の歴史について話しましょう。', en: 'Let\u2019s talk about Japanese history.' },
-        { jp: 'この問題について考えてみた。', en: 'I tried thinking about this problem.' }
-      ]
-    },
-    {
-      jp: '〜わけではない', level: 'N2',
-      meaning: 'Softens a statement to mean "it\u2019s not that..." or "that doesn\u2019t necessarily mean...", denying a conclusion someone might jump to.',
-      examples: [
-        { jp: '肉が嫌いなわけではないが、今日は魚が食べたい。', en: 'It\u2019s not that I dislike meat, but I want fish today.' },
-        { jp: '全部覚えたわけではない。', en: 'That doesn\u2019t mean I memorised everything.' }
+        { jp: '連絡先を知らないので、彼に連絡しようがない。', en: 'I don\u2019t know his contact info, so there\u2019s no way to reach him.' },
+        { jp: 'こんなに壊れていては、直しようがない。', en: 'It\u2019s broken so badly that there\u2019s no way to fix it.' }
       ]
     },
     {
@@ -6685,11 +6685,11 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
       ]
     },
     {
-      jp: '〜ともすれば', level: 'N1',
-      meaning: 'A formal, literary expression meaning "tend to" or "apt to", used to point out an undesirable tendency that easily happens under certain conditions.',
+      jp: '〜をもって', level: 'N1',
+      meaning: 'A formal expression meaning "by means of" or "with", often used in official announcements to mark the timing, method, or instrument by which something is carried out.',
       examples: [
-        { jp: '一人暮らしは、ともすれば不健康な生活になりがちだ。', en: 'Living alone tends to lead to an unhealthy lifestyle if you\u2019re not careful.' },
-        { jp: '忙しいと、ともすれば食事を忘れてしまう。', en: 'When busy, one tends to forget to eat.' }
+        { jp: '本日をもって、当店は閉店いたします。', en: 'As of today, this store will be closing.' },
+        { jp: '彼の実力をもってすれば、合格は間違いない。', en: 'With his ability, passing is no doubt certain.' }
       ]
     }
   ];
