@@ -1511,6 +1511,10 @@
 
   /* ── KANA EXPLORER (centered, theme-blended, row + script picker) ── */
   .kana-explorer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     margin: 1.5rem auto;
     max-width: 480px;
     background: var(--bg-2);
@@ -1518,6 +1522,11 @@
     border-radius: 14px;
     padding: 1.5rem;
     text-align: center;
+    box-sizing: border-box;
+  }
+  .kana-explorer-rows,
+  .kana-explorer-grid {
+    width: 100%;
   }
   .kana-explorer-script {
     display: inline-flex;
@@ -6495,7 +6504,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   ].join(',');
 
   function tagRevealTargets(root) {
-    root.querySelectorAll('.section-page, .group-panel').forEach(container => {
+    root.querySelectorAll('.section-page, .section-inner, .group-panel, .anki-panel, .reading-panel, .res-picker-panel, .yomitan-panel').forEach(container => {
       Array.from(container.children).forEach(child => {
         if (child.matches(REVEAL_SELECTOR) && !child.classList.contains('reveal')) {
           child.classList.add('reveal');
