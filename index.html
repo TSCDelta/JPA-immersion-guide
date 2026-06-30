@@ -18,16 +18,18 @@
     --text: #eeeef0;
     --text-muted: #a8a8b4;
     --text-dim: #646478;
-    --green: #9d8fef;
-    --green-dim: rgba(157,143,239,0.12);
+    --green: #9c8df2;
+    --green-dim: rgba(156,141,242,0.12);
     --amber: #d4b83e;
     --amber-dim: rgba(212,184,62,0.1);
-    --blue: #52aec8;
-    --blue-dim: rgba(82,174,200,0.1);
-    --rose: #e0718a;
-    --rose-dim: rgba(224,113,138,0.1);
-    --teal: #4bbfa0;
-    --teal-dim: rgba(75,191,160,0.1);
+    --blue: #57b9d8;
+    --blue-dim: rgba(87,185,216,0.1);
+    --purple: #8a64d8;
+    --purple-dim: rgba(138,100,216,0.1);
+    --rose: #de76a3;
+    --rose-dim: rgba(222,118,163,0.1);
+    --teal: #42c1ac;
+    --teal-dim: rgba(66,193,172,0.1);
     --sidebar-w: 200px;
   }
 
@@ -46,6 +48,8 @@
     --amber-dim: rgba(184,144,16,0.1);
     --blue: #5b6abf;
     --blue-dim: rgba(91,106,191,0.1);
+    --purple: #8b5fbf;
+    --purple-dim: rgba(139,95,191,0.1);
     --rose: #c04060;
     --rose-dim: rgba(192,64,96,0.1);
     --teal: #2a9a78;
@@ -241,7 +245,7 @@
   }
   h2::before {
     content: ""; width: 8px; height: 28px; border-radius: 4px; flex-shrink: 0;
-    background: linear-gradient(180deg, var(--green), var(--blue));
+    background: linear-gradient(180deg, var(--green), var(--purple));
   }
   .view-sub {
     font-size: 14px;
@@ -1106,7 +1110,7 @@
   .topnav-link.active { color: var(--text); font-weight: 500; background: var(--green-dim); position: relative; }
   .topnav-link.active::after {
     content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; border-radius: 2px;
-    background: linear-gradient(90deg, var(--green), var(--blue));
+    background: linear-gradient(90deg, var(--green), var(--purple));
   }
   .topnav-right { margin-left: auto; }
 
@@ -1125,7 +1129,7 @@
   }
   .landing-title em {
     font-style: normal;
-    background: linear-gradient(90deg, #b8a6ff 0%, var(--green) 100%);
+    background: linear-gradient(90deg, #7a5fc7, var(--purple));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .landing-desc {
@@ -1135,7 +1139,7 @@
   .landing-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
   .landing-btn-primary {
     display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
-    background: linear-gradient(135deg, #b8a6ff, var(--green)); color: var(--bg); font-family: 'Geist', sans-serif;
+    background: linear-gradient(135deg, var(--green), var(--purple)); color: var(--bg); font-family: 'Geist', sans-serif;
     font-size: 13px; font-weight: 600; letter-spacing: 0; border: none;
     border-radius: 8px; cursor: pointer; transition: opacity 0.15s, transform 0.15s;
     box-shadow: 0 4px 20px -4px var(--green-dim);
@@ -1161,7 +1165,7 @@
   }
   .landing-pillar::before {
     content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--green), var(--blue));
+    background: linear-gradient(90deg, var(--green), var(--purple));
     opacity: 0; transition: opacity 0.2s;
   }
   .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); box-shadow: 0 8px 30px -10px var(--green-dim); transform: translateY(-2px); }
@@ -1203,7 +1207,7 @@
   }
   .guide-card::before {
     content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--green), var(--blue)); opacity: 0; transition: opacity 0.2s;
+    background: linear-gradient(90deg, var(--green), var(--purple)); opacity: 0; transition: opacity 0.2s;
   }
   .guide-card:hover::before { opacity: 0.9; }
   .guide-card:hover { background: var(--bg-3); box-shadow: 0 10px 30px -8px rgba(157,143,239,0.18); transform: translateY(-2px); }
