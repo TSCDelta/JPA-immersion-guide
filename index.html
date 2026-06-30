@@ -188,6 +188,27 @@
   .view { display: none; }
   .view.active { display: block; }
 
+  /* ── PAGE TRANSITION (guide index ↔ content cross-fade, 1s total) ── */
+  .landing, .guide-index, .res-index, .section-page {
+    transition: opacity 0.5s ease;
+  }
+  .landing.fading-out, .guide-index.fading-out, .res-index.fading-out, .section-page.fading-out {
+    opacity: 0;
+  }
+  .landing.active, .guide-index.active, .res-index.active, .section-page.active {
+    animation: pageFadeIn 0.5s ease forwards;
+  }
+  @keyframes pageFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .landing, .guide-index, .res-index, .section-page { transition: none; }
+    .landing.active, .guide-index.active, .res-index.active, .section-page.active {
+      animation: none;
+    }
+  }
+
   /* ── TYPOGRAPHY ── */
   .view-tag {
     font-family: 'Geist Mono', monospace;
@@ -1346,6 +1367,49 @@
     .annotated { grid-template-columns: 1fr; }
   }
 
+  /* ── CARD FLOW (e.g. Anki front → back) ── */
+  .card-flow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+    max-width: 720px;
+  }
+  .card-flow-shot {
+    flex: 1;
+    min-width: 0;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .card-flow-shot img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .card-flow.revealed .card-flow-shot:first-child { opacity: 1; transform: none; }
+  .card-flow.revealed .card-flow-shot:last-child { opacity: 1; transform: none; transition-delay: 0.9s; }
+
+  .card-flow-arrow { width: 48px; height: 32px; flex-shrink: 0; }
+  .card-flow-arrow path {
+    stroke: var(--green);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 140;
+    stroke-dashoffset: 140;
+    transition: stroke-dashoffset 0.5s ease 0.45s;
+  }
+  .card-flow.revealed .card-flow-arrow path { stroke-dashoffset: 0; }
+
+  @media (max-width: 560px) {
+    .card-flow { flex-direction: column; }
+    .card-flow-arrow { width: 32px; height: 48px; transform: rotate(90deg); }
+  }
+
   /* ── SETTINGS SLIDER ── */
   .settings-slider { margin: 1rem 0; max-width: 720px; }
   .slider-track-wrap { position: relative; overflow: hidden; }
@@ -1433,6 +1497,161 @@
     .slider-slide { grid-template-columns: 1fr; }
     .slider-label { display: none; }
   }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s cubic-bezier(0.2,0.6,0.2,1), transform 0.5s cubic-bezier(0.2,0.6,0.2,1);
+  }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ── KANA EXPLORER (centered, theme-blended, row + script picker) ── */
+  .kana-explorer {
+    margin: 1.5rem auto;
+    max-width: 480px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .kana-explorer-script {
+    display: inline-flex;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+    margin-bottom: 1.1rem;
+  }
+  .kana-explorer-script button {
+    border: none;
+    background: none;
+    color: var(--text-dim);
+    font-family: 'Geist', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .kana-explorer-script button.active {
+    background: var(--green);
+    color: var(--bg);
+  }
+  .kana-explorer-rows {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+  }
+  .kana-explorer-rows button {
+    border: 1px solid var(--border);
+    background: var(--bg-3);
+    color: var(--text-muted);
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .kana-explorer-rows button:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .kana-explorer-rows button.active {
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .kana-explorer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.6rem;
+  }
+  .kana-explorer-cell {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 0.8rem 0.3rem;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  }
+  .kana-explorer-cell:hover {
+    border-color: var(--green);
+    background: var(--green-dim);
+    transform: translateY(-2px);
+  }
+  .kana-explorer-char {
+    font-size: 23px;
+    font-weight: 500;
+    color: var(--text);
+    display: block;
+  }
+  .kana-explorer-romaji {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    display: block;
+    margin-top: 4px;
+  }
+  @media (max-width: 560px) {
+    .kana-explorer-grid { gap: 0.4rem; }
+    .kana-explorer-char { font-size: 18px; }
+  }
+
+  /* ── PITCH ACCENT DEMO ── */
+  .pitch-demo {
+    margin: 1.25rem 0;
+    background: linear-gradient(160deg, var(--bg-2), var(--bg-3));
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .pitch-demo-word { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.4rem; }
+  .pitch-demo-jp { font-size: 26px; font-weight: 500; }
+  .pitch-demo-reading { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--text-dim); }
+  .pitch-demo-gloss { font-size: 12px; color: var(--text-muted); margin-bottom: 1.1rem; }
+  .pitch-demo-pattern { font-size: 11px; color: var(--text-dim); font-family: 'Geist Mono', monospace; margin-bottom: 0.5rem; letter-spacing: 0.03em; }
+  .pitch-graph { position: relative; height: 70px; display: flex; align-items: flex-end; gap: 0; }
+  .pitch-mora { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .pitch-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--rose); margin-bottom: 6px;
+    opacity: 0; transform: scale(0.4);
+    box-shadow: 0 0 0 0 var(--rose-dim);
+    transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34,1.56,0.64,1), margin-bottom 0.45s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.6s ease;
+  }
+  .pitch-mora.high .pitch-dot { margin-bottom: 38px; }
+  .pitch-mora.low .pitch-dot { margin-bottom: 6px; }
+  .pitch-demo.revealed .pitch-dot {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 14px 2px var(--rose-dim);
+  }
+  .pitch-demo.revealed .pitch-mora:nth-child(2) .pitch-dot { transition-delay: 0.08s; }
+  .pitch-demo.revealed .pitch-mora:nth-child(3) .pitch-dot { transition-delay: 0.16s; }
+  .pitch-demo.revealed .pitch-mora:nth-child(4) .pitch-dot { transition-delay: 0.24s; }
+  .pitch-demo.revealed .pitch-mora:nth-child(5) .pitch-dot { transition-delay: 0.32s; }
+  .pitch-mora-label { font-size: 15px; font-weight: 500; color: var(--text-muted); transition: color 0.4s ease; }
+  .pitch-demo.revealed .pitch-mora.high .pitch-mora-label { color: var(--rose); }
+  .pitch-line { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--border); }
+  .pitch-svg-line { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+  .pitch-svg-line path {
+    stroke: url(#pitchLineGradient); stroke-width: 2; fill: none;
+    stroke-linecap: round;
+    stroke-dasharray: 240; stroke-dashoffset: 240;
+    transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1) 0.15s;
+    filter: drop-shadow(0 0 4px var(--rose-dim));
+  }
+  .pitch-demo.revealed .pitch-svg-line path { stroke-dashoffset: 0; }
 
   .grade-grid {
     display: grid;
@@ -2380,6 +2599,15 @@
           <strong>Japanese has three writing systems.</strong> Hiragana (ひらがな) is the basic phonetic alphabet used for grammar words and everyday writing. Katakana (カタカナ) represents the same sounds but is used mainly for foreign loan words like コーヒー (<em>kōhī</em>, coffee). Kanji (漢字) are logographic characters borrowed from Chinese, and you'll pick these up naturally through vocab, not isolation study.
         </div>
 
+        <div class="kana-explorer">
+          <div class="kana-explorer-script" role="group" aria-label="Switch script">
+            <button type="button" class="active" onclick="kanaExplorerScript('hiragana', this)">Hiragana</button>
+            <button type="button" onclick="kanaExplorerScript('katakana', this)">Katakana</button>
+          </div>
+          <div class="kana-explorer-rows" id="kanaExplorerRows"></div>
+          <div class="kana-explorer-grid" id="kanaExplorerGrid"></div>
+        </div>
+
         <p>Learn hiragana first, then katakana. Tackle one row at a time. Drill each row on <strong>kana.pro</strong> until you can read it without hesitating before moving on. Don't move to katakana until hiragana is solid. Most learners finish both in 1–2 weeks.</p>
 
         <h3>The process</h3>
@@ -2458,14 +2686,14 @@
 
         <hr>
         <h3>What to cover</h3>
+        <p class="view-sub" style="margin-top:-0.5rem;margin-bottom:1rem;">The five most important concepts from Yokubi's <strong>Absolute Beginner, Part 1: Getting Started</strong>.</p>
         <div class="card">
           <ul>
-            <li><strong>Sentence structure</strong>: subject, object, verb (SOV), how particles mark each role</li>
-            <li><strong>Particles</strong>: は, が, を, に, で, と, も, の, から, まで and their core uses</li>
-            <li><strong>Verb conjugation</strong>: present/past, negative, te-form, and the three verb groups (う, る, irregular)</li>
-            <li><strong>Adjective types</strong>: い-adjectives and な-adjectives behave differently</li>
-            <li><strong>Common patterns</strong>: ～ている, ～たい, ～てもいい, ～なければならない</li>
-            <li><strong>Politeness levels</strong>: ます/です (polite) vs plain form, you'll use both in immersion</li>
+            <li><strong>Sentence order</strong>: subject-object-verb, with the verb always coming last &mdash; the opposite of English word order</li>
+            <li><strong>Particles</strong>: は, が, を, に mark the role each word plays in the sentence (topic, subject, object, direction); there's no equivalent in English</li>
+            <li><strong>Adjectives</strong>: い-adjectives and な-adjectives conjugate differently, and both behave more like verbs than English adjectives do</li>
+            <li><strong>The て form</strong>: the single most useful conjugation &mdash; links actions together and is the base for requests, ongoing states, and many other patterns</li>
+            <li><strong>Politeness levels</strong>: です/ます (polite) vs plain form &mdash; you'll encounter and need both during immersion</li>
           </ul>
         </div>
 
@@ -2487,6 +2715,28 @@
 
         <div class="callout info">
           <strong>You don't need to study kanji separately.</strong> Japanese learners often panic about kanji, but you don't need to memorise readings or stroke order in isolation. You learn kanji the same way you learned English words: through the words that contain them. Seeing 食 in 食べる, 食事, and 朝食 teaches you the character faster and more durably than memorising it alone.
+        </div>
+
+        <div class="card-flow reveal">
+          <div class="card-flow-shot">
+            <img src="anki1.png" alt="Anki card front, showing just the kanji and example sentence">
+          </div>
+          <svg class="card-flow-arrow" viewBox="0 0 120 40" preserveAspectRatio="none">
+            <path d="M5 20 L100 20 M88 8 L100 20 L88 32" />
+          </svg>
+          <div class="card-flow-shot">
+            <img src="anki2.png" alt="Anki card back, showing reading, meaning, audio, and example sentence">
+          </div>
+        </div>
+        <div class="annot-stack" style="margin-top:0.75rem;">
+          <div class="note n-green">
+            <strong>This is what a card looks like</strong>
+            <p>Word, reading, an example sentence, and native audio, all on one card.</p>
+          </div>
+          <div class="note n-blue">
+            <strong>You're not memorising kanji alone</strong>
+            <p>The kanji rides along with the word. Recognise 日本, not 日 and 本 in isolation.</p>
+          </div>
         </div>
 
         <h3>Setup</h3>
@@ -2551,6 +2801,31 @@
 
         <div class="callout info">
           <strong>You don't need perfect pitch to be understood.</strong> Context fills most of the gap, and native speakers handle flat-pitched learners just fine. The goal here is just to train your ear early, so you start noticing pitch patterns and absorbing them naturally through immersion instead of picking up bad habits you'll have to unlearn later.
+        </div>
+
+        <div class="pitch-demo reveal" data-pitch="LHHL">
+          <div class="pitch-demo-word">
+            <span class="pitch-demo-jp">可愛い</span>
+            <span class="pitch-demo-reading">かわいい</span>
+          </div>
+          <p class="pitch-demo-gloss">cute, adorable</p>
+          <div class="pitch-graph">
+            <svg class="pitch-svg-line" viewBox="0 0 200 70" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="pitchLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="var(--rose)" stop-opacity="0.4"/>
+                  <stop offset="50%" stop-color="var(--rose)"/>
+                  <stop offset="100%" stop-color="var(--rose)" stop-opacity="0.4"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 50 L 70 18 L 130 18 L 180 50" />
+            </svg>
+            <div class="pitch-mora low"><span class="pitch-dot"></span><span class="pitch-mora-label">か</span></div>
+            <div class="pitch-mora high"><span class="pitch-dot"></span><span class="pitch-mora-label">わ</span></div>
+            <div class="pitch-mora high"><span class="pitch-dot"></span><span class="pitch-mora-label">い</span></div>
+            <div class="pitch-mora low"><span class="pitch-dot"></span><span class="pitch-mora-label">い</span></div>
+          </div>
+          <div class="pitch-line"></div>
         </div>
 
         <h3>The one thing to remember</h3>
@@ -5647,17 +5922,31 @@ function buildResAll() {
 }
 
 function go(id, pushState = true) {
-  // Deactivate all pages
-  document.querySelectorAll('.landing, .guide-index, .res-index, .section-page').forEach(el => {
-    el.classList.remove('active');
-  });
-  views.forEach(v => {
-    const el = document.getElementById('v-' + v);
-    if (el) el.classList.remove('active');
-  });
-  const target = document.getElementById('v-' + id);
-  if (target) target.classList.add('active');
-  if (id === 'res-all') buildResAll();
+  const current = document.querySelector('.landing.active, .guide-index.active, .res-index.active, .section-page.active');
+
+  const swap = () => {
+    // Deactivate all pages
+    document.querySelectorAll('.landing, .guide-index, .res-index, .section-page').forEach(el => {
+      el.classList.remove('active', 'fading-out');
+    });
+    views.forEach(v => {
+      const el = document.getElementById('v-' + v);
+      if (el) el.classList.remove('active');
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    const target = document.getElementById('v-' + id);
+    if (target) target.classList.add('active');
+    if (id === 'res-all') buildResAll();
+    if (window.initScrollReveal) window.initScrollReveal();
+  };
+
+  if (current) {
+    current.classList.add('fading-out');
+    setTimeout(swap, 500);
+  } else {
+    swap();
+  }
+
   // Nav active state
   const guideIds = ['guide-index','basics','mining','reading','listening','routine','speaking','jlpt','anki','yomitan','immersion-group','skills-group'];
   const resIds = ['res-index','anki','resources','res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
@@ -5668,7 +5957,6 @@ function go(id, pushState = true) {
     if (nav === 'resources' && resIds.includes(id)) btn.classList.add('active');
     if (nav === 'faq' && id === 'faq') btn.classList.add('active');
   });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   closeResourcePickerBtn();
   if (pushState) {
     history.pushState({ view: id }, '', '/' + id);
@@ -6030,7 +6318,7 @@ function closeLightbox() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
 // Wrap all annotated images and the standalone gif with the img-wrap + button
-document.querySelectorAll('.annotated img, .slider-slide img, img[src="Animation2.gif"]').forEach(img => {
+document.querySelectorAll('.annotated img, .card-flow img, .slider-slide img, img[src="Animation2.gif"]').forEach(img => {
   const wrap = document.createElement('div');
   wrap.className = 'img-wrap';
   img.parentNode.insertBefore(wrap, img);
@@ -6068,6 +6356,129 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     img.style.cursor = 'pointer';
   }
 });
+</script>
+
+<script>
+// ── Scroll reveal: auto-tag content blocks inside section pages ──
+(function () {
+  const REVEAL_SELECTOR = [
+    'h3', 'p', '.callout', '.card', '.link-grid', '.steps',
+    '.video-wrap', '.annotated', '.gif-wrap', '.img-figure',
+    '.kana-explorer', '.pitch-demo', '.settings-slider', 'hr'
+  ].join(',');
+
+  function tagRevealTargets(root) {
+    root.querySelectorAll('.section-page, .group-panel').forEach(container => {
+      Array.from(container.children).forEach(child => {
+        if (child.matches(REVEAL_SELECTOR) && !child.classList.contains('reveal')) {
+          child.classList.add('reveal');
+        }
+      });
+    });
+  }
+
+  let observer;
+  function getObserver() {
+    if (!observer) {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }
+    return observer;
+  }
+
+  function observeAll(root) {
+    root.querySelectorAll('.reveal:not(.revealed)').forEach(el => getObserver().observe(el));
+  }
+
+  window.initScrollReveal = function (root) {
+    root = root || document;
+    tagRevealTargets(root);
+    observeAll(root);
+  };
+
+  document.addEventListener('DOMContentLoaded', () => window.initScrollReveal());
+})();
+</script>
+
+<script>
+// ── Kana explorer: row picker + script toggle ──
+(function () {
+  const HIRAGANA = [
+    { key: 'a',  label: 'あ', cells: [['あ','a'],['い','i'],['う','u'],['え','e'],['お','o']] },
+    { key: 'ka', label: 'か', cells: [['か','ka'],['き','ki'],['く','ku'],['け','ke'],['こ','ko']] },
+    { key: 'sa', label: 'さ', cells: [['さ','sa'],['し','shi'],['す','su'],['せ','se'],['そ','so']] },
+    { key: 'ta', label: 'た', cells: [['た','ta'],['ち','chi'],['つ','tsu'],['て','te'],['と','to']] },
+    { key: 'na', label: 'な', cells: [['な','na'],['に','ni'],['ぬ','nu'],['ね','ne'],['の','no']] },
+    { key: 'ha', label: 'は', cells: [['は','ha'],['ひ','hi'],['ふ','fu'],['へ','he'],['ほ','ho']] },
+    { key: 'ma', label: 'ま', cells: [['ま','ma'],['み','mi'],['む','mu'],['め','me'],['も','mo']] },
+    { key: 'ya', label: 'や', cells: [['や','ya'],['','—'],['ゆ','yu'],['','—'],['よ','yo']] },
+    { key: 'ra', label: 'ら', cells: [['ら','ra'],['り','ri'],['る','ru'],['れ','re'],['ろ','ro']] },
+    { key: 'wa', label: 'わ', cells: [['わ','wa'],['','—'],['','—'],['','—'],['を','wo']] },
+    { key: 'n',  label: 'ん', cells: [['ん','n'],['','—'],['','—'],['','—'],['','—']] },
+  ];
+  const KATAKANA = [
+    { key: 'a',  label: 'ア', cells: [['ア','a'],['イ','i'],['ウ','u'],['エ','e'],['オ','o']] },
+    { key: 'ka', label: 'カ', cells: [['カ','ka'],['キ','ki'],['ク','ku'],['ケ','ke'],['コ','ko']] },
+    { key: 'sa', label: 'サ', cells: [['サ','sa'],['シ','shi'],['ス','su'],['セ','se'],['ソ','so']] },
+    { key: 'ta', label: 'タ', cells: [['タ','ta'],['チ','chi'],['ツ','tsu'],['テ','te'],['ト','to']] },
+    { key: 'na', label: 'ナ', cells: [['ナ','na'],['ニ','ni'],['ヌ','nu'],['ネ','ne'],['ノ','no']] },
+    { key: 'ha', label: 'ハ', cells: [['ハ','ha'],['ヒ','hi'],['フ','fu'],['ヘ','he'],['ホ','ho']] },
+    { key: 'ma', label: 'マ', cells: [['マ','ma'],['ミ','mi'],['ム','mu'],['メ','me'],['モ','mo']] },
+    { key: 'ya', label: 'ヤ', cells: [['ヤ','ya'],['','—'],['ユ','yu'],['','—'],['ヨ','yo']] },
+    { key: 'ra', label: 'ラ', cells: [['ラ','ra'],['リ','ri'],['ル','ru'],['レ','re'],['ロ','ro']] },
+    { key: 'wa', label: 'ワ', cells: [['ワ','wa'],['','—'],['','—'],['','—'],['ヲ','wo']] },
+    { key: 'n',  label: 'ン', cells: [['ン','n'],['','—'],['','—'],['','—'],['','—']] },
+  ];
+
+  let script = 'hiragana';
+  let rowIndex = 0;
+
+  function table() { return script === 'katakana' ? KATAKANA : HIRAGANA; }
+
+  function renderRows() {
+    const el = document.getElementById('kanaExplorerRows');
+    if (!el) return;
+    el.innerHTML = table().map((row, i) =>
+      `<button type="button" class="${i === rowIndex ? 'active' : ''}" onclick="kanaExplorerRow(${i})">${row.label}</button>`
+    ).join('');
+  }
+
+  function renderGrid() {
+    const el = document.getElementById('kanaExplorerGrid');
+    if (!el) return;
+    const row = table()[rowIndex];
+    el.innerHTML = row.cells.map(([ch, r]) => {
+      if (!ch) return `<div class="kana-explorer-cell" style="opacity:0.25;"><span class="kana-explorer-char">·</span><span class="kana-explorer-romaji">&nbsp;</span></div>`;
+      return `<div class="kana-explorer-cell"><span class="kana-explorer-char">${ch}</span><span class="kana-explorer-romaji">${r}</span></div>`;
+    }).join('');
+  }
+
+  window.kanaExplorerScript = function (newScript, btn) {
+    script = newScript;
+    if (rowIndex >= table().length) rowIndex = 0;
+    btn.closest('.kana-explorer-script').querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderRows();
+    renderGrid();
+  };
+
+  window.kanaExplorerRow = function (i) {
+    rowIndex = i;
+    renderRows();
+    renderGrid();
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderRows();
+    renderGrid();
+  });
+})();
 </script>
 </body>
 </html>
