@@ -1211,6 +1211,22 @@
   .guide-card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; line-height: 1.3; }
   .guide-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; display: block; }
 
+  .guide-card.c-blue  { border-left: 2px solid rgba(82,174,200,0.65); }
+  .guide-card.c-green { border-left: 2px solid rgba(157,143,239,0.65); }
+  .guide-card.c-amber { border-left: 2px solid rgba(212,184,62,0.65); }
+  .guide-card.c-rose  { border-left: 2px solid rgba(224,113,138,0.65); }
+  .guide-card.c-teal  { border-left: 2px solid rgba(75,191,160,0.65); }
+  .guide-card.c-blue::before  { display: none; }
+  .guide-card.c-green::before { display: none; }
+  .guide-card.c-amber::before { display: none; }
+  .guide-card.c-rose::before  { display: none; }
+  .guide-card.c-teal::before  { display: none; }
+  .guide-card.c-blue:hover  { border-left-color: var(--blue); }
+  .guide-card.c-green:hover { border-left-color: var(--green); }
+  .guide-card.c-amber:hover { border-left-color: var(--amber); }
+  .guide-card.c-rose:hover  { border-left-color: var(--rose); }
+  .guide-card.c-teal:hover  { border-left-color: var(--teal); }
+
   /* ── RES INDEX ── */
   .res-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
   .res-index.active { display: block; }
@@ -1317,7 +1333,7 @@
     width: 100%;
     height: auto;
     border-radius: 8px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--blue);
     display: block;
   }
   .img-figure figcaption {
@@ -1366,6 +1382,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    border: 2px solid var(--green);
   }
 
   .annotated {
@@ -1377,7 +1394,7 @@
     max-width: 720px;
   }
   .annotated .shot { margin: 0; min-height: 220px; max-width: none; height: 100%; }
-  .annotated img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); display: block; }
+  .annotated img { width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--amber); display: block; }
   .annot-stack { display: flex; flex-direction: column; gap: 1rem; position: relative; padding-left: 20px; }
   .annot-stack::before {
     content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 1px;
@@ -1445,9 +1462,11 @@
     width: 100%;
     height: auto;
     border-radius: 8px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--blue);
     display: block;
   }
+  .card-flow-shot.border-green img { border-color: var(--green); }
+  .card-flow-shot.border-blue img { border-color: var(--blue); }
   .card-flow.revealed .card-flow-shot:first-child { opacity: 1; transform: none; }
   .card-flow.revealed .card-flow-shot:last-child { opacity: 1; transform: none; transition-delay: 1.05s; }
 
@@ -1498,7 +1517,7 @@
     gap: 1.25rem;
     align-items: start;
   }
-  .slider-slide img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); display: block; }
+  .slider-slide img { width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--green); display: block; }
   .slider-slide .annot-stack { display: flex; flex-direction: column; gap: 0.75rem; }
 
   .slider-controls {
@@ -2178,7 +2197,7 @@
     <h3 class="guide-stage-title">Basics</h3>
 
     <div class="guide-cards">
-      <button class="guide-card" onclick="go('basics')" style="border-color:var(--blue); background:var(--blue-dim);">        <span class="guide-card-title">Basics</span>
+      <button class="guide-card c-blue" onclick="go('basics')">        <span class="guide-card-title">Basics</span>
         <span class="guide-card-desc">Kana, grammar, vocab, and pitch, your starting checklist.</span>
       </button>
     </div>
@@ -2188,16 +2207,16 @@
     <h3 class="guide-stage-title">Immersion</h3>
 
     <div class="guide-cards">
-      <button class="guide-card" onclick="go('immersion-group')" style="border-color:var(--green); background:var(--green-dim);">        <span class="guide-card-title">Immersion</span>
+      <button class="guide-card c-green" onclick="go('immersion-group')">        <span class="guide-card-title">Immersion</span>
         <span class="guide-card-desc">What immersion is, your goal, tool setup, and how to actually do it, all in one place.</span>
       </button>
-      <button class="guide-card" onclick="go('skills-group')" style="border-color:var(--teal); background:var(--teal-dim);">        <span class="guide-card-title">Skills</span>
+      <button class="guide-card c-teal" onclick="go('skills-group')">        <span class="guide-card-title">Skills</span>
         <span class="guide-card-desc">Reading (manga, LNs, VNs, games), listening, and speaking: one page per skill.</span>
       </button>
-      <button class="guide-card" onclick="go('mining')" style="border-color:var(--amber); background:var(--amber-dim);">        <span class="guide-card-title">Sentence mining</span>
+      <button class="guide-card c-amber" onclick="go('mining')">        <span class="guide-card-title">Sentence mining</span>
         <span class="guide-card-desc">Build a personalised Anki deck from your own content.</span>
       </button>
-      <button class="guide-card" onclick="go('routine')" style="border-color:var(--rose); background:var(--rose-dim);">        <span class="guide-card-title">Daily routine</span>
+      <button class="guide-card c-rose" onclick="go('routine')">        <span class="guide-card-title">Daily routine</span>
         <span class="guide-card-desc">What a consistent study day looks like.</span>
       </button>
     </div>
@@ -2207,16 +2226,16 @@
     <h3 class="guide-stage-title">Misc</h3>
     <p class="guide-stage-desc">Extra reference material that doesn't fit neatly into the flow above.</p>
     <div class="guide-cards">
-      <button class="guide-card" onclick="go('jlpt')" style="border-color:var(--amber); background:var(--amber-dim);">        <span class="guide-card-title">JLPT</span>
+      <button class="guide-card c-amber" onclick="go('jlpt')">        <span class="guide-card-title">JLPT</span>
         <span class="guide-card-desc">Practice tests, prep books, Anki decks: N5 through N1.</span>
       </button>
-      <button class="guide-card" onclick="go('anki')" style="border-color:var(--rose); background:var(--rose-dim);">        <span class="guide-card-title">Anki deep dive</span>
+      <button class="guide-card c-rose" onclick="go('anki')">        <span class="guide-card-title">Anki deep dive</span>
         <span class="guide-card-desc">Settings, add-ons, and how to review cards correctly.</span>
       </button>
-      <button class="guide-card" onclick="go('yomitan')" style="border-color:var(--teal); background:var(--teal-dim);">        <span class="guide-card-title">Yomitan setup</span>
+      <button class="guide-card c-teal" onclick="go('yomitan')">        <span class="guide-card-title">Yomitan setup</span>
         <span class="guide-card-desc">Install the pop-up dictionary, load dictionaries, and connect it to Anki.</span>
       </button>
-      <button class="guide-card" onclick="openResourcePicker()" style="border-color:var(--green); background:var(--green-dim);">        <span class="guide-card-title">Resources</span>
+      <button class="guide-card c-green" onclick="openResourcePicker()">        <span class="guide-card-title">Resources</span>
         <span class="guide-card-desc">Every tool, app, and site, organised by category.</span>
       </button>
     </div>
