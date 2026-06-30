@@ -1340,6 +1340,9 @@
     border: 2px solid var(--blue);
     display: block;
   }
+  .img-figure-neutral img {
+    border: 1px solid rgba(238,240,250,0.22);
+  }
   .img-figure figcaption {
     font-family: 'Geist Mono', monospace;
     font-size: 11px;
@@ -2540,8 +2543,8 @@
           <div class="reading-panel active" id="rp-manga">
             <p>Manga is one of the best complements to anime. It builds reading speed, exposes you to more kanji in context, and the visual storytelling makes it easy to follow even at lower levels. The same 0–2 unknown rule applies: look up what you can, skip what's overwhelming, and keep moving.</p>
 
-            <figure class="img-figure">
-              <img src="manga.png" alt="Manga reading with Yomitan">
+            <figure class="img-figure img-figure-neutral">
+              <img src="manga.png" alt="Manga reading with Yomitan OCR support">
               <figcaption>Reading manga with Yomitan OCR support</figcaption>
             </figure>
 
@@ -2619,7 +2622,7 @@
           <div class="reading-panel" id="rp-vn">
             <p>Visual novels sit somewhere between reading and watching: voiced dialogue means you're training your ears at the same time as your reading, which makes them one of the most efficient immersion formats once you have some foundation.</p>
 
-            <figure class="img-figure">
+            <figure class="img-figure img-figure-neutral">
               <img src="visual_novel.png" alt="Visual novel with text hooking">
               <figcaption>Text hooking setup for visual novels with dictionary support</figcaption>
             </figure>
@@ -2660,7 +2663,7 @@
           <div class="reading-panel" id="rp-games">
             <p>Games are harder to set up than VNs but extremely good for immersion, particularly RPGs, adventure games, and story-driven titles where you're reading a lot and the gameplay holds your attention.</p>
 
-            <figure class="img-figure">
+            <figure class="img-figure img-figure-neutral">
               <img src="game.png" alt="Game with text hooking">
               <figcaption>OCR support in game example</figcaption>
             </figure>
@@ -3308,7 +3311,7 @@
       <p>Manga is one of the best complements to anime! It builds reading speed, exposes you to more kanji in context, and the visual storytelling makes it easy to follow even at lower levels. The same 0–2 unknown rule applies: look up what you can, skip what's overwhelming, and keep moving.</p>
       <p>To get Yomitan working on manga you need OCR, since the text is part of the image. <strong>Manatan</strong> is the easiest all-in-one option. It handles OCR automatically and works on desktop, iOS, and Android. <strong>Mokuro</strong> pre-processes manga into hoverable HTML pages for desktop use.</p>
       
-      <figure class="img-figure">
+      <figure class="img-figure img-figure-neutral">
         <img src="manga.png" alt="Manga reading">
         <figcaption>Reading manga with Yomitan OCR support</figcaption>
       </figure>
@@ -3383,7 +3386,7 @@
       <h3>Visual novels</h3>
       <p>Visual novels sit somewhere between reading and watching: voiced dialogue means you're training your ears at the same time as your reading, which makes them one of the most efficient immersion formats once you have some foundation. Text hooking with <strong>Textractor</strong> or <strong>JL</strong> lets you hover over any line with Yomitan, making lookups just as smooth as with anime subtitles. Ryuugames has a large catalogue of VNs available for download, and TheMoeWay has a full setup guide to get everything running.</p>
       
-      <figure class="img-figure">
+      <figure class="img-figure img-figure-neutral">
         <img src="visual_novel.png" alt="Visual novel with text hooking">
         <figcaption>Text hooking setup for visual novels with dictionary support</figcaption>
       </figure>
@@ -3603,9 +3606,9 @@
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">Improving listening</span>
         </button>
-        <button class="page-nav-btn next" onclick="go('speaking')">
+        <button class="page-nav-btn next" onclick="go('jlpt')">
           <span class="page-nav-label">Next →</span>
-          <span class="page-nav-title">Speaking</span>
+          <span class="page-nav-title">JLPT</span>
         </button>
       </div>
     </div></div><!-- /inner -->
@@ -4069,9 +4072,9 @@
       </div><!-- /jlpt-tabs -->
 
       <div class="page-nav">
-        <button class="page-nav-btn" onclick="go('speaking')">
+        <button class="page-nav-btn" onclick="go('routine')">
           <span class="page-nav-label">← Prev</span>
-          <span class="page-nav-title">Speaking</span>
+          <span class="page-nav-title">Daily routine</span>
         </button>
         <button class="page-nav-btn next" onclick="go('anki')">
           <span class="page-nav-label">Next →</span>
