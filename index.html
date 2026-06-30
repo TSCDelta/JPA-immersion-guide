@@ -2672,9 +2672,9 @@
           <span class="page-nav-label">← Prev</span>
           <span class="page-nav-title">Immersion</span>
         </button>
-        <button class="page-nav-btn next" onclick="go('reading')">
+        <button class="page-nav-btn next" onclick="go('routine')">
           <span class="page-nav-label">Next →</span>
-          <span class="page-nav-title">Improving reading</span>
+          <span class="page-nav-title">Daily routine</span>
         </button>
       </div>
     </div></div><!-- /inner -->
@@ -6047,12 +6047,23 @@ document.querySelectorAll('.annotated img, .slider-slide img, img[src="Animation
 document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   const img = container.querySelector('img');
   if (img) {
-    // Container is already position:relative, just append button directly to it
+    // For containers that include a figcaption (img-figure), the button must
+    // anchor to the image itself, not the whole container - otherwise
+    // "bottom: 8px" is measured against the caption's bottom edge and the
+    // button floats below the image instead of sitting on its corner.
+    let btnParent = container;
+    if (container.classList.contains('img-figure')) {
+      const imgWrap = document.createElement('div');
+      imgWrap.style.position = 'relative';
+      img.parentNode.insertBefore(imgWrap, img);
+      imgWrap.appendChild(img);
+      btnParent = imgWrap;
+    }
     const btn = document.createElement('button');
     btn.className = 'img-container-btn';
     btn.textContent = 'click to expand';
     btn.onclick = (e) => { e.stopPropagation(); openLightbox(img.src, img.alt); };
-    container.appendChild(btn);
+    btnParent.appendChild(btn);
     img.onclick = () => openLightbox(img.src, img.alt);
     img.style.cursor = 'pointer';
   }
