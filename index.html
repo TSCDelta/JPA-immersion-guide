@@ -1441,6 +1441,63 @@
   .anno-lines circle.anno-dot-img { stroke: var(--bg); stroke-width: 2; }
   .anno-lines circle.anno-dot-note { opacity: 0.85; }
 
+  /* Plain-stack note style, reused inside .annotated / .slider-slide via
+     .plain-annot: keeps the SVG pointer-lines to the screenshot, but the
+     note cards themselves fall back to the standard vertical-spine +
+     numbered-dot look (same as .annot-stack outside these containers). */
+  .annotated .plain-annot, .slider-slide .plain-annot { padding-left: 20px; }
+  .annotated .plain-annot::before, .slider-slide .plain-annot::before {
+    content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 1px;
+    background: linear-gradient(180deg, var(--border-strong), transparent);
+  }
+  .annotated .plain-annot .note::before, .slider-slide .plain-annot .note::before {
+    content: ""; position: absolute; left: -20px; top: 19px; width: 16px; height: 1px;
+    background: var(--border-strong);
+  }
+  .annotated .plain-annot .note::after, .slider-slide .plain-annot .note::after {
+    content: ""; position: absolute; left: -24px; top: 15px; width: 9px; height: 9px;
+    border-radius: 50%; border: 2px solid var(--bg);
+  }
+  .annotated .plain-annot .note.n-green::after, .slider-slide .plain-annot .note.n-green::after { background: var(--green); }
+  .annotated .plain-annot .note.n-blue::after, .slider-slide .plain-annot .note.n-blue::after { background: var(--blue); }
+  .annotated .plain-annot .note.n-amber::after, .slider-slide .plain-annot .note.n-amber::after { background: var(--amber); }
+  .annotated .plain-annot .note > strong, .slider-slide .plain-annot .note > strong {
+    display: flex; align-items: center; gap: 7px; color: var(--text); font-weight: 600;
+    font-size: 12px; letter-spacing: 0.02em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .annotated .plain-annot .note.n-green > strong::before, .slider-slide .plain-annot .note.n-green > strong::before {
+    content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--green); flex-shrink: 0;
+  }
+  .annotated .plain-annot .note.n-blue > strong::before, .slider-slide .plain-annot .note.n-blue > strong::before {
+    content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--blue); flex-shrink: 0;
+  }
+  .annotated .plain-annot .note.n-amber > strong::before, .slider-slide .plain-annot .note.n-amber > strong::before {
+    content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--amber); flex-shrink: 0;
+  }
+  .annotated .plain-annot .note p, .slider-slide .plain-annot .note p { font-size: 12.5px; line-height: 1.6; }
+  .annotated .plain-annot .note p strong, .slider-slide .plain-annot .note p strong {
+    display: inline; font-weight: 600; font-size: inherit; text-transform: none; color: var(--text); margin: 0;
+  }
+  .annotated .plain-annot .note p strong::before, .slider-slide .plain-annot .note p strong::before { content: none; }
+
+  /* Sequential reveal: notes fade in staggered once their frame scrolls
+     into view (or the slide becomes active), mirroring the card-flow
+     front → arrow → back timing. The pointer-lines then draw in via JS. */
+  .plain-annot .note {
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .annotated.revealed .plain-annot .note, .slider-slide.revealed .plain-annot .note {
+    opacity: 1; transform: none;
+  }
+  .plain-annot .note:nth-child(1) { transition-delay: 0.15s; }
+  .plain-annot .note:nth-child(2) { transition-delay: 0.32s; }
+  .plain-annot .note:nth-child(3) { transition-delay: 0.49s; }
+  .anno-lines.dotted circle { opacity: 0; }
+
+  /* Dotted variant of the SVG pointer-lines. */
+  .anno-lines.dotted path { stroke-dasharray: 2.5 3.5; }
+
   .note {
     position: relative;
     border-radius: 10px;
@@ -4270,7 +4327,7 @@
         <p>Kaishi 1.5k is the recommended starter vocabulary deck. It covers the most common ~1,500 Japanese words with audio, example sentences, and kanji. Download the <code>.apkg</code> file from the link below, then open it. Anki will import it automatically.</p>
 
         <div class="annotated centered-layout">
-          <div class="anno-col left">
+          <div class="anno-col left plain-annot">
             <div class="note n-green" data-anno-x="50" data-anno-y="17">
               <strong>Card front</strong>
               <p>Each card starts with just a word, like <strong>私</strong> here. Try to recall it before checking the answer.</p>
@@ -4283,7 +4340,7 @@
           <div class="anno-img" style="max-width:320px;">
             <img src="Animation.gif" alt="Kaishi 1.5k card example">
           </div>
-          <svg class="anno-lines"></svg>
+          <svg class="anno-lines dotted"></svg>
         </div>
 
         <div class="link-grid" style="grid-template-columns:1fr 1fr;">
@@ -4308,8 +4365,8 @@
             <div class="slider-track" id="settingsTrack">
               <div class="slider-slide">
                 <img src="Setting_1.png" alt="Deck options panel">
-                <svg class="anno-lines"></svg>
-                <div class="annot-stack">
+                <svg class="anno-lines dotted"></svg>
+                <div class="annot-stack plain-annot">
                   <div class="note n-green" data-anno-x="67" data-anno-y="29">
                     <strong>Daily Limits</strong>
                     <p>New cards/day: 20 (lower to 10 if reviews pile up). Maximum reviews/day: 9999, uncapped, so all due reviews are shown.</p>
@@ -4326,8 +4383,8 @@
               </div>
               <div class="slider-slide">
                 <img src="Setting_2.png" alt="Display Order and FSRS panel">
-                <svg class="anno-lines"></svg>
-                <div class="annot-stack">
+                <svg class="anno-lines dotted"></svg>
+                <div class="annot-stack plain-annot">
                   <div class="note n-blue" data-anno-x="67" data-anno-y="26">
                     <strong>Display Order</strong>
                     <p>Set New/review order and Interday learning/review order to <code>Mix with reviews</code> (interleaving), the recommended setting to introduce new cards.</p>
@@ -4344,8 +4401,8 @@
               </div>
               <div class="slider-slide">
                 <img src="Setting_3.png" alt="Preferences, Review tab">
-                <svg class="anno-lines"></svg>
-                <div class="annot-stack">
+                <svg class="anno-lines dotted"></svg>
+                <div class="annot-stack plain-annot">
                   <div class="note n-blue" data-anno-x="80" data-anno-y="24">
                     <strong>Learn ahead limit</strong>
                     <p>Set to <code>999</code> mins if you prefer finishing all your Anki in one daily session. For precise review intervals set this to <code>0</code> instead. This requires you to review multiple (re-)learning steps throughout the day.</p>
@@ -4397,7 +4454,7 @@
         <p>Go to Tools → Add-ons → Get Add-ons and paste each code below, one at a time. Restart Anki after installing all four.</p>
 
         <div class="annotated centered-layout">
-          <div class="anno-col left">
+          <div class="anno-col left plain-annot">
             <div class="note n-blue" data-anno-x="8" data-anno-y="12">
               <strong>Essential add-ons</strong>
               <p><strong>AnkiConnect</strong> lets outside tools (like sentence mining apps) talk to Anki. <strong>KanjiGrid</strong> shows which kanji you've learned. <strong>Review Heatmap</strong> visualizes your review streak. <strong>Pass/Fail</strong> simplifies grading to two buttons.</p>
@@ -4406,8 +4463,8 @@
           <div class="anno-img">
             <img src="Add_on.png" alt="Add-ons manager">
           </div>
-          <svg class="anno-lines"></svg>
-          <div class="anno-col right">
+          <svg class="anno-lines dotted"></svg>
+          <div class="anno-col right plain-annot">
             <div class="note n-green" data-anno-x="89" data-anno-y="7">
               <strong>Get Add-ons</strong>
               <p>Opens the code entry dialog. Paste each code below, one at a time.</p>
@@ -6811,9 +6868,13 @@ function updateResIndexSearch(query) {
 <script>
 // ── Annotated screenshot callouts: curved SVG pointer-lines from each
 //    note to a specific spot on its paired image (data-anno-x/-y are
-//    percentages of the image's own width/height). ──
+//    percentages of the image's own width/height). For .dotted frames,
+//    notes fade in staggered and each line draws in briefly before
+//    settling into its dotted resting state — mirroring the front→arrow→
+//    back sequence used on the card-flow diagram. ──
 (function () {
   const COLOR_VAR = { 'n-green': '--green', 'n-blue': '--blue', 'n-amber': '--amber' };
+  const NOTE_BASE = 0.15, NOTE_STEP = 0.17, LINE_LAG = 0.25, DRAW_DUR = 0.55;
 
   function colorFor(note) {
     for (const cls in COLOR_VAR) {
@@ -6822,22 +6883,22 @@ function updateResIndexSearch(query) {
     return getComputedStyle(document.documentElement).getPropertyValue('--text-dim').trim();
   }
 
-  function drawFrame(frame) {
+  function computePoints(frame) {
     const img = frame.querySelector('img');
     const svg = frame.querySelector(':scope > svg.anno-lines');
     const notes = frame.querySelectorAll('.note[data-anno-x]');
-    if (!img || !svg || !notes.length) return;
-    if (!img.complete || !img.naturalWidth) return;
+    if (!img || !svg || !notes.length) return null;
+    if (!img.complete || !img.naturalWidth) return null;
 
     const frameRect = frame.getBoundingClientRect();
-    if (!frameRect.width || !frameRect.height) return;
+    if (!frameRect.width || !frameRect.height) return null;
     const imgRect = img.getBoundingClientRect();
 
     svg.setAttribute('width', frameRect.width);
     svg.setAttribute('height', frameRect.height);
     svg.setAttribute('viewBox', `0 0 ${frameRect.width} ${frameRect.height}`);
 
-    let markup = '';
+    const points = [];
     notes.forEach(note => {
       const px = parseFloat(note.dataset.annoX) / 100;
       const py = parseFloat(note.dataset.annoY) / 100;
@@ -6851,13 +6912,86 @@ function updateResIndexSearch(query) {
       const noteY = noteRect.top - frameRect.top + Math.min(18, noteRect.height / 2);
 
       const midX = (imgX + noteX) / 2;
-      const color = colorFor(note);
-
-      markup += `<path d="M ${noteX.toFixed(1)} ${noteY.toFixed(1)} C ${midX.toFixed(1)} ${noteY.toFixed(1)}, ${midX.toFixed(1)} ${imgY.toFixed(1)}, ${imgX.toFixed(1)} ${imgY.toFixed(1)}" stroke="${color}"/>`;
-      markup += `<circle class="anno-dot-img" cx="${imgX.toFixed(1)}" cy="${imgY.toFixed(1)}" r="4" fill="${color}"/>`;
-      markup += `<circle class="anno-dot-note" cx="${noteX.toFixed(1)}" cy="${noteY.toFixed(1)}" r="2.5" fill="${color}"/>`;
+      points.push({ noteX, noteY, midX, imgX, imgY, color: colorFor(note) });
     });
-    svg.innerHTML = markup;
+    return { svg, points };
+  }
+
+  function drawFrame(frame) {
+    const result = computePoints(frame);
+    if (!result) return;
+    const { svg, points } = result;
+    const dotted = svg.classList.contains('dotted');
+
+    svg.innerHTML = points.map(p =>
+      `<path d="M ${p.noteX.toFixed(1)} ${p.noteY.toFixed(1)} C ${p.midX.toFixed(1)} ${p.noteY.toFixed(1)}, ${p.midX.toFixed(1)} ${p.imgY.toFixed(1)}, ${p.imgX.toFixed(1)} ${p.imgY.toFixed(1)}" stroke="${p.color}"${dotted ? ' stroke-dasharray="2.5 3.5"' : ''}/>` +
+      `<circle class="anno-dot-img" cx="${p.imgX.toFixed(1)}" cy="${p.imgY.toFixed(1)}" r="4" fill="${p.color}"/>` +
+      `<circle class="anno-dot-note" cx="${p.noteX.toFixed(1)}" cy="${p.noteY.toFixed(1)}" r="2.5" fill="${p.color}"/>`
+    ).join('');
+
+    if (dotted) armDrawIn(frame, svg);
+  }
+
+  function armDrawIn(frame, svg) {
+    const paths = svg.querySelectorAll('path');
+    paths.forEach(path => {
+      const len = path.getTotalLength();
+      path.style.transition = 'none';
+      path.style.opacity = '0';
+      path.style.strokeDasharray = `${len} ${len}`;
+      path.style.strokeDashoffset = `${len}`;
+      path.dataset.fullLength = len;
+    });
+    // Force reflow so the hidden state above is committed before animating.
+    void svg.getBoundingClientRect();
+
+    const alreadyVisible = frame.getBoundingClientRect().top < window.innerHeight * 0.9 && frame.classList.contains('revealed');
+    if (alreadyVisible) {
+      playDrawIn(frame, svg);
+    } else if (!frame._annoObserver) {
+      frame._annoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            playDrawIn(frame, svg);
+            frame._annoObserver.unobserve(frame);
+          }
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+      frame._annoObserver.observe(frame);
+    }
+  }
+
+  function playDrawIn(frame, svg) {
+    if (frame._annoPlayed) return;
+    frame._annoPlayed = true;
+    frame.classList.add('revealed');
+
+    const paths = svg.querySelectorAll('path');
+    paths.forEach((path, i) => {
+      const len = parseFloat(path.dataset.fullLength) || 0;
+      const delay = NOTE_BASE + i * NOTE_STEP + LINE_LAG;
+      path.style.transition = `opacity 0.25s ease ${delay}s, stroke-dashoffset ${DRAW_DUR}s ease ${delay}s`;
+      path.style.opacity = '0.6';
+      path.style.strokeDashoffset = '0';
+      setTimeout(() => {
+        path.style.transition = 'none';
+        path.style.strokeDasharray = '2.5 3.5';
+      }, (delay + DRAW_DUR) * 1000);
+    });
+
+    const circlePairs = svg.querySelectorAll('circle');
+    circlePairs.forEach((circle, i) => {
+      const idx = Math.floor(i / 2);
+      const delay = NOTE_BASE + idx * NOTE_STEP + LINE_LAG + DRAW_DUR * 0.7;
+      circle.style.transformOrigin = 'center';
+      circle.style.transformBox = 'fill-box';
+      circle.style.transform = 'scale(0.4)';
+      circle.style.transition = `opacity 0.25s ease ${delay}s, transform 0.25s ease ${delay}s`;
+      requestAnimationFrame(() => {
+        circle.style.opacity = circle.classList.contains('anno-dot-note') ? '0.85' : '1';
+        circle.style.transform = 'scale(1)';
+      });
+    });
   }
 
   function drawAll() {
