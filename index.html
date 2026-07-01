@@ -1478,6 +1478,27 @@
   .note.n-amber::after { background: var(--amber); }
   .note.n-amber strong::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--amber); flex-shrink: 0; }
 
+  .annotated .note, .slider-slide .note { padding: 1.15rem 1.3rem; border-radius: 14px; }
+
+  /* Big colored heading, reference-style — only the note's own title (a
+     direct-child <strong>), not any <strong> used for inline emphasis
+     inside a <p>. */
+  .annotated .note > strong, .slider-slide .note > strong {
+    display: block; font-size: 17px; font-weight: 700; letter-spacing: 0;
+    text-transform: none; margin-bottom: 0.5rem; line-height: 1.3;
+  }
+  .annotated .note > strong::before, .slider-slide .note > strong::before { content: none; }
+  .annotated .note.n-green > strong, .slider-slide .note.n-green > strong { color: var(--green); }
+  .annotated .note.n-blue  > strong, .slider-slide .note.n-blue  > strong { color: var(--blue); }
+  .annotated .note.n-amber > strong, .slider-slide .note.n-amber > strong { color: var(--amber); }
+
+  .annotated .note p, .slider-slide .note p { font-size: 13px; line-height: 1.65; }
+  .annotated .note p strong, .slider-slide .note p strong {
+    display: inline; font-weight: 600; font-size: inherit; letter-spacing: 0;
+    text-transform: none; color: var(--text); margin: 0;
+  }
+  .annotated .note p strong::before, .slider-slide .note p strong::before { content: none; }
+
   @media (max-width: 680px) {
     .annotated { grid-template-columns: 1fr; }
     .annotated.centered-layout { grid-template-columns: 1fr; }
@@ -2226,7 +2247,7 @@
 <!-- ── LANDING ── -->
 <div id="v-welcome" class="landing">
   <span class="landing-eyebrow">日本語 · immersion method</span>
-  <h1 class="landing-title">Learn Japanese<br>through <em>immersion</em></h1>
+  <h1 class="landing-title"><em>JPA's</em> Immersion Method</h1>
   <p class="landing-desc">A complete guide to acquiring Japanese the natural way, through reading, listening, and living in the language.</p>
   <div class="landing-actions">
     <button class="landing-btn-primary" onclick="go('guide-index')">Start the guide</button>
@@ -2241,7 +2262,7 @@
     <button class="landing-pillar" onclick="openResourcePicker()">
       <span class="landing-pillar-icon">02 / Resources</span>
       <span class="landing-pillar-title">Resources</span>
-      <span class="landing-pillar-desc">Curated tools, apps, and sites for every aspect of study.</span>
+      <span class="landing-pillar-desc">Resources to be used for study..</span>
     </button>
     <button class="landing-pillar" onclick="go('faq')">
       <span class="landing-pillar-icon">03 / FAQ</span>
@@ -7210,4 +7231,4 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
 })();
 </script>
 </body>
-</html>
+</html>s
