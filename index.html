@@ -1418,6 +1418,7 @@
     align-items: start;
     margin: 1rem 0;
     max-width: 720px;
+    position: relative;
   }
   .annotated .shot { margin: 0; min-height: 220px; max-width: none; height: 100%; }
   .annotated img { width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--amber); display: block; }
@@ -1427,6 +1428,18 @@
     background: linear-gradient(180deg, var(--border-strong), transparent);
   }
   .annot-stack .note { display: flex; flex-direction: column; justify-content: center; }
+
+  /* Pointer-line mode: used inside .annotated / .slider-slide, where each
+     note curves via SVG to a specific spot on the paired screenshot instead
+     of hanging off a generic vertical spine. */
+  .annotated .annot-stack, .slider-slide .annot-stack { padding-left: 14px; }
+  .annotated .annot-stack::before, .slider-slide .annot-stack::before { content: none; }
+  .annotated .note::before, .slider-slide .note::before { content: none; }
+  .annotated .note::after, .slider-slide .note::after { content: none; }
+  .anno-lines { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; z-index: 5; }
+  .anno-lines path { fill: none; stroke-width: 1.5; opacity: 0.6; }
+  .anno-lines circle.anno-dot-img { stroke: var(--bg); stroke-width: 2; }
+  .anno-lines circle.anno-dot-note { opacity: 0.85; }
 
   .note {
     position: relative;
@@ -1467,6 +1480,7 @@
 
   @media (max-width: 680px) {
     .annotated { grid-template-columns: 1fr; }
+    .anno-lines { display: none; }
   }
 
   /* ── CARD FLOW (e.g. Anki front → back) ── */
@@ -1542,6 +1556,7 @@
     grid-template-columns: 1fr 1.2fr;
     gap: 1.25rem;
     align-items: start;
+    position: relative;
   }
   .slider-slide img { width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--green); display: block; }
   .slider-slide .annot-stack { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -1615,6 +1630,7 @@
   @media (max-width: 680px) {
     .slider-slide { grid-template-columns: 1fr; }
     .slider-label { display: none; }
+    .slider-slide .anno-lines { display: none; }
   }
 
   /* ── SCROLL REVEAL ── */
@@ -4215,12 +4231,13 @@
 
         <div class="annotated">
           <img src="Animation.gif" alt="Kaishi 1.5k card example">
+          <svg class="anno-lines"></svg>
           <div class="annot-stack">
-            <div class="note n-green">
+            <div class="note n-green" data-anno-x="50" data-anno-y="30">
               <strong>1.5k cards</strong>
               <p>The 1500 most common Japanese words, with images and native audio.</p>
             </div>
-            <div class="note n-blue">
+            <div class="note n-blue" data-anno-x="50" data-anno-y="75">
               <strong>Importing</strong>
               <p>Open the downloaded <code>.apkg</code> file directly. Anki opens and imports it for you.</p>
             </div>
@@ -4249,16 +4266,17 @@
             <div class="slider-track" id="settingsTrack">
               <div class="slider-slide">
                 <img src="Setting_1.png" alt="Deck options panel">
+                <svg class="anno-lines"></svg>
                 <div class="annot-stack">
-                  <div class="note n-green">
+                  <div class="note n-green" data-anno-x="60" data-anno-y="16">
                     <strong>Daily Limits</strong>
                     <p>New cards/day: 20 (lower to 10 if reviews pile up). Maximum reviews/day: 9999, uncapped, so all due reviews are shown.</p>
                   </div>
-                  <div class="note n-blue">
+                  <div class="note n-blue" data-anno-x="60" data-anno-y="48">
                     <strong>New Cards</strong>
                     <p>Learning steps: <code>1m 5m 10m</code>. The interval and number of times you'll see a new card in a session until you finish it for the day.</p>
                   </div>
-                  <div class="note n-amber">
+                  <div class="note n-amber" data-anno-x="60" data-anno-y="74">
                     <strong>Lapses</strong>
                     <p>Leech threshold: 20, how many times you can fail a card before it's flagged as a leech.</p>
                   </div>
@@ -4266,16 +4284,17 @@
               </div>
               <div class="slider-slide">
                 <img src="Setting_2.png" alt="Display Order and FSRS panel">
+                <svg class="anno-lines"></svg>
                 <div class="annot-stack">
-                  <div class="note n-blue">
+                  <div class="note n-blue" data-anno-x="60" data-anno-y="18">
                     <strong>Display Order</strong>
                     <p>Set New/review order and Interday learning/review order to <code>Mix with reviews</code> (interleaving), the recommended setting to introduce new cards.</p>
                   </div>
-                  <div class="note n-green">
+                  <div class="note n-green" data-anno-x="60" data-anno-y="46">
                     <strong>FSRS</strong>
                     <p>The algorithm Anki uses to schedule reviews based on your review history. Set it to on.</p>
                   </div>
-                  <div class="note n-amber">
+                  <div class="note n-amber" data-anno-x="60" data-anno-y="66">
                     <strong>Desired retention</strong>
                     <p>85% is the sweet spot for high retention and frequency of reviews. A higher value means more reviews throughout the days.</p>
                   </div>
@@ -4283,12 +4302,13 @@
               </div>
               <div class="slider-slide">
                 <img src="Setting_3.png" alt="Preferences, Review tab">
+                <svg class="anno-lines"></svg>
                 <div class="annot-stack">
-                  <div class="note n-blue">
+                  <div class="note n-blue" data-anno-x="55" data-anno-y="32">
                     <strong>Learn ahead limit</strong>
                     <p>Set to <code>999</code> mins if you prefer finishing all your Anki in one daily session. For precise review intervals set this to <code>0</code> instead. This requires you to review multiple (re-)learning steps throughout the day.</p>
                   </div>
-                  <div class="note n-green">
+                  <div class="note n-green" data-anno-x="55" data-anno-y="60">
                     <strong>Answer hotkeys</strong>
                     <p>Instead of clicking the answer buttons, use the hotkeys: set <code>1</code> for Again and <code>2</code> for Good, or any keys you prefer.</p>
                   </div>
@@ -4336,12 +4356,13 @@
 
         <div class="annotated" style="align-items:center;">
           <img src="Add_on.png" alt="Add-ons manager">
+          <svg class="anno-lines"></svg>
           <div class="annot-stack">
-            <div class="note n-green">
+            <div class="note n-green" data-anno-x="55" data-anno-y="12">
               <strong>Tools → Add-ons</strong>
               <p>Opens the add-ons manager. Click "Get Add-ons" and paste each code below, one at a time.</p>
             </div>
-            <div class="note n-blue">
+            <div class="note n-blue" data-anno-x="55" data-anno-y="80">
               <strong>Restart required</strong>
               <p>Restart Anki after installing all four codes for them to take effect.</p>
             </div>
@@ -6738,6 +6759,79 @@ function updateResIndexSearch(query) {
   window.settingsSliderGo = function (delta) {
     window.settingsSliderSet(current + delta);
   };
+})();
+</script>
+
+<script>
+// ── Annotated screenshot callouts: curved SVG pointer-lines from each
+//    note to a specific spot on its paired image (data-anno-x/-y are
+//    percentages of the image's own width/height). ──
+(function () {
+  const COLOR_VAR = { 'n-green': '--green', 'n-blue': '--blue', 'n-amber': '--amber' };
+
+  function colorFor(note) {
+    for (const cls in COLOR_VAR) {
+      if (note.classList.contains(cls)) return getComputedStyle(document.documentElement).getPropertyValue(COLOR_VAR[cls]).trim();
+    }
+    return getComputedStyle(document.documentElement).getPropertyValue('--text-dim').trim();
+  }
+
+  function drawFrame(frame) {
+    const img = frame.querySelector('img');
+    const svg = frame.querySelector(':scope > svg.anno-lines');
+    const notes = frame.querySelectorAll('.note[data-anno-x]');
+    if (!img || !svg || !notes.length) return;
+    if (!img.complete || !img.naturalWidth) return;
+
+    const frameRect = frame.getBoundingClientRect();
+    if (!frameRect.width || !frameRect.height) return;
+    const imgRect = img.getBoundingClientRect();
+
+    svg.setAttribute('width', frameRect.width);
+    svg.setAttribute('height', frameRect.height);
+    svg.setAttribute('viewBox', `0 0 ${frameRect.width} ${frameRect.height}`);
+
+    let markup = '';
+    notes.forEach(note => {
+      const px = parseFloat(note.dataset.annoX) / 100;
+      const py = parseFloat(note.dataset.annoY) / 100;
+      const imgX = (imgRect.left - frameRect.left) + px * imgRect.width;
+      const imgY = (imgRect.top - frameRect.top) + py * imgRect.height;
+
+      const noteRect = note.getBoundingClientRect();
+      const noteX = noteRect.left - frameRect.left;
+      const noteY = noteRect.top - frameRect.top + Math.min(18, noteRect.height / 2);
+
+      const midX = (imgX + noteX) / 2;
+      const color = colorFor(note);
+
+      markup += `<path d="M ${noteX.toFixed(1)} ${noteY.toFixed(1)} C ${midX.toFixed(1)} ${noteY.toFixed(1)}, ${midX.toFixed(1)} ${imgY.toFixed(1)}, ${imgX.toFixed(1)} ${imgY.toFixed(1)}" stroke="${color}"/>`;
+      markup += `<circle class="anno-dot-img" cx="${imgX.toFixed(1)}" cy="${imgY.toFixed(1)}" r="4" fill="${color}"/>`;
+      markup += `<circle class="anno-dot-note" cx="${noteX.toFixed(1)}" cy="${noteY.toFixed(1)}" r="2.5" fill="${color}"/>`;
+    });
+    svg.innerHTML = markup;
+  }
+
+  function drawAll() {
+    document.querySelectorAll('.annotated, .slider-slide').forEach(drawFrame);
+  }
+
+  function init() {
+    document.querySelectorAll('.annotated, .slider-slide').forEach(frame => {
+      const img = frame.querySelector('img');
+      if (!img) return;
+      if (img.complete && img.naturalWidth) drawFrame(frame);
+      else img.addEventListener('load', () => drawFrame(frame));
+      const ro = new ResizeObserver(() => drawFrame(frame));
+      ro.observe(frame);
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+
+  window.addEventListener('resize', () => { clearTimeout(window._annoResizeT); window._annoResizeT = setTimeout(drawAll, 120); });
+  window.redrawAnnoLines = drawAll;
 })();
 </script>
 
