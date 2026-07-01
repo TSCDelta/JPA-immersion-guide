@@ -1480,8 +1480,27 @@
 
   @media (max-width: 680px) {
     .annotated { grid-template-columns: 1fr; }
+    .annotated.centered-layout { grid-template-columns: 1fr; }
     .anno-lines { display: none; }
   }
+
+  /* ── Centered-image annotation variant: image stays centered, notes float
+     in narrow columns either side (curve endpoints picked by nearest edge
+     in the anno-lines JS, so this needs no JS changes). ── */
+  .annotated.centered-layout {
+    display: grid;
+    grid-template-columns: var(--anno-col-w, 150px) minmax(0,1fr) var(--anno-col-w, 150px);
+    align-items: center;
+    gap: 1.1rem;
+    max-width: 640px;
+  }
+  .annotated.centered-layout .anno-img { grid-column: 2; justify-self: center; width: 100%; }
+  .annotated.centered-layout .anno-img img {
+    width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--amber); display: block;
+  }
+  .annotated.centered-layout .anno-col { display: flex; flex-direction: column; gap: 0.85rem; }
+  .annotated.centered-layout .anno-col.left { grid-column: 1; }
+  .annotated.centered-layout .anno-col.right { grid-column: 3; }
 
   /* ── CARD FLOW (e.g. Anki front → back) ── */
   .card-flow {
@@ -4229,19 +4248,21 @@
         <h3>Essential Deck</h3>
         <p>Kaishi 1.5k is the recommended starter vocabulary deck. It covers the most common ~1,500 Japanese words with audio, example sentences, and kanji. Download the <code>.apkg</code> file from the link below, then open it. Anki will import it automatically.</p>
 
-        <div class="annotated">
-          <img src="Animation.gif" alt="Kaishi 1.5k card example">
-          <svg class="anno-lines"></svg>
-          <div class="annot-stack">
+        <div class="annotated centered-layout">
+          <div class="anno-col left">
             <div class="note n-green" data-anno-x="50" data-anno-y="17">
               <strong>Card front</strong>
               <p>Each card starts with just a word, like <strong>私</strong> here. Try to recall it before checking the answer.</p>
             </div>
             <div class="note n-blue" data-anno-x="50" data-anno-y="94">
               <strong>Show Answer</strong>
-              <p>Click <strong>解答を表示</strong> (Show Answer) to reveal the reading and meaning, then grade yourself so Anki can schedule the next review.</p>
+              <p>Click <strong>Show Answer</strong> to reveal the reading and meaning, then grade yourself so Anki can schedule the next review.</p>
             </div>
           </div>
+          <div class="anno-img" style="max-width:320px;">
+            <img src="Animation.gif" alt="Kaishi 1.5k card example">
+          </div>
+          <svg class="anno-lines"></svg>
         </div>
 
         <div class="link-grid" style="grid-template-columns:1fr 1fr;">
@@ -4354,17 +4375,21 @@
         <h3>Recommended add-ons</h3>
         <p>Go to Tools → Add-ons → Get Add-ons and paste each code below, one at a time. Restart Anki after installing all four.</p>
 
-        <div class="annotated" style="align-items:center;">
-          <img src="Add_on.png" alt="Add-ons manager">
+        <div class="annotated centered-layout">
+          <div class="anno-col left">
+            <div class="note n-blue" data-anno-x="8" data-anno-y="12">
+              <strong>Essential add-ons</strong>
+              <p><strong>AnkiConnect</strong> lets outside tools (like sentence mining apps) talk to Anki. <strong>KanjiGrid</strong> shows which kanji you've learned. <strong>Review Heatmap</strong> visualizes your review streak. <strong>Pass/Fail</strong> simplifies grading to two buttons.</p>
+            </div>
+          </div>
+          <div class="anno-img">
+            <img src="Add_on.png" alt="Add-ons manager">
+          </div>
           <svg class="anno-lines"></svg>
-          <div class="annot-stack">
+          <div class="anno-col right">
             <div class="note n-green" data-anno-x="89" data-anno-y="7">
               <strong>Get Add-ons</strong>
               <p>Opens the code entry dialog. Paste each code below, one at a time.</p>
-            </div>
-            <div class="note n-blue" data-anno-x="17" data-anno-y="6">
-              <strong>Restart required</strong>
-              <p>Anki shows this notice as soon as you install one; restart it after installing all four codes for them to take effect.</p>
             </div>
           </div>
         </div>
@@ -6799,7 +6824,9 @@ function updateResIndexSearch(query) {
       const imgY = (imgRect.top - frameRect.top) + py * imgRect.height;
 
       const noteRect = note.getBoundingClientRect();
-      const noteX = noteRect.left - frameRect.left;
+      const noteLeft = noteRect.left - frameRect.left;
+      const noteRight = noteRect.right - frameRect.left;
+      const noteX = Math.abs(noteLeft - imgX) <= Math.abs(noteRight - imgX) ? noteLeft : noteRight;
       const noteY = noteRect.top - frameRect.top + Math.min(18, noteRect.height / 2);
 
       const midX = (imgX + noteX) / 2;
