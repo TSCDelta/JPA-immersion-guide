@@ -1558,8 +1558,30 @@
 
   @media (max-width: 680px) {
     .annotated { grid-template-columns: 1fr; }
-    .annotated.centered-layout { grid-template-columns: 1fr; }
     .anno-lines { display: none; }
+
+    /* .annotated.centered-layout normally places its image and note
+       columns into explicit grid-column 1/2/3 tracks. Just collapsing
+       grid-template-columns to 1fr isn't enough - the children's explicit
+       grid-column placements still force extra implicit (auto-sized,
+       squeezed) columns into existence, which is what was squashing the
+       image and scattering the notes. Switch to a flex column instead so
+       those placements are ignored outright, and pull the image to the
+       top with order so the annotation notes always land underneath it. */
+    .annotated.centered-layout {
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+    }
+    .annotated.centered-layout .anno-img {
+      order: -1;
+      width: 100%;
+      margin-bottom: 0.25rem;
+    }
+    .annotated.centered-layout .anno-col.left,
+    .annotated.centered-layout .anno-col.right {
+      width: 100%;
+    }
   }
 
   /* ── Centered-image annotation variant: image stays centered, notes float
