@@ -1559,16 +1559,34 @@
   @media (max-width: 680px) {
     .annotated { grid-template-columns: 1fr; }
     .anno-lines { display: none; }
+  }
 
-    /* .annotated.centered-layout normally places its image and note
-       columns into explicit grid-column 1/2/3 tracks, with SVG lines
-       pointing from each note to a spot on the image. That layout only
-       makes sense side-by-side; on mobile there's no room for it and the
-       explicit grid-column placements just force cramped, squeezed
-       tracks. Rebuild it to match the plain-stack pattern used elsewhere
-       on mobile: full-width image on top, then every note (left and
-       right columns combined) as one simple vertical spine-stack
-       underneath, in image → note order. */
+  /* ── Centered-image annotation variant: image stays centered, notes float
+     in narrow columns either side (curve endpoints picked by nearest edge
+     in the anno-lines JS, so this needs no JS changes). ── */
+  .annotated.centered-layout {
+    display: grid;
+    grid-template-columns: var(--anno-col-w, 150px) minmax(0,1fr) var(--anno-col-w, 150px);
+    align-items: center;
+    gap: 1.1rem;
+    max-width: 640px;
+  }
+  .annotated.centered-layout .anno-img { grid-column: 2; justify-self: center; width: 100%; }
+  .annotated.centered-layout .anno-img img {
+    width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--amber); display: block;
+  }
+  .annotated.centered-layout .anno-col { display: flex; flex-direction: column; gap: 0.85rem; }
+  .annotated.centered-layout .anno-col.left { grid-column: 1; }
+  .annotated.centered-layout .anno-col.right { grid-column: 3; }
+
+  /* Mobile override for the centered-layout variant above. This MUST come
+     after the base .annotated.centered-layout rule (source order breaks
+     the tie when specificity is equal, even across a media query) or the
+     desktop grid-column placements win and squeeze everything sideways
+     again. Rebuilds it to match the plain-stack pattern used elsewhere on
+     mobile: full-width image on top, then every note (left and right
+     columns combined) as one simple vertical spine-stack underneath. */
+  @media (max-width: 680px) {
     .annotated.centered-layout {
       display: flex;
       flex-direction: column;
@@ -1577,11 +1595,14 @@
     }
     .annotated.centered-layout .anno-img {
       order: -1;
+      grid-column: unset;
+      justify-self: unset;
       width: 100%;
       margin: 0;
     }
     .annotated.centered-layout .anno-col.left,
     .annotated.centered-layout .anno-col.right {
+      grid-column: unset;
       width: 100%;
       gap: 1rem;
     }
@@ -1604,24 +1625,6 @@
     .annotated.centered-layout .plain-annot .note.n-blue::after { background: var(--blue); }
     .annotated.centered-layout .plain-annot .note.n-amber::after { background: var(--amber); }
   }
-
-  /* ── Centered-image annotation variant: image stays centered, notes float
-     in narrow columns either side (curve endpoints picked by nearest edge
-     in the anno-lines JS, so this needs no JS changes). ── */
-  .annotated.centered-layout {
-    display: grid;
-    grid-template-columns: var(--anno-col-w, 150px) minmax(0,1fr) var(--anno-col-w, 150px);
-    align-items: center;
-    gap: 1.1rem;
-    max-width: 640px;
-  }
-  .annotated.centered-layout .anno-img { grid-column: 2; justify-self: center; width: 100%; }
-  .annotated.centered-layout .anno-img img {
-    width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--amber); display: block;
-  }
-  .annotated.centered-layout .anno-col { display: flex; flex-direction: column; gap: 0.85rem; }
-  .annotated.centered-layout .anno-col.left { grid-column: 1; }
-  .annotated.centered-layout .anno-col.right { grid-column: 3; }
 
   /* ── CARD FLOW (e.g. Anki front → back) ── */
   .card-flow {
