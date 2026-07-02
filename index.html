@@ -1561,27 +1561,48 @@
     .anno-lines { display: none; }
 
     /* .annotated.centered-layout normally places its image and note
-       columns into explicit grid-column 1/2/3 tracks. Just collapsing
-       grid-template-columns to 1fr isn't enough - the children's explicit
-       grid-column placements still force extra implicit (auto-sized,
-       squeezed) columns into existence, which is what was squashing the
-       image and scattering the notes. Switch to a flex column instead so
-       those placements are ignored outright, and pull the image to the
-       top with order so the annotation notes always land underneath it. */
+       columns into explicit grid-column 1/2/3 tracks, with SVG lines
+       pointing from each note to a spot on the image. That layout only
+       makes sense side-by-side; on mobile there's no room for it and the
+       explicit grid-column placements just force cramped, squeezed
+       tracks. Rebuild it to match the plain-stack pattern used elsewhere
+       on mobile: full-width image on top, then every note (left and
+       right columns combined) as one simple vertical spine-stack
+       underneath, in image → note order. */
     .annotated.centered-layout {
       display: flex;
       flex-direction: column;
       max-width: 100%;
+      gap: 1.25rem;
     }
     .annotated.centered-layout .anno-img {
       order: -1;
       width: 100%;
-      margin-bottom: 0.25rem;
+      margin: 0;
     }
     .annotated.centered-layout .anno-col.left,
     .annotated.centered-layout .anno-col.right {
       width: 100%;
+      gap: 1rem;
     }
+    /* Drop the pointer-line dot/dash on each note (nothing left to point
+       to) and fall back to the plain vertical spine + numbered dot. */
+    .annotated.centered-layout .plain-annot { position: relative; padding-left: 20px; }
+    .annotated.centered-layout .plain-annot::before {
+      content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 1px;
+      background: linear-gradient(180deg, var(--border-strong), transparent);
+    }
+    .annotated.centered-layout .plain-annot .note::before {
+      content: ""; position: absolute; left: -20px; top: 19px; width: 16px; height: 1px;
+      background: var(--border-strong);
+    }
+    .annotated.centered-layout .plain-annot .note::after {
+      content: ""; position: absolute; left: -24px; top: 15px; width: 9px; height: 9px;
+      border-radius: 50%; border: 2px solid var(--bg);
+    }
+    .annotated.centered-layout .plain-annot .note.n-green::after { background: var(--green); }
+    .annotated.centered-layout .plain-annot .note.n-blue::after { background: var(--blue); }
+    .annotated.centered-layout .plain-annot .note.n-amber::after { background: var(--amber); }
   }
 
   /* ── Centered-image annotation variant: image stays centered, notes float
