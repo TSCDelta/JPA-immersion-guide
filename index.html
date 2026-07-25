@@ -2784,9 +2784,46 @@
   .tracker-signout { font-size: 12px; color: var(--text-dim); background: none; border: none; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
   .tracker-signout:hover { color: var(--text); }
 
-  .tracker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 2rem; }
+  .tracker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
+  .tracker-row { margin-bottom: 1.5rem; }
   .tracker-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
   .tracker-card-title { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1rem; }
+
+  .tracker-stats-row { display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tracker-stat-box { flex: 1; min-width: 110px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 0.85rem 1rem; }
+  .tracker-stat-label { font-family: 'Geist Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+  .tracker-stat-value { font-family: 'Geist Mono', monospace; font-size: 18px; font-weight: 700; color: var(--text); }
+  .tracker-stat-box.streak-box { border-color: var(--amber); background: var(--amber-dim); }
+  .tracker-stat-box.streak-box .tracker-stat-value { color: var(--amber); display: flex; align-items: center; gap: 5px; }
+  .tracker-stat-box.streak-box .streak-flame { font-size: 15px; filter: grayscale(1); opacity: 0.4; transition: filter 0.2s, opacity 0.2s; }
+  .tracker-stat-box.streak-box.is-live .streak-flame { filter: none; opacity: 1; }
+
+  /* ── HEATMAP ── */
+  .heatmap-wrap { overflow-x: auto; padding-bottom: 4px; }
+  .heatmap-months { display: flex; gap: 3px; margin-bottom: 4px; padding-left: 0; min-width: max-content; }
+  .heatmap-month-label { width: 13px; font-family: 'Geist Mono', monospace; font-size: 9.5px; color: var(--text-dim); flex-shrink: 0; }
+  .heatmap-grid { display: flex; gap: 3px; min-width: max-content; }
+  .heatmap-col { display: flex; flex-direction: column; gap: 3px; }
+  .heatmap-cell {
+    width: 10px; height: 10px; border-radius: 2.5px; background: var(--bg-3);
+    border: 1px solid var(--border); display: block; flex-shrink: 0;
+  }
+  .heatmap-cell-empty { visibility: hidden; }
+  .heatmap-cell[data-level="1"] { background: var(--green); opacity: 0.28; border-color: transparent; }
+  .heatmap-cell[data-level="2"] { background: var(--green); opacity: 0.52; border-color: transparent; }
+  .heatmap-cell[data-level="3"] { background: var(--green); opacity: 0.76; border-color: transparent; }
+  .heatmap-cell[data-level="4"] { background: var(--green); opacity: 1; border-color: transparent; }
+  .heatmap-foot { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); font-family: 'Geist Mono', monospace; font-size: 10.5px; color: var(--text-dim); }
+  .heatmap-foot .heatmap-cell { width: 9px; height: 9px; }
+
+  .lb-subtitle { font-family: 'Geist Mono', monospace; font-size: 9.5px; letter-spacing: 0.04em; text-transform: none; color: var(--text-dim); font-weight: 400; margin-left: 6px; }
+
+  .tracker-weekchart { display: flex; align-items: flex-end; gap: 8px; height: 100px; }
+  .tracker-weekchart-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
+  .tracker-weekchart-bar-track { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+  .tracker-weekchart-bar { width: 100%; background: var(--green); border-radius: 4px 4px 0 0; min-height: 3px; transition: height 0.2s; }
+  .tracker-weekchart-daylabel { margin-top: 6px; font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--text-dim); }
+  .tracker-weekchart-foot { text-align: right; font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border); }
 
   .tracker-form { display: flex; flex-direction: column; gap: 10px; }
   .tracker-form-row { display: flex; gap: 8px; }
@@ -2810,7 +2847,11 @@
   .donut-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .donut-empty { font-size: 12.5px; color: var(--text-dim); text-align: center; padding: 1.5rem 0; }
 
-  .tracker-history { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+  .tracker-history { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; max-height: 460px; overflow-y: auto; }
+  .tracker-history-day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px; margin-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .tracker-history-day-date { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+  .tracker-history-day-total { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
+  .tracker-history-day-items { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
   .tracker-history-item {
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
     background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 12.5px;
@@ -2993,6 +3034,14 @@
         <button class="tracker-signout" onclick="trackerSignOut()">Sign out</button>
       </div>
 
+      <div class="tracker-stats-row">
+        <div class="tracker-stat-box"><div class="tracker-stat-label">Today</div><div class="tracker-stat-value" id="stat-today">0m</div></div>
+        <div class="tracker-stat-box"><div class="tracker-stat-label">This week</div><div class="tracker-stat-value" id="stat-week">0m</div></div>
+        <div class="tracker-stat-box"><div class="tracker-stat-label">This month</div><div class="tracker-stat-value" id="stat-month">0m</div></div>
+        <div class="tracker-stat-box"><div class="tracker-stat-label">All time</div><div class="tracker-stat-value" id="stat-alltime">0m</div></div>
+        <div class="tracker-stat-box streak-box" id="stat-streak-box"><div class="tracker-stat-label">Streak</div><div class="tracker-stat-value" id="stat-streak"><span class="streak-flame">🔥</span><span id="stat-streak-num">0</span></div></div>
+      </div>
+
       <div class="tracker-grid">
         <div class="tracker-card">
           <div class="tracker-card-title">Log immersion</div>
@@ -3021,16 +3070,45 @@
         </div>
       </div>
 
-      <div class="tracker-grid">
+      <div class="tracker-row">
         <div class="tracker-card">
-          <div class="tracker-card-title">Recent entries</div>
+          <div class="tracker-card-title">Last 7 days</div>
+          <div class="tracker-weekchart" id="tracker-weekchart"></div>
+          <div class="tracker-weekchart-foot" id="tracker-week-total">Week total: 0m</div>
+        </div>
+      </div>
+
+      <div class="tracker-row">
+        <div class="tracker-card">
+          <div class="tracker-card-title">Activity heatmap</div>
+          <div class="heatmap-wrap">
+            <div class="heatmap-months" id="tracker-heatmap-months"></div>
+            <div class="heatmap-grid" id="tracker-heatmap"></div>
+          </div>
+          <div class="heatmap-foot">
+            <span>Less</span>
+            <span class="heatmap-cell" data-level="0"></span>
+            <span class="heatmap-cell" data-level="1"></span>
+            <span class="heatmap-cell" data-level="2"></span>
+            <span class="heatmap-cell" data-level="3"></span>
+            <span class="heatmap-cell" data-level="4"></span>
+            <span>More</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tracker-row">
+        <div class="tracker-card">
+          <div class="tracker-card-title">History</div>
           <ul class="tracker-history" id="tracker-history">
             <li class="donut-empty">No entries yet.</li>
           </ul>
         </div>
+      </div>
 
+      <div class="tracker-row">
         <div class="tracker-card">
-          <div class="tracker-card-title">Leaderboard</div>
+          <div class="tracker-card-title">Leaderboard<span class="lb-subtitle">resets on the 1st of each month</span></div>
           <ul class="tracker-leaderboard" id="tracker-leaderboard">
             <li class="donut-empty">Loading…</li>
           </ul>
@@ -8018,6 +8096,13 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
 
         This lets anyone signed in read everyone's totals (for the leaderboard)
         but only ever write their own data.
+
+        Leaderboard note: each user doc also stores monthMinutes + monthKey
+        (e.g. "2026-07"). The leaderboard ranks by monthMinutes and treats a
+        stale monthKey as 0, so rankings reset automatically on the 1st of
+        each month — no cron job or Cloud Function needed. totalMinutes
+        keeps accumulating all-time as before, and streaks are computed
+        client-side from each user's own entries.
      6. Authentication → Settings → Authorized domains → add the domain you
         host this file on (e.g. yourname.github.io). Without this, sign-in
         will fail with an "unauthorized domain" error.
@@ -8114,6 +8199,8 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
             photoURL: user.photoURL || '',
             totalMinutes: 0,
             breakdown: { reading: 0, listening: 0, anime: 0, anki: 0, other: 0 },
+            monthMinutes: 0,
+            monthKey: monthKeyStr(new Date()),
             updatedAt: serverTimestamp()
           });
         }
@@ -8151,9 +8238,20 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
         type, minutes, note, createdAt: serverTimestamp()
       });
       const fieldPath = 'breakdown.' + type;
+
+      // Monthly leaderboard total: reset to 0 if the stored month doesn't
+      // match the current one, so the leaderboard naturally starts fresh
+      // on the 1st of each month without needing a backend cron job.
+      const nowMonthKey = monthKeyStr(new Date());
+      const beforeSnap = await getDoc(userRef);
+      const beforeData = beforeSnap.data() || {};
+      const carriedMonthMinutes = (beforeData.monthKey === nowMonthKey) ? (beforeData.monthMinutes || 0) : 0;
+
       await updateDoc(userRef, {
         totalMinutes: increment(minutes),
         [fieldPath]: increment(minutes),
+        monthMinutes: carriedMonthMinutes + minutes,
+        monthKey: nowMonthKey,
         updatedAt: serverTimestamp()
       });
       renderDonut((await getDoc(userRef)).data());
@@ -8169,6 +8267,9 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   };
 
   function renderDonut(data) {
+    const atEl = document.getElementById('stat-alltime');
+    if (atEl) atEl.textContent = fmtMins((data && data.totalMinutes) || 0);
+
     const wrap = document.getElementById('tracker-donut-wrap');
     const breakdown = (data && data.breakdown) || {};
     const total = Object.values(breakdown).reduce((a, b) => a + (b || 0), 0);
@@ -8196,53 +8297,225 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     `;
   }
 
+  function fmtMins(total) {
+    total = Math.max(0, Math.round(total || 0));
+    const h = Math.floor(total / 60), m = total % 60;
+    if (h > 0) return `${h}h ${m}m`;
+    return `${m}m`;
+  }
+
+  function startOfDay(d) { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+  function startOfWeek(d) { const x = startOfDay(d); const day = (x.getDay() + 6) % 7; x.setDate(x.getDate() - day); return x; }
+  function startOfMonth(d) { const x = startOfDay(d); x.setDate(1); return x; }
+  function monthKeyStr(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
+
   function watchHistory(uid) {
-    const listEl = document.getElementById('tracker-history');
     const entriesRef = collection(db, 'users', uid, 'entries');
-    const q = query(entriesRef, orderBy('createdAt', 'desc'), limit(15));
+    const q = query(entriesRef, orderBy('createdAt', 'desc'), limit(200));
     if (unsubHistory) unsubHistory();
     unsubHistory = onSnapshot(q, (snap) => {
-      if (snap.empty) {
-        listEl.innerHTML = '<li class="donut-empty">No entries yet.</li>';
-        return;
-      }
-      listEl.innerHTML = '';
+      const entries = [];
       snap.forEach((docSnap) => {
         const e = docSnap.data();
+        const date = (e.createdAt && e.createdAt.toDate) ? e.createdAt.toDate() : new Date();
+        entries.push({ ...e, date });
+      });
+      renderHistory(entries);
+      renderStats(entries);
+      renderWeekChart(entries);
+      renderStreak(entries);
+      renderHeatmap(entries);
+    }, (err) => console.error(err));
+  }
+
+  function renderStreak(entries) {
+    const numEl = document.getElementById('stat-streak-num');
+    const boxEl = document.getElementById('stat-streak-box');
+    if (!numEl) return;
+    const daySet = new Set(entries.map((e) => startOfDay(e.date).getTime()));
+    const today = startOfDay(new Date());
+    let cursor = new Date(today);
+    // If nothing logged yet today, the streak isn't broken until the day
+    // actually passes — so check from yesterday instead.
+    if (!daySet.has(cursor.getTime())) cursor.setDate(cursor.getDate() - 1);
+    let streak = 0;
+    while (daySet.has(cursor.getTime())) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    }
+    numEl.textContent = streak;
+    if (boxEl) boxEl.classList.toggle('is-live', streak > 0);
+  }
+
+  function renderHeatmap(entries) {
+    const gridEl = document.getElementById('tracker-heatmap');
+    const monthsEl = document.getElementById('tracker-heatmap-months');
+    if (!gridEl) return;
+
+    const totalsByDay = new Map();
+    entries.forEach((e) => {
+      const key = startOfDay(e.date).getTime();
+      totalsByDay.set(key, (totalsByDay.get(key) || 0) + (e.minutes || 0));
+    });
+
+    const WEEKS = 20;
+    const today = startOfDay(new Date());
+    const gridStart = startOfWeek(new Date(today.getTime() - (WEEKS - 1) * 7 * 86400000));
+    const max = Math.max(1, ...totalsByDay.values());
+
+    let cols = '';
+    let monthLabels = '';
+    let lastMonth = null;
+    for (let w = 0; w < WEEKS; w++) {
+      const colStart = new Date(gridStart);
+      colStart.setDate(colStart.getDate() + w * 7);
+      const m = colStart.getMonth();
+      monthLabels += `<span class="heatmap-month-label">${m !== lastMonth ? colStart.toLocaleDateString(undefined, { month: 'short' }) : ''}</span>`;
+      lastMonth = m;
+
+      let cells = '';
+      for (let d = 0; d < 7; d++) {
+        const cellDate = new Date(gridStart);
+        cellDate.setDate(cellDate.getDate() + w * 7 + d);
+        if (cellDate > today) {
+          cells += `<span class="heatmap-cell heatmap-cell-empty"></span>`;
+          continue;
+        }
+        const mins = totalsByDay.get(cellDate.getTime()) || 0;
+        const level = mins <= 0 ? 0 : mins < max * 0.25 ? 1 : mins < max * 0.5 ? 2 : mins < max * 0.75 ? 3 : 4;
+        const label = cellDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        cells += `<span class="heatmap-cell" data-level="${level}" title="${label}: ${fmtMins(mins)}"></span>`;
+      }
+      cols += `<div class="heatmap-col">${cells}</div>`;
+    }
+    gridEl.innerHTML = cols;
+    if (monthsEl) monthsEl.innerHTML = monthLabels;
+  }
+
+  function renderHistory(entries) {
+    const listEl = document.getElementById('tracker-history');
+    if (!entries.length) {
+      listEl.innerHTML = '<li class="donut-empty">No entries yet.</li>';
+      return;
+    }
+    const groups = [];
+    let cur = null;
+    entries.forEach((e) => {
+      const key = e.date.toDateString();
+      if (!cur || cur.key !== key) {
+        cur = { key, date: e.date, items: [], total: 0 };
+        groups.push(cur);
+      }
+      cur.items.push(e);
+      cur.total += (e.minutes || 0);
+    });
+    const todayKey = new Date().toDateString();
+    const yestKey = new Date(Date.now() - 86400000).toDateString();
+    listEl.innerHTML = groups.map((g) => {
+      const heading = g.key === todayKey ? 'Today' : g.key === yestKey ? 'Yesterday'
+        : g.date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+      const items = g.items.map((e) => {
         const meta = TYPE_COLORS[e.type] || TYPE_COLORS.other;
-        const li = document.createElement('li');
-        li.className = 'tracker-history-item';
-        li.innerHTML = `
+        return `<li class="tracker-history-item">
           <span class="th-type"><span class="th-dot" style="background:var(${meta.var})"></span>${meta.label}${e.note ? ' — <span class="th-note">' + escapeHtml(e.note) + '</span>' : ''}</span>
           <span class="th-mins">${e.minutes}m</span>
-        `;
-        listEl.appendChild(li);
-      });
-    }, (err) => console.error(err));
+        </li>`;
+      }).join('');
+      return `<li>
+        <div class="tracker-history-day-head">
+          <span class="tracker-history-day-date">${heading}</span>
+          <span class="tracker-history-day-total">${fmtMins(g.total)}</span>
+        </div>
+        <ul class="tracker-history-day-items">${items}</ul>
+      </li>`;
+    }).join('');
+  }
+
+  function renderStats(entries) {
+    const now = new Date();
+    const sod = startOfDay(now), sow = startOfWeek(now), som = startOfMonth(now);
+    let today = 0, week = 0, month = 0;
+    entries.forEach((e) => {
+      const mins = e.minutes || 0;
+      if (e.date >= sod) today += mins;
+      if (e.date >= sow) week += mins;
+      if (e.date >= som) month += mins;
+    });
+    const t = document.getElementById('stat-today');
+    const w = document.getElementById('stat-week');
+    const m = document.getElementById('stat-month');
+    if (t) t.textContent = fmtMins(today);
+    if (w) w.textContent = fmtMins(week);
+    if (m) m.textContent = fmtMins(month);
+  }
+
+  function renderWeekChart(entries) {
+    const el = document.getElementById('tracker-weekchart');
+    const footEl = document.getElementById('tracker-week-total');
+    if (!el) return;
+    const today = startOfDay(new Date());
+    const days = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today); d.setDate(d.getDate() - i);
+      days.push({ date: d, total: 0 });
+    }
+    entries.forEach((e) => {
+      const key = startOfDay(e.date).getTime();
+      const day = days.find((d) => d.date.getTime() === key);
+      if (day) day.total += (e.minutes || 0);
+    });
+    const max = Math.max(1, ...days.map((d) => d.total));
+    const weekTotal = days.reduce((a, d) => a + d.total, 0);
+    el.innerHTML = days.map((d) => {
+      const pct = Math.max(3, Math.round((d.total / max) * 100));
+      const label = d.date.toLocaleDateString(undefined, { weekday: 'short' }).slice(0, 2);
+      return `<div class="tracker-weekchart-col">
+        <div class="tracker-weekchart-bar-track"><div class="tracker-weekchart-bar" style="height:${d.total ? pct : 0}%" title="${fmtMins(d.total)}"></div></div>
+        <span class="tracker-weekchart-daylabel">${label}</span>
+      </div>`;
+    }).join('');
+    if (footEl) footEl.textContent = `Week total: ${fmtMins(weekTotal)}`;
   }
 
   function watchLeaderboard() {
     const listEl = document.getElementById('tracker-leaderboard');
     const usersRef = collection(db, 'users');
-    const q = query(usersRef, orderBy('totalMinutes', 'desc'), limit(20));
+    // Ranked by this month's minutes (monthMinutes), not the all-time total,
+    // so the board naturally resets on the 1st. We over-fetch on monthMinutes
+    // since a user's stored value can be stale from a previous month, then
+    // zero those out and re-sort client-side before taking the top 20 —
+    // this avoids needing a composite Firestore index or a backend cron job.
+    const q = query(usersRef, orderBy('monthMinutes', 'desc'), limit(50));
     onSnapshot(q, (snap) => {
       if (snap.empty) {
         listEl.innerHTML = '<li class="donut-empty">No one has logged anything yet, be the first.</li>';
         return;
       }
-      listEl.innerHTML = '';
-      let rank = 0;
+      const nowMonthKey = monthKeyStr(new Date());
+      let rows = [];
       snap.forEach((docSnap) => {
-        rank++;
         const u = docSnap.data();
-        const isMe = currentUser && docSnap.id === currentUser.uid;
+        const mins = (u.monthKey === nowMonthKey) ? (u.monthMinutes || 0) : 0;
+        rows.push({ id: docSnap.id, u, mins });
+      });
+      rows.sort((a, b) => b.mins - a.mins);
+      rows = rows.slice(0, 20);
+
+      if (!rows.some((r) => r.mins > 0)) {
+        listEl.innerHTML = '<li class="donut-empty">No one has logged anything this month yet, be the first.</li>';
+        return;
+      }
+
+      listEl.innerHTML = '';
+      rows.forEach((r, i) => {
+        const isMe = currentUser && r.id === currentUser.uid;
         const li = document.createElement('li');
         li.className = 'lb-item' + (isMe ? ' is-me' : '');
-        const hours = Math.round(((u.totalMinutes || 0) / 60) * 10) / 10;
+        const hours = Math.round((r.mins / 60) * 10) / 10;
         li.innerHTML = `
-          <span class="lb-rank">#${rank}</span>
-          <img class="lb-avatar" src="${u.photoURL || ''}" alt="">
-          <span class="lb-name">${escapeHtml(u.displayName || 'Anonymous')}</span>
+          <span class="lb-rank">#${i + 1}</span>
+          <img class="lb-avatar" src="${r.u.photoURL || ''}" alt="">
+          <span class="lb-name">${escapeHtml(r.u.displayName || 'Anonymous')}</span>
           <span class="lb-total">${hours}h</span>
         `;
         listEl.appendChild(li);
