@@ -429,6 +429,8 @@
     display: flex;
     gap: 8px;
     margin-top: 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
     padding-top: 1.5rem;
     border-top: 1px solid var(--border);
     max-width: 560px;
@@ -654,7 +656,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin: 0.75rem 0 1.25rem;
+    margin: 0.75rem auto 1.25rem;
     max-width: 560px;
   }
   .basics-card {
@@ -1134,36 +1136,52 @@
   .topnav-right { margin-left: auto; }
 
   /* ── LANDING ── */
-  .landing { display: none; max-width: 860px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+  .landing { display: none; max-width: 980px; margin: 0 auto; padding: 5rem 2rem 0; position: relative; text-align: center; }
   .landing.active { display: block; }
+  .landing::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(157,143,242,0.08), rgba(87,185,216,0.04) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
   .landing-eyebrow {
     font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: 500;
     color: var(--green); margin-bottom: 1.5rem; display: inline-block; text-transform: uppercase;
     background: var(--green-dim); padding: 4px 12px; border-radius: 20px;
-    border: 1px solid rgba(157,143,239,0.25);
+    border: 1px solid rgba(157,143,242,0.25);
   }
   .landing-title {
-    font-size: clamp(36px, 6vw, 64px); font-weight: 700; letter-spacing: -0.04em;
-    color: var(--text); line-height: 1.05; margin-bottom: 1.5rem;
+    font-size: clamp(36px, 6vw, 68px); font-weight: 700; letter-spacing: -0.04em;
+    line-height: 1.05; margin-bottom: 1.5rem;
+    background: linear-gradient(120deg, var(--text) 45%, var(--green), var(--blue));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 200% auto;
   }
   .landing-title em {
     font-style: normal;
-    background: linear-gradient(90deg, #7a5fc7, var(--purple));
+    background: linear-gradient(90deg, var(--rose), var(--purple));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .landing-desc {
     font-size: 16px; color: var(--text-muted); line-height: 1.75;
-    max-width: 520px; margin-bottom: 2rem;
+    max-width: 560px; margin: 0 auto 2rem;
   }
-  .landing-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+  .landing-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4.5rem; }
   .landing-btn-primary {
     display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
-    background: linear-gradient(135deg, var(--green), var(--purple)); color: var(--bg); font-family: 'Geist', sans-serif;
+    background: linear-gradient(135deg, var(--green), var(--blue)); background-size: 200% auto;
+    color: var(--bg); font-family: 'Geist', sans-serif;
     font-size: 13px; font-weight: 600; letter-spacing: 0; border: none;
-    border-radius: 8px; cursor: pointer; transition: opacity 0.15s, transform 0.15s;
-    box-shadow: 0 4px 20px -4px var(--green-dim);
+    border-radius: 8px; cursor: pointer; transition: opacity 0.15s, transform 0.15s, background-position 0.4s;
+    box-shadow: 0 4px 20px -6px var(--green-dim);
   }
-  .landing-btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .landing-btn-primary:hover { opacity: 0.92; transform: translateY(-1px); background-position: right center; }
   .landing-btn-secondary {
     display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
     background: none; color: var(--text-muted); font-family: 'Geist', sans-serif;
@@ -1173,31 +1191,95 @@
   }
   .landing-btn-secondary:hover { color: var(--text); border-color: var(--text-dim); background: var(--bg-2); }
 
+  /* SECTION HEADS */
+  .landing-section-head { margin-bottom: 1.5rem; text-align: center; }
+  .landing-section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin: 0 auto 0.4rem; justify-content: center; }
+  .landing-section-title::before { display: none; }
+  .landing-section-sub { font-size: 13px; color: var(--text-dim); margin-left: auto; margin-right: auto; }
+
+  /* SPLIT CARDS (JPA / Observatory) */
+  .landing-split {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-bottom: 4.5rem;
+  }
+  .landing-split-card {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    border: 1px solid var(--border); border-radius: 14px;
+    padding: 2rem 1.75rem 1.75rem; cursor: pointer; width: 100%;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s; position: relative; overflow: hidden;
+  }
+  .landing-split-card.c-jpa { background: linear-gradient(160deg, var(--blue-dim) 0%, var(--bg-2) 60%); }
+  .landing-split-card.c-obs { background: linear-gradient(160deg, var(--rose-dim) 0%, var(--bg-2) 60%); }
+  .landing-split-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .landing-split-card.c-jpa::before { background: linear-gradient(90deg, var(--blue), var(--teal)); }
+  .landing-split-card.c-obs::before { background: linear-gradient(90deg, var(--rose), var(--purple)); }
+  .landing-split-card::after {
+    content: ""; position: absolute; width: 220px; height: 220px; border-radius: 50%;
+    filter: blur(60px); opacity: 0.16; pointer-events: none; transition: opacity 0.2s;
+    bottom: -100px; right: -60px;
+  }
+  .landing-split-card.c-jpa::after { background: radial-gradient(circle, var(--blue), transparent 70%); }
+  .landing-split-card.c-obs::after { background: radial-gradient(circle, var(--rose), transparent 70%); }
+  .landing-split-card:hover { transform: translateY(-3px); border-color: var(--border-strong); }
+  .landing-split-card:hover::after { opacity: 0.3; }
+  .landing-split-card.c-jpa:hover { box-shadow: 0 14px 36px -16px var(--blue-dim); }
+  .landing-split-card.c-obs:hover { box-shadow: 0 14px 36px -16px var(--rose-dim); }
+  .landing-split-title { font-size: 22px; font-weight: 700; margin-bottom: 0.6rem; }
+  .landing-split-card.c-jpa .landing-split-title {
+    background: linear-gradient(90deg, var(--blue), var(--teal));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .landing-split-card.c-obs .landing-split-title {
+    background: linear-gradient(90deg, var(--rose), var(--purple));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .landing-split-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.25rem; position: relative; z-index: 1; }
+  .landing-split-cta { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: auto; position: relative; z-index: 1; }
+  .landing-split-card.c-jpa:hover .landing-split-cta { color: var(--blue); }
+  .landing-split-card.c-obs:hover .landing-split-cta { color: var(--rose); }
+
+  /* CLOSING CTA BAND */
+  .landing-cta-band {
+    margin: 0 -2rem; padding: 3.5rem 2rem; text-align: center;
+    background: linear-gradient(120deg, var(--green-dim), var(--blue-dim), var(--rose-dim));
+    background-size: 300% auto;
+    border-top: 1px solid var(--border);
+  }
+  .landing-cta-title { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.5rem; }
+  .landing-cta-sub { font-size: 13px; color: var(--text-muted); margin: 0 auto 1.75rem; }
+  .landing-cta-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .landing-cta-btn { text-decoration: none; }
+  .landing-cta-btn.c-obs-btn { background: linear-gradient(135deg, var(--rose), var(--purple)); box-shadow: 0 4px 20px -4px var(--rose-dim); }
+
   .landing-pillars {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-    margin-top: 0.25rem;
+    margin-top: 0.25rem; margin-bottom: 4.5rem;
   }
   .landing-pillar {
     background: var(--bg-2); padding: 1.5rem 1.5rem 1.75rem; cursor: pointer;
-    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; text-align: left; border: 1px solid var(--border); width: 100%;
+    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; text-align: center; border: 1px solid var(--border); width: 100%;
     border-radius: 10px; position: relative; overflow: hidden;
   }
   .landing-pillar::before {
     content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--green), var(--purple));
+    background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
     opacity: 0; transition: opacity 0.2s;
   }
   .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); box-shadow: 0 8px 30px -10px var(--green-dim); transform: translateY(-2px); }
   .landing-pillar:hover::before { opacity: 1; }
   .landing-pillar-icon {
-    font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green);
+    font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
     margin-bottom: 0.85rem; display: block;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .landing-pillar-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; }
   .landing-pillar-desc { font-size: 12px; color: var(--text-dim); line-height: 1.55; display: block; }
 
   /* ── GUIDE INDEX ── */
-  .guide-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
+  .guide-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; text-align: center; }
   .guide-index.active { display: block; }
   .guide-index-eyebrow {
     font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: 500;
@@ -1206,8 +1288,14 @@
     border: 1px solid rgba(157,143,239,0.25);
   }
   .guide-index-title { font-size: 30px; font-weight: 600; letter-spacing: -0.03em; color: var(--text); margin-bottom: 0.4rem; }
-  .guide-index-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; }
+  .guide-index-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0 auto 2.5rem; }
   .guide-stage { margin-bottom: 2.75rem; }
+  .guide-stage-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: -0.3rem auto 0.75rem;
+  }
+
   .guide-stage-title {
     font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 600;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--green);
@@ -1221,7 +1309,7 @@
   }
   .guide-card {
     background: var(--bg-2); padding: 1.25rem 1.35rem 1.4rem; cursor: pointer;
-    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; border: 1px solid var(--border); text-align: left; width: 100%;
+    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; border: 1px solid var(--border); text-align: center; width: 100%;
     border-radius: 10px; position: relative; overflow: hidden;
   }
   .guide-card::before {
@@ -1253,7 +1341,11 @@
   /* ── RES INDEX ── */
   .res-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
   .res-index.active { display: block; }
-  .res-index-title { font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.4rem; }
+  .res-index-title {
+    font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.4rem;
+    background: linear-gradient(90deg, var(--text), var(--green) 140%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
   .res-index-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
   .res-search-bar { display: flex; gap: 8px; max-width: 480px; margin-bottom: 2rem; }
   .res-search-input {
@@ -1275,6 +1367,66 @@
   .res-cat-card:hover { background: var(--bg-3); border-color: var(--border-strong); }
   .res-cat-card-icon { font-size: 18px; line-height: 1; color: var(--text-muted); }
   .res-cat-card-label { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.3; }
+
+  /* ── RESOURCE WHEEL (radial category picker) ── */
+  .res-wheel-wrap { display: flex; justify-content: center; margin-bottom: 2.75rem; }
+  .res-wheel {
+    position: relative;
+    width: 380px; height: 380px;
+    flex-shrink: 0;
+  }
+  .res-wheel-ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 1px dashed var(--border-strong);
+  }
+  .res-wheel-ring::before {
+    content: "";
+    position: absolute; inset: -1px; border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--green-dim), var(--purple-dim), var(--teal-dim), var(--green-dim));
+    opacity: 0.35;
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+    animation: resWheelSpin 40s linear infinite;
+  }
+  @keyframes resWheelSpin { to { transform: rotate(360deg); } }
+  .res-wheel-hub {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 118px; height: 118px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--green-dim), var(--purple-dim));
+    border: 1px solid var(--border-strong);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; text-align: center; padding: 8px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .res-wheel-hub:hover { transform: translate(-50%,-50%) scale(1.05); box-shadow: 0 0 30px -6px var(--green-dim); }
+  .res-wheel-hub-count {
+    font-size: 24px; font-weight: 700; font-family: 'Geist Mono', monospace;
+    background: linear-gradient(90deg, var(--green), var(--purple));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .res-wheel-hub-label { font-size: 9.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.3; }
+  .res-wheel-item {
+    position: absolute; top: 50%; left: 50%;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--bg-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; color: var(--text-muted); cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+  .res-wheel-item:hover {
+    border-color: var(--green); background: var(--green-dim); color: var(--green);
+    box-shadow: 0 0 0 4px var(--green-dim);
+    z-index: 5;
+  }
+  .res-wheel-tooltip {
+    position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+    font-size: 9px; white-space: nowrap; color: var(--text-dim); opacity: 0; transition: opacity 0.15s;
+    font-family: 'Geist Mono', monospace; letter-spacing: 0.02em; pointer-events: none;
+  }
+  .res-wheel-item:hover .res-wheel-tooltip { opacity: 1; }
+  @media (max-width: 780px) {
+    .res-wheel-wrap { display: none; }
+  }
+
   .res-inline-results { display: none; flex-direction: column; gap: 2px; margin-top: 0.5rem; }
   .res-inline-results.visible { display: flex; }
 
@@ -1282,6 +1434,80 @@
   .section-page { display: none; max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 3rem; }
   .section-page.active { display: block; }
   .section-inner { max-width: 640px; }
+  .section-inner > .view-tag,
+  .section-inner > h2,
+  .section-inner > .view-sub {
+    text-align: center;
+  }
+  .section-inner > .view-tag { margin-left: auto; margin-right: auto; }
+  .section-inner > h2,
+  .landing-cta-title {
+    justify-content: center;
+  }
+  .section-inner > .view-sub { margin-left: auto; margin-right: auto; }
+  .section-inner > h2::before,
+  .landing-cta-title::before {
+    display: none;
+  }
+
+  /* Center all body content within section pages, not just the intro */
+  .section-inner { margin-left: auto; margin-right: auto; text-align: center; }
+  .section-inner h3 {
+    text-align: center;
+    border-left: none;
+    padding-left: 0;
+  }
+  .section-inner p {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .section-inner .callout {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .section-inner .video-wrap,
+  .section-inner .img-placeholder {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section-inner .link-grid {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+  .section-inner .link-card {
+    text-align: center;
+  }
+  .section-inner .card {
+    text-align: center;
+  }
+  .section-inner .card p,
+  .section-inner .card ol,
+  .section-inner .card ul {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .section-inner .card ol,
+  .section-inner .card ul {
+    list-style-position: inside;
+    padding-left: 0;
+  }
+  .section-inner .steps {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 560px;
+  }
+  .section-inner .step {
+    align-items: center;
+    text-align: center;
+  }
+  .section-inner .group-subnav,
+  .section-inner .reading-subnav {
+    justify-content: center;
+  }
   .breadcrumb {
     display: flex; align-items: center; gap: 6px; margin-bottom: 2rem;
     font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-dim);
@@ -1299,8 +1525,11 @@
   @media (max-width: 680px) {
     .topnav { padding: 0 1.25rem; gap: 0.75rem; }
     .topnav-link { padding: 5px 8px; font-size: 12px; }
-    .landing { padding: 3rem 1.25rem 3rem; }
+    .landing { padding: 3rem 1.25rem 0; }
     .landing-pillars { grid-template-columns: 1fr; }
+    .landing-split { grid-template-columns: 1fr; }
+    .landing-cta-band { margin: 0 -1.25rem; }
+    .landing-cta-actions { flex-direction: column; }
     .landing-title { font-size: 32px; }
     .guide-index { padding: 2rem 1.25rem; }
     .guide-cards { grid-template-columns: 1fr 1fr; }
@@ -2350,28 +2579,62 @@
 <!-- ── LANDING ── -->
 <div id="v-welcome" class="landing">
   <span class="landing-eyebrow">日本語 · immersion method</span>
-  <h1 class="landing-title"><em>JPA's</em> Immersion Method</h1>
-  <p class="landing-desc">A complete guide to acquiring Japanese the natural way, through reading, listening, and living in the language.</p>
+  <h1 class="landing-title">The <em>Immersion</em> Guide</h1>
+  <p class="landing-desc">A complete guide to acquiring Japanese the natural way, through reading, listening, and living in the language. Shared by two communities, JPA and The Observatory.</p>
   <div class="landing-actions">
     <button class="landing-btn-primary" onclick="go('guide-index')">Start the guide</button>
-    <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-secondary">Join the Discord</a>
+    <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-secondary">Join JPA</a>
+    <a href="https://discord.gg/RZXYqmYcrx" target="_blank" class="landing-btn-secondary">Join The Observatory</a>
   </div>
+
+  <div class="landing-section-head">
+    <h2 class="landing-section-title">Pick your starting track</h2>
+    <p class="landing-section-sub">Both tracks lead into the same shared Immersion stage.</p>
+  </div>
+
+  <div class="landing-split">
+    <button class="landing-split-card c-jpa" onclick="go('textbooks')">
+      <span class="landing-split-title">Textbooks</span>
+      <span class="landing-split-desc">Structured, Genki-based study with a daily routine that folds in reading and listening from day one.</span>
+      <span class="landing-split-cta">Start with Textbooks →</span>
+    </button>
+    <button class="landing-split-card c-obs" onclick="go('basics')">
+      <span class="landing-split-title">Basics</span>
+      <span class="landing-split-desc">Kana, grammar, vocab, and pitch accent, an immersion-first checklist to get you reading and listening fast.</span>
+      <span class="landing-split-cta">Start with Basics →</span>
+    </button>
+  </div>
+
+  <div class="landing-section-head">
+    <h2 class="landing-section-title">Everything else, shared</h2>
+    <p class="landing-section-sub">Once you're past the basics, both tracks use the same guide.</p>
+  </div>
+
   <div class="landing-pillars">
-    <button class="landing-pillar" onclick="go('guide-index')">
-      <span class="landing-pillar-icon">01 / Guide</span>
-      <span class="landing-pillar-title">The Guide</span>
-      <span class="landing-pillar-desc">Foundations, setup, and practice methods, everything from day one to fluency.</span>
+    <button class="landing-pillar" onclick="go('immersion-group')">
+      <span class="landing-pillar-icon">01 / Immersion</span>
+      <span class="landing-pillar-title">Immersion</span>
+      <span class="landing-pillar-desc">What immersion is, tool setup, and how to actually do it, the core of the method.</span>
     </button>
     <button class="landing-pillar" onclick="openResourcePicker()">
       <span class="landing-pillar-icon">02 / Resources</span>
       <span class="landing-pillar-title">Resources</span>
-      <span class="landing-pillar-desc">Resources to be used for study..</span>
+      <span class="landing-pillar-desc">A curated library across 19 categories, from dictionaries to podcasts to sentence mining.</span>
     </button>
     <button class="landing-pillar" onclick="go('faq')">
       <span class="landing-pillar-icon">03 / FAQ</span>
       <span class="landing-pillar-title">FAQ</span>
       <span class="landing-pillar-desc">Common questions, answered. Search or browse them all.</span>
     </button>
+  </div>
+
+  <div class="landing-cta-band">
+    <h2 class="landing-cta-title">Ready to start?</h2>
+    <p class="landing-cta-sub">Join whichever community brought you here, the guide is the same either way.</p>
+    <div class="landing-cta-actions">
+      <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-primary landing-cta-btn">Join JPA</a>
+      <a href="https://discord.gg/RZXYqmYcrx" target="_blank" class="landing-btn-primary landing-cta-btn c-obs-btn">Join The Observatory</a>
+    </div>
   </div>
 </div>
 
@@ -2384,9 +2647,13 @@
   <div class="guide-stage">
     <h3 class="guide-stage-title">Basics</h3>
 
+    <p class="guide-stage-sub">Pick the starting approach that fits you, both lead into the same Immersion stage below.</p>
     <div class="guide-cards">
+      <button class="guide-card c-rose" onclick="go('textbooks')">        <span class="guide-card-title">Textbooks</span>
+        <span class="guide-card-desc">Genki-based structured study with a daily routine, for a textbook-first foundation.</span>
+      </button>
       <button class="guide-card c-blue" onclick="go('basics')">        <span class="guide-card-title">Basics</span>
-        <span class="guide-card-desc">Kana, grammar, vocab, and pitch, your starting checklist.</span>
+        <span class="guide-card-desc">Kana, grammar, vocab, and pitch, your immersion-first starting checklist.</span>
       </button>
     </div>
   </div>
@@ -2434,6 +2701,18 @@
 <div id="v-res-index" class="res-index">
   <h2 class="res-index-title">Resources</h2>
   <p class="res-index-sub">Every tool, app, and site, organised by category.</p>
+
+  <div class="res-wheel-wrap">
+    <div class="res-wheel">
+      <div class="res-wheel-ring"></div>
+      <div class="res-wheel-hub" onclick="go('res-all')">
+        <span class="res-wheel-hub-count">19</span>
+        <span class="res-wheel-hub-label">Categories</span>
+      </div>
+      <div id="res-wheel-items"></div>
+    </div>
+  </div>
+
   <div class="res-search-bar">
     <input class="res-search-input" type="text" placeholder="Search resources..." oninput="updateResIndexSearch(this.value)" />
   </div>
@@ -3026,6 +3305,75 @@
           <span class="page-nav-title">Sentence mining</span>
         </button>
       </div>
+    </div>
+
+    <!-- 00 TEXTBOOKS -->
+    <div id="v-textbooks" class="section-page">
+  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('guide-index')">Guide</button><span class="breadcrumb-sep"> / </span><span>Textbooks</span></div>
+    <div class="section-inner">
+      <span class="view-tag tag-rose">structured foundation</span>
+      <h2>Textbooks</h2>
+      <p class="view-sub">A textbook-first alternative to the Basics page, using Genki as a structured foundation before moving into immersion. Both paths lead to the same place, pick whichever fits how you learn.</p>
+
+      <h3>Getting the books</h3>
+      <div class="link-grid">
+        <a class="link-card" href="https://mega.nz/folder/dS8j3RaR#IrTXP2U6EPL7NIDHleskZw" target="_blank">
+          <p class="link-card-title">Genki I (PDF)</p>
+          <p class="link-card-desc">The most popular beginner Japanese textbook, 2nd edition</p>
+        </a>
+        <a class="link-card" href="https://mega.nz/folder/FQkwBZYb#WKX6XQHOVORI-jzlbUWkaA" target="_blank">
+          <p class="link-card-title">Genki II (PDF)</p>
+          <p class="link-card-desc">Continuation of Genki, intermediate beginner</p>
+        </a>
+      </div>
+
+      <h3>How much time should I put in?</h3>
+      <p>This is a recommendation, not a hardcore rule. It's based on unofficial JLPT study hour estimates: N1 sits around <strong>4,800 hours</strong>. Spread over 4 years, that's roughly <strong>3 hours a day</strong>.</p>
+      <div class="callout info">
+        "Study" doesn't just mean sitting with the textbook open. It includes listening to level-appropriate podcasts, reading, meeting up with Japanese friends, and anything else that makes the language enjoyable to engage with.
+      </div>
+
+      <h3>The Genki study plan</h3>
+      <p class="view-sub" style="margin-top:0.25rem;">Two or three 45–60 minute sessions a day, split into chunks. Mix and match depending on your schedule.</p>
+
+      <ol class="steps">
+        <li class="step"><span class="step-n">A</span><span class="step-body"><strong>Vocab, kanji &amp; dialogue.</strong> Before studying a chapter, get most of its vocabulary and kanji down first. Genki marks the words used in each dialogue, so it's easy to prep. Try reading the dialogue without the English translation, guess from context and the pictures, then check how you did. Shadow the audio and review the previous day's work here too.</span></li>
+        <li class="step"><span class="step-n">B</span><span class="step-body"><strong>Textbook (grammar).</strong> Work through one grammar point a day and do its associated exercises. If it's a speaking exercise, do both parts.</span></li>
+        <li class="step"><span class="step-n">C</span><span class="step-body"><strong>Workbook.</strong> Do the workbook exercises later in the day, once the grammar point has had time to settle.</span></li>
+      </ol>
+
+      <div class="callout tip">
+        Don't skip the reading and writing sections at the back of each chapter. Get your writing checked on an app like <strong>HelloTalk</strong>, make corrections, resubmit, then move on to the next chapter.
+      </div>
+
+      <p>You can add, drop, or reorder chunks depending on your schedule, and it's fine to mix low-effort and high-effort study in the same session. The point is consistency, not a rigid template.</p>
+
+      <h3>Folding in reading &amp; listening</h3>
+      <p>Textbook study works best alongside light immersion from day one, not after "finishing" the book. A realistic day might look like:</p>
+      <ul class="steps" style="list-style:none;">
+        <li class="step"><span class="step-n">🎧</span><span class="step-body">Making and eating breakfast: listen to a podcast (30 min)</span></li>
+        <li class="step"><span class="step-n">📺</span><span class="step-body">Lunch break: watch a grammar-focused YouTube video (30 min)</span></li>
+        <li class="step"><span class="step-n">🚃</span><span class="step-body">Commute: work through Pimsleur (60 min)</span></li>
+        <li class="step"><span class="step-n">📖</span><span class="step-body">Read manga (20 min)</span></li>
+        <li class="step"><span class="step-n">📝</span><span class="step-body">Workbook exercises (20 min)</span></li>
+        <li class="step"><span class="step-n">🗣</span><span class="step-body">Meet with a tutor (30 min)</span></li>
+      </ul>
+
+      <div class="callout info">
+        Once you're comfortable reading dialogue without translation and can hold basic conversations from the routine above, you're ready to move fully into the shared Immersion stage below, the textbook becomes a reference rather than the main driver.
+      </div>
+
+      <div class="page-nav">
+        <button class="page-nav-btn" onclick="go('guide-index')">
+          <span class="page-nav-label">← Prev</span>
+          <span class="page-nav-title">Guide</span>
+        </button>
+        <button class="page-nav-btn next" onclick="go('immersion-group')">
+          <span class="page-nav-label">Next →</span>
+          <span class="page-nav-title">Immersion</span>
+        </button>
+      </div>
+    </div>
     </div>
 
     <!-- 01 BASICS -->
@@ -6130,7 +6478,7 @@
 
 <script>
 
-const views = ['welcome','guide-index','res-index','basics','mining','routine','jlpt','anki','yomitan','resources','faq','immersion-group','skills-group',
+const views = ['welcome','guide-index','res-index','textbooks','basics','mining','routine','jlpt','anki','yomitan','resources','faq','immersion-group','skills-group',
   'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
 
 const resCategories = [
@@ -6155,6 +6503,19 @@ const resCategories = [
   { id: 'res-textbooks',   label: 'Guides & Textbooks' },
 ];
 
+function adjustLinkGrids(root) {
+  (root || document).querySelectorAll('.link-grid').forEach(grid => {
+    const count = grid.children.length;
+    if (count > 0 && count <= 2) {
+      grid.style.gridTemplateColumns = `repeat(${count}, minmax(160px, 240px))`;
+      grid.style.justifyContent = 'center';
+    } else {
+      grid.style.gridTemplateColumns = '';
+      grid.style.justifyContent = '';
+    }
+  });
+}
+
 function buildResAll() {
   const container = document.getElementById('res-all-content');
   if (container.hasChildNodes()) return; // already built
@@ -6170,6 +6531,7 @@ function buildResAll() {
       container.appendChild(el.cloneNode(true));
     });
   });
+  adjustLinkGrids(container);
 }
 
 function go(id, pushState = true) {
@@ -6188,6 +6550,7 @@ function go(id, pushState = true) {
     const target = document.getElementById('v-' + id);
     if (target) target.classList.add('active');
     if (id === 'res-all') buildResAll();
+    adjustLinkGrids(target);
     if (window.initScrollReveal) window.initScrollReveal();
   };
 
@@ -6199,7 +6562,7 @@ function go(id, pushState = true) {
   }
 
   // Nav active state
-  const guideIds = ['guide-index','basics','mining','routine','jlpt','anki','yomitan','immersion-group','skills-group'];
+  const guideIds = ['guide-index','textbooks','basics','mining','routine','jlpt','anki','yomitan','immersion-group','skills-group'];
   const resIds = ['res-index','anki','resources','res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
   document.querySelectorAll('.topnav-link[data-nav]').forEach(btn => {
     btn.classList.remove('active');
@@ -7076,6 +7439,56 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     renderColumns();
     renderDetail();
   });
+})();
+</script>
+
+<script>
+// ── Resource wheel: positions category icons radially around the hub ──
+(function () {
+  const CATS = [
+    ['あ', 'Kana', 'res-kana'],
+    ['🃏', 'Anki', 'res-anki'],
+    ['📖', 'Dictionaries', 'res-dictionaries'],
+    ['文', 'Grammar', 'res-grammar'],
+    ['📺', 'Anime', 'res-anime'],
+    ['📡', 'TV Shows', 'res-drama'],
+    ['漫', 'Manga', 'res-manga'],
+    ['📕', 'Novels', 'res-novels'],
+    ['🎮', 'VNs & Games', 'res-vn'],
+    ['⛏', 'Mining', 'res-mining'],
+    ['🎧', 'Podcasts', 'res-podcasts'],
+    ['💬', 'Subtitles', 'res-subs'],
+    ['漢', 'Kanji', 'res-kanji'],
+    ['♩', 'Pitch Accent', 'res-pitch'],
+    ['🎵', 'Cond. Audio', 'res-audio'],
+    ['🔍', 'Sentence Search', 'res-immersion'],
+    ['📱', 'Mobile Apps', 'res-mobile'],
+    ['📊', 'Tracking', 'res-tracking'],
+    ['📄', 'Textbooks', 'res-textbooks']
+  ];
+
+  function render() {
+    const wrap = document.getElementById('res-wheel-items');
+    if (!wrap || wrap.dataset.rendered) return;
+    const R = 165;
+    CATS.forEach((it, i) => {
+      const angle = (i / CATS.length) * 2 * Math.PI - Math.PI / 2;
+      const x = Math.cos(angle) * R;
+      const y = Math.sin(angle) * R;
+      const btn = document.createElement('button');
+      btn.className = 'res-wheel-item';
+      btn.type = 'button';
+      btn.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+      btn.onclick = () => go(it[2]);
+      btn.innerHTML = `${it[0]}<span class="res-wheel-tooltip">${it[1]}</span>`;
+      wrap.appendChild(btn);
+    });
+    wrap.dataset.rendered = 'true';
+  }
+
+  document.addEventListener('DOMContentLoaded', render);
+  // also render on first navigation to the resources index, in case it's not in the DOM yet at load
+  document.addEventListener('click', () => setTimeout(render, 0));
 })();
 </script>
 </body>
