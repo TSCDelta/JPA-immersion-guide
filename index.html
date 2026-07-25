@@ -8822,6 +8822,84 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   // the browser — no backend needed. jiten.moe and jpdb.io both have APIs too,
   // but both require a personal API key and aren't CORS-open, so they'd need a
   // backend proxy to call safely from a static page like this one.
+  //
+  // These APIs mostly do exact/substring matching, so a typo, or a query that
+  // skips a word in the middle of the title (e.g. "motto haramase mahou" for
+  // "Motto! Haramase! Honoo no Oppai Isekai Ero Mahou Gakuen!"), can come back
+  // empty even though a human would immediately recognize the closest match.
+  // To fix that: we send only the query's first word to the remote API (to
+  // pull a wide net of candidates, since remote search is decent at prefix
+  // matching but not much else), fetch more results than we show (15–20
+  // instead of 3), then rank everything ourselves against the FULL query
+  // using per-word fuzzy matching (edit distance + substring containment) so
+  // typos and skipped/reordered words still surface the closest title.
+
+  function fuzzySeedTerm(rawQuery) {
+    const first = rawQuery.trim().split(/\s+/)[0] || rawQuery;
+    return first;
+  }
+
+  function normalizeTokens(str) {
+    return (str || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
+  }
+
+  function levenshtein(a, b) {
+    const m = a.length, n = b.length;
+    if (!m) return n;
+    if (!n) return m;
+    const dp = new Array(n + 1);
+    for (let j = 0; j <= n; j++) dp[j] = j;
+    for (let i = 1; i <= m; i++) {
+      let prev = dp[0];
+      dp[0] = i;
+      for (let j = 1; j <= n; j++) {
+        const tmp = dp[j];
+        dp[j] = a[i - 1] === b[j - 1] ? prev : 1 + Math.min(prev, dp[j], dp[j - 1]);
+        prev = tmp;
+      }
+    }
+    return dp[n];
+  }
+
+  // Best similarity (0–1) between one query word and any word in the title,
+  // allowing for a partially-typed word (substring/prefix) or a typo (edit distance).
+  function bestWordSimilarity(qWord, titleWords) {
+    let best = 0;
+    for (const tWord of titleWords) {
+      if (tWord === qWord) return 1;
+      if (tWord.includes(qWord) || qWord.includes(tWord)) { best = Math.max(best, 0.92); continue; }
+      const dist = levenshtein(qWord, tWord);
+      const sim = 1 - dist / Math.max(qWord.length, tWord.length);
+      if (sim > best) best = sim;
+    }
+    return best;
+  }
+
+  // Scores how well a candidate title matches the full (possibly misspelled,
+  // possibly out-of-order, possibly word-skipping) query the user typed.
+  function fuzzyScoreTitle(rawQuery, title) {
+    const qWords = normalizeTokens(rawQuery);
+    const tWords = normalizeTokens(title);
+    if (!qWords.length || !tWords.length) return { matchedRatio: 0, avgSim: 0 };
+    let sum = 0, matched = 0;
+    for (const qw of qWords) {
+      const sim = bestWordSimilarity(qw, tWords);
+      sum += sim;
+      if (sim >= 0.6) matched++;
+    }
+    return { matchedRatio: matched / qWords.length, avgSim: sum / qWords.length };
+  }
+
+  // Re-ranks (and trims) a candidate list against the full raw query, always
+  // keeping the closest options even if none are a great match, so a typo
+  // never just comes back empty when something close exists.
+  function fuzzyRank(rawQuery, items) {
+    const scored = items.map((it) => ({ it, ...fuzzyScoreTitle(rawQuery, it.title) }));
+    scored.sort((a, b) => (b.matchedRatio - a.matchedRatio) || (b.avgSim - a.avgSim));
+    let kept = scored.filter((s) => s.matchedRatio >= 0.5 || s.avgSim >= 0.55);
+    if (!kept.length) kept = scored.slice(0, 5);
+    return kept.slice(0, 6).map((s) => s.it);
+  }
 
   // Retries once on a transient gateway error (502/503/504) after a short
   // delay — Jikan in particular times out under load fairly often, and a
@@ -8842,7 +8920,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   }
 
   function jikanSearch(kind, q) {
-    return fetchJSON(`https://api.jikan.moe/v4/${kind}?q=${encodeURIComponent(q)}&limit=3&sfw=true`)
+    return fetchJSON(`https://api.jikan.moe/v4/${kind}?q=${encodeURIComponent(fuzzySeedTerm(q))}&limit=20&sfw=true`)
       .then((json) => (json.data || []).map((it) => ({
         id: 'mal:' + it.mal_id,
         type: kind === 'anime' ? 'anime' : (it.type === 'Light Novel' ? 'light novel' : 'manga'),
@@ -8856,7 +8934,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     return fetchJSON('https://api.vndb.org/kana/vn', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filters: ['search', '=', q], fields: 'title, image.url', results: 3 })
+      body: JSON.stringify({ filters: ['search', '=', fuzzySeedTerm(q)], fields: 'title, image.url', results: 20 })
     })
       .then((json) => (json.results || []).map((it) => ({
         id: 'vndb:' + it.id, type: 'visual novel', title: it.title,
@@ -8866,7 +8944,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   }
 
   function openLibrarySearch(q) {
-    return fetchJSON(`https://openlibrary.org/search.json?title=${encodeURIComponent(q)}&limit=3&fields=key,title,cover_i`)
+    return fetchJSON(`https://openlibrary.org/search.json?title=${encodeURIComponent(fuzzySeedTerm(q))}&limit=20&fields=key,title,cover_i`)
       .then((json) => (json.docs || []).map((it) => ({
         id: 'ol:' + it.key, type: 'book', title: it.title,
         image: it.cover_i ? `https://covers.openlibrary.org/b/id/${it.cover_i}-M.jpg` : null
@@ -8897,7 +8975,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
         resultsEl.innerHTML = '<div class="tracker-media-results-msg">Search is temporarily unavailable, try again in a moment.</div>';
         return;
       }
-      items = items.filter((it) => it.title);
+      items = fuzzyRank(q, items.filter((it) => it.title));
       if (!items.length) {
         resultsEl.innerHTML = '<div class="tracker-media-results-msg">No matches found.</div>';
         return;
