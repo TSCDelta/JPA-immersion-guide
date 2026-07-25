@@ -1271,7 +1271,7 @@
 
   /* ── LANDING ── */
   .landing { display: none; max-width: 980px; margin: 0 auto; padding: 5rem 2rem 0; position: relative; text-align: center; }
-  .landing.active { display: block; }
+  .landing.active { display: block; flex: 1 0 auto; }
   .landing::before {
     content: "";
     position: absolute;
@@ -1389,10 +1389,10 @@
   .landing-split-card.c-jpa:hover .landing-split-cta { color: var(--blue); }
   .landing-split-card.c-obs:hover .landing-split-cta { color: var(--rose); }
 
-  /* CLOSING CTA BAND — single instance, sits at the bottom of the document flow on every page (reached by scrolling, not pinned to the viewport) */
+  /* CLOSING CTA BAND — single instance, sits at the bottom of the document flow. The active view above it stretches to fill leftover viewport space (see .active flex rules), so on short pages the bar still sits flush at the bottom of the screen with no gap, and on tall pages you reach it by scrolling to the true end. */
   .landing-cta-band {
     position: relative;
-    margin-top: 2.5rem;
+    flex-shrink: 0;
     padding: 0.7rem 1.5rem;
     padding-bottom: max(0.7rem, env(safe-area-inset-bottom));
     background: linear-gradient(120deg, var(--green-dim), var(--blue-dim), var(--rose-dim));
@@ -1494,7 +1494,7 @@
 
   /* ── GUIDE INDEX ── */
   .guide-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; text-align: center; }
-  .guide-index.active { display: block; }
+  .guide-index.active { display: block; flex: 1 0 auto; }
   .guide-index-eyebrow {
     font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: 500;
     color: var(--green); text-transform: uppercase; margin-bottom: 0.75rem; display: inline-block;
@@ -1554,7 +1554,7 @@
 
   /* ── RES INDEX ── */
   .res-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
-  .res-index.active { display: block; }
+  .res-index.active { display: block; flex: 1 0 auto; }
   .res-index-title {
     font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.4rem;
     background: linear-gradient(90deg, var(--text), var(--green) 140%);
@@ -1646,7 +1646,7 @@
 
   /* ── SECTION PAGE ── */
   .section-page { display: none; max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 3rem; }
-  .section-page.active { display: block; }
+  .section-page.active { display: block; flex: 1 0 auto; }
   .section-inner { max-width: 640px; }
   .section-inner > .view-tag,
   .section-inner > h2,
@@ -7209,7 +7209,7 @@
   </div>
 </div>
 
-<!-- ── GLOBAL BOTTOM CTA BAR (single instance, sits at the end of the page, shown on every page) ── -->
+<!-- ── GLOBAL BOTTOM CTA BAR (single instance, sits at the true bottom of every page; the active view above stretches so it's flush with the screen edge on short pages too) ── -->
 <div class="landing-cta-band" id="global-cta-band">
   <div class="landing-cta-band-inner">
     <div class="landing-cta-band-text">
