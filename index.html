@@ -86,6 +86,11 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     font-family: 'Geist', sans-serif;
     background: var(--bg);
@@ -545,6 +550,7 @@
     display: flex;
     gap: 8px;
     margin-top: 2.5rem;
+    margin-bottom: 2rem;
     margin-left: auto;
     margin-right: auto;
     padding-top: 1.5rem;
@@ -1383,34 +1389,45 @@
   .landing-split-card.c-jpa:hover .landing-split-cta { color: var(--blue); }
   .landing-split-card.c-obs:hover .landing-split-cta { color: var(--rose); }
 
-  /* CLOSING CTA BAND */
+  /* CLOSING CTA BAND — single instance, sits at the bottom of the document flow on every page (reached by scrolling, not pinned to the viewport) */
   .landing-cta-band {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding: 3.5rem 2rem;
-    text-align: center;
+    position: relative;
+    margin-top: 2.5rem;
+    padding: 0.7rem 1.5rem;
+    padding-bottom: max(0.7rem, env(safe-area-inset-bottom));
     background: linear-gradient(120deg, var(--green-dim), var(--blue-dim), var(--rose-dim));
     background-size: 300% auto;
     border-top: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
-  .landing-cta-band-inner { max-width: 640px; margin: 0 auto; }
-  .landing-cta-title { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.5rem; }
-  .landing-cta-sub { font-size: 13px; color: var(--text-muted); margin: 0 auto 1.75rem; }
-  .landing-cta-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-  .landing-cta-btn { text-decoration: none; }
+  .landing-cta-band-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+  .landing-cta-band-text { text-align: left; flex: 1 1 auto; min-width: 0; }
+  .landing-cta-title { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); line-height: 1.3; }
+  .landing-cta-sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .landing-cta-actions { display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex: 0 0 auto; flex-wrap: nowrap; }
+  .landing-cta-btn { text-decoration: none; padding: 8px 16px; font-size: 13px; white-space: nowrap; }
   .landing-cta-btn.c-obs-btn { background: linear-gradient(135deg, var(--rose), var(--purple)); box-shadow: 0 4px 20px -4px var(--rose-dim); }
 
   .landing-cta-quicklinks {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    flex-wrap: nowrap; flex: 0 0 auto;
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--border);
   }
   .landing-cta-quick-btn {
     font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.03em;
-    padding: 6px 13px; border-radius: 999px; border: 1px solid var(--border-strong);
+    padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border-strong);
     background: var(--bg-2); color: var(--text-muted); cursor: pointer;
     transition: color 0.15s, border-color 0.15s, background 0.15s;
+    white-space: nowrap;
   }
   .landing-cta-quick-btn:hover { color: var(--text); border-color: var(--text-dim); background: var(--bg-3); }
 
@@ -1726,8 +1743,21 @@
     .landing-pillars { grid-template-columns: 1fr; }
     .landing-grid6 { grid-template-columns: 1fr; }
     .landing-split { grid-template-columns: 1fr; }
-    .landing-cta-band { padding: 3rem 1.25rem; }
-    .landing-cta-actions { flex-direction: column; }
+    .landing-cta-band { padding: 0.6rem 0.85rem; padding-bottom: max(0.6rem, env(safe-area-inset-bottom)); }
+    .landing-cta-band-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+    .landing-cta-band-text { text-align: center; }
+    .landing-cta-title { font-size: 13px; }
+    .landing-cta-sub { display: none; }
+    .landing-cta-actions { justify-content: stretch; gap: 0.5rem; }
+    .landing-cta-btn { flex: 1 1 0; text-align: center; padding: 9px 10px; font-size: 12.5px; }
+    .landing-cta-quicklinks {
+      border-left: none;
+      border-top: 1px solid var(--border);
+      padding-left: 0;
+      padding-top: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
     .landing-title { font-size: 32px; }
     .guide-index { padding: 2rem 1.25rem; }
     .guide-cards { grid-template-columns: 1fr 1fr; }
@@ -3117,22 +3147,7 @@
     <p class="dash-teaser-caption">Log your reading, listening, and anime time, watch your breakdown fill in, and see where you land on the leaderboard.</p>
   </div>
 
-  <div class="landing-cta-band">
-    <div class="landing-cta-band-inner">
-      <h2 class="landing-cta-title">Ready to start?</h2>
-      <p class="landing-cta-sub">Join whichever community brought you here, the guide is the same either way.</p>
-      <div class="landing-cta-actions">
-        <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-primary landing-cta-btn">Join JPA</a>
-        <a href="https://discord.gg/RZXYqmYcrx" target="_blank" class="landing-btn-primary landing-cta-btn c-obs-btn">Join The Observatory</a>
-      </div>
-      <div class="landing-cta-quicklinks">
-        <button class="landing-cta-quick-btn" onclick="go('guide-index')">Guide</button>
-        <button class="landing-cta-quick-btn" onclick="openResourcePicker()">Resources</button>
-        <button class="landing-cta-quick-btn" onclick="go('tracker')">Tracker</button>
-        <button class="landing-cta-quick-btn" onclick="go('faq')">FAQ</button>
-      </div>
-    </div>
-  </div>
+
 </div>
 
 <!-- ── TRACKER ── -->
@@ -3989,12 +4004,12 @@
 
       <div class="reading-panel active" id="tb-basics">
         <h3>What textbooks actually do</h3>
-        <p>A textbook gives you a fixed curriculum: grammar explained in a deliberate order, vocab and kanji matched to each chapter, and structured exercises that force you to produce the language instead of just recognising it. Genki is the standard choice, and it's what this page is built around.</p>
-        <p>This is the opposite of the immersion-first approach on the Basics page, where you pick things up from whatever content you're consuming, in whatever order it happens to show up. Neither is more "correct": textbooks front-load structure so you're not guessing blind, immersion front-loads exposure so you're not stuck in theory. Most people end up landing somewhere in between.</p>
+        <p>A textbook gives you a fixed curriculum. Grammar comes in a set order, vocab and kanji match each chapter, and exercises force you to produce the language instead of just recognising it. Genki is the standard choice, and it's what this page is built around.</p>
+        <p>This is the opposite of the immersion-first approach on the Basics page, where you pick things up in whatever order your content happens to show them. Neither is more "correct." Textbooks front-load structure. Immersion front-loads exposure. Most people land somewhere in between.</p>
         <div class="callout info">
-          <strong>Genki gives you three things in one package:</strong> a grammar explanation, a workbook to practice it, and audio to hear it spoken. Working through all three per chapter is what the study plan on this page is built around.
+          <strong>Genki gives you three things per chapter:</strong> a grammar explanation, a workbook, and audio. Working through all three is the study plan this page follows.
         </div>
-        <p>Finish Genki I and II and you'll land somewhere around <strong>N4</strong>, with a solid enough grammar base to start leaning much more heavily on immersion.</p>
+        <p>Finish Genki I and II and you'll land around <strong>N4</strong>, with enough grammar to start leaning much more heavily on immersion.</p>
       </div>
 
       <div class="reading-panel" id="tb-books">
@@ -7194,7 +7209,25 @@
   </div>
 </div>
 
-
+<!-- ── GLOBAL BOTTOM CTA BAR (single instance, sits at the end of the page, shown on every page) ── -->
+<div class="landing-cta-band" id="global-cta-band">
+  <div class="landing-cta-band-inner">
+    <div class="landing-cta-band-text">
+      <h2 class="landing-cta-title">Ready to start?</h2>
+      <p class="landing-cta-sub">Join whichever community brought you here, the guide is the same either way.</p>
+    </div>
+    <div class="landing-cta-actions">
+      <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-primary landing-cta-btn">Join JPA</a>
+      <a href="https://discord.gg/RZXYqmYcrx" target="_blank" class="landing-btn-primary landing-cta-btn c-obs-btn">Join The Observatory</a>
+    </div>
+    <div class="landing-cta-quicklinks">
+      <button class="landing-cta-quick-btn" onclick="go('guide-index')">Guide</button>
+      <button class="landing-cta-quick-btn" onclick="openResourcePicker()">Resources</button>
+      <button class="landing-cta-quick-btn" onclick="go('tracker')">Tracker</button>
+      <button class="landing-cta-quick-btn" onclick="go('faq')">FAQ</button>
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -8867,25 +8900,6 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     d.textContent = str;
     return d.innerHTML;
   }
-</script>
-<script>
-  // Append the "Ready to start?" CTA band to the bottom of every page except the landing page (which already has it).
-  (function () {
-    function addCtaBandToPages() {
-      const source = document.querySelector('#v-welcome .landing-cta-band');
-      if (!source) return;
-      const pages = document.querySelectorAll('.guide-index, .res-index, .section-page');
-      pages.forEach(page => {
-        if (page.querySelector('.landing-cta-band')) return; // already has one
-        page.appendChild(source.cloneNode(true));
-      });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', addCtaBandToPages);
-    } else {
-      addCtaBandToPages();
-    }
-  })();
 </script>
 </body>
 </html>
