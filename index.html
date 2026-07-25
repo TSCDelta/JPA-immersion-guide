@@ -2894,6 +2894,14 @@
   .tracker-rank-foot { margin-top: 6px; text-align: right; font-family: 'Geist Mono', monospace; font-size: 10.5px; color: var(--text-dim); }
 
   /* ── MEDIA SEARCH ── */
+  .tracker-media-type-row { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .tracker-media-type-btn {
+    font-family: 'Geist', sans-serif; font-size: 12px; color: var(--text-muted);
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 999px;
+    padding: 5px 12px; cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .tracker-media-type-btn:hover { border-color: var(--border-strong); color: var(--text); }
+  .tracker-media-type-btn.active { background: var(--green-dim); border-color: var(--green); color: var(--text); }
   .tracker-media-search { position: relative; }
   .tracker-media-search input { width: 100%; }
   .tracker-media-results {
@@ -3212,7 +3220,13 @@
             <input type="text" id="tracker-note" placeholder="Note (e.g. Read 12 pages of よつばと!)" maxlength="80">
 
             <div class="tracker-media-search" id="tracker-media-search-wrap">
-              <input type="text" id="tracker-media-input" placeholder="Attach a title — anime, manga, VN, books, games (optional)" autocomplete="off" oninput="trackerMediaSearch(this.value)">
+              <div class="tracker-media-type-row" id="tracker-media-type-row">
+                <button type="button" class="tracker-media-type-btn active" data-type="anime" onclick="trackerSetMediaType('anime', this)">Anime</button>
+                <button type="button" class="tracker-media-type-btn" data-type="manga" onclick="trackerSetMediaType('manga', this)">Manga</button>
+                <button type="button" class="tracker-media-type-btn" data-type="visual novel" onclick="trackerSetMediaType('visual novel', this)">Visual Novel</button>
+                <button type="button" class="tracker-media-type-btn" data-type="book" onclick="trackerSetMediaType('book', this)">Book</button>
+              </div>
+              <input type="text" id="tracker-media-input" placeholder="Search anime titles (optional)" autocomplete="off" oninput="trackerMediaSearch(this.value)">
               <div class="tracker-media-results" id="tracker-media-results"></div>
               <div class="tracker-media-picked" id="tracker-media-picked" style="display:none;">
                 <img id="tracker-media-picked-img" src="" alt="">
@@ -8330,6 +8344,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   let pickedMedia = null;
   let mediaSearchTimer = null;
   let mediaSearchSeq = 0;
+  let mediaSearchType = 'anime';
 
   const RANK_TIERS = [
     { name: 'Newcomer',     hours: 0 },
@@ -8797,7 +8812,9 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   }
 
   // ── MEDIA SEARCH ──
-  // Looks up titles across three free databases, in parallel, per keystroke:
+  // The user picks a type first (Anime / Manga / Visual Novel / Book, see the
+  // chip row above the input), then searches — only the matching database is
+  // queried, instead of hitting all of them per keystroke:
   //   • Jikan (https://docs.api.jikan.moe/)     — anime + manga/light novels, unofficial MyAnimeList API
   //   • VNDB Kana API (https://api.vndb.org/kana#the-basics) — visual novels
   //   • Open Library (https://openlibrary.org/dev/docs/api/search) — books
@@ -8855,12 +8872,13 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     mediaSearchTimer = setTimeout(async () => {
       resultsEl.classList.add('active');
       resultsEl.innerHTML = '<div class="tracker-media-results-msg">Searching…</div>';
-      const results = await Promise.all([
-        jikanSearch('anime', q), jikanSearch('manga', q),
-        vndbSearch(q), openLibrarySearch(q)
-      ]);
+      let items = [];
+      if (mediaSearchType === 'anime') items = await jikanSearch('anime', q);
+      else if (mediaSearchType === 'manga') items = await jikanSearch('manga', q);
+      else if (mediaSearchType === 'visual novel') items = await vndbSearch(q);
+      else if (mediaSearchType === 'book') items = await openLibrarySearch(q);
       if (seq !== mediaSearchSeq) return; // a newer keystroke superseded this search
-      const items = results.flat().filter((it) => it.title);
+      items = items.filter((it) => it.title);
       if (!items.length) {
         resultsEl.innerHTML = '<div class="tracker-media-results-msg">No matches found.</div>';
         return;
@@ -8874,6 +8892,23 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
       ).join('');
       window.__trackerMediaResults = items;
     }, 400);
+  };
+
+  window.trackerSetMediaType = function (type, btn) {
+    mediaSearchType = type;
+    const row = document.getElementById('tracker-media-type-row');
+    if (row) row.querySelectorAll('.tracker-media-type-btn').forEach((b) => b.classList.toggle('active', b === btn));
+    const input = document.getElementById('tracker-media-input');
+    const resultsEl = document.getElementById('tracker-media-results');
+    if (input) {
+      input.placeholder = `Search ${type} titles (optional)`;
+      if (input.value.trim().length >= 3) {
+        trackerMediaSearch(input.value); // re-run the search against the newly selected type
+      } else if (resultsEl) {
+        resultsEl.classList.remove('active');
+        resultsEl.innerHTML = '';
+      }
+    }
   };
 
   window.trackerPickMedia = function (i) {
