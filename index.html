@@ -424,7 +424,123 @@
     color: var(--text);
   }
 
-  /* ── NAV BUTTONS AT BOTTOM ── */
+  /* ── STUDY PLAN PHASE STEPPER ── */
+  .plan-phases {
+    margin: 1.5rem auto 0;
+    max-width: 520px;
+  }
+  .plan-track {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    padding: 0 6px;
+  }
+  .plan-track::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 32px;
+    right: 32px;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .plan-dot {
+    position: relative;
+    z-index: 1;
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    width: 90px;
+    font-family: 'Geist', sans-serif;
+    padding: 0;
+  }
+  .plan-dot-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .plan-dot-label {
+    font-size: 10px;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.35;
+    transition: color 0.15s;
+  }
+  .plan-dot:hover .plan-dot-icon { border-color: var(--border-strong); background: var(--bg-3); }
+  .plan-dot.active .plan-dot-icon {
+    background: var(--green-dim);
+    border-color: var(--green);
+    transform: scale(1.1);
+    box-shadow: 0 0 14px rgba(157,143,239,0.25);
+  }
+  .plan-dot.active .plan-dot-label { color: var(--green); }
+  .plan-detail {
+    margin: 1.5rem auto 0;
+    max-width: 560px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.3rem;
+    text-align: center;
+    min-height: 108px;
+    transition: border-color 0.15s;
+  }
+  .plan-detail-panel { display: none; }
+  .plan-detail-panel.active { display: block; animation: planFadeIn 0.3s ease; }
+  @keyframes planFadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: none; }
+  }
+  .plan-detail-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-bottom: 0.6rem;
+  }
+  .plan-detail-letter {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .plan-detail-head h4 { margin: 0; font-size: 14px; font-weight: 600; color: var(--text); }
+  .plan-detail-panel p { margin: 0 0 0.5rem; font-size: 13px; color: var(--text-muted); line-height: 1.7; max-width: 460px; margin-left: auto; margin-right: auto; }
+  .plan-detail-panel p:last-child { margin-bottom: 0; }
+  .plan-detail-panel .steps { text-align: left; margin: 0.75rem auto 0; max-width: 420px; }
+  @media (max-width: 680px) {
+    .plan-dot { width: 68px; }
+    .plan-dot-label { font-size: 9px; }
+    .plan-track::before { left: 26px; right: 26px; }
+    .plan-detail { padding: 1rem; }
+  }
+
+
   .page-nav {
     display: flex;
     gap: 8px;
@@ -3315,53 +3431,109 @@
       <h2>Textbooks</h2>
       <p class="view-sub">A textbook-first alternative to the Basics page, using Genki as a structured foundation before moving into immersion. Both paths lead to the same place, pick whichever fits how you learn.</p>
 
-      <h3>Getting the books</h3>
-      <div class="link-grid">
-        <a class="link-card" href="https://mega.nz/folder/dS8j3RaR#IrTXP2U6EPL7NIDHleskZw" target="_blank">
-          <p class="link-card-title">Genki I (PDF)</p>
-          <p class="link-card-desc">The most popular beginner Japanese textbook, 2nd edition</p>
-        </a>
-        <a class="link-card" href="https://mega.nz/folder/FQkwBZYb#WKX6XQHOVORI-jzlbUWkaA" target="_blank">
-          <p class="link-card-title">Genki II (PDF)</p>
-          <p class="link-card-desc">Continuation of Genki, intermediate beginner</p>
-        </a>
+      <div id="textbooks-tabs">
+      <div class="reading-subnav">
+        <button class="reading-tab active" onclick="subTabGo('textbooks-tabs','tb-basics',this)">What are textbooks?</button>
+        <button class="reading-tab" onclick="subTabGo('textbooks-tabs','tb-books',this)">Getting the books</button>
+        <button class="reading-tab" onclick="subTabGo('textbooks-tabs','tb-time',this)">Time commitment</button>
+        <button class="reading-tab" onclick="subTabGo('textbooks-tabs','tb-plan',this)">Study plan</button>
       </div>
 
-      <h3>How much time should I put in?</h3>
-      <p>This is a recommendation, not a hardcore rule. It's based on unofficial JLPT study hour estimates: N1 sits around <strong>4,800 hours</strong>. Spread over 4 years, that's roughly <strong>3 hours a day</strong>.</p>
-      <div class="callout info">
-        "Study" doesn't just mean sitting with the textbook open. It includes listening to level-appropriate podcasts, reading, meeting up with Japanese friends, and anything else that makes the language enjoyable to engage with.
+      <div class="reading-panel active" id="tb-basics">
+        <h3>What textbooks actually do</h3>
+        <p>A textbook gives you a fixed curriculum: grammar explained in a deliberate order, vocab and kanji matched to each chapter, and structured exercises that force you to produce the language instead of just recognising it. Genki is the standard choice, and it's what this page is built around.</p>
+        <p>This is the opposite of the immersion-first approach on the Basics page, where you pick things up from whatever content you're consuming, in whatever order it happens to show up. Neither is more "correct": textbooks front-load structure so you're not guessing blind, immersion front-loads exposure so you're not stuck in theory. Most people end up landing somewhere in between.</p>
+        <div class="callout info">
+          <strong>Genki gives you three things in one package:</strong> a grammar explanation, a workbook to practice it, and audio to hear it spoken. Working through all three per chapter is what the study plan on this page is built around.
+        </div>
+        <p>Finish Genki I and II and you'll land somewhere around <strong>N4</strong>, with a solid enough grammar base to start leaning much more heavily on immersion.</p>
       </div>
 
-      <h3>The Genki study plan</h3>
-      <p class="view-sub" style="margin-top:0.25rem;">Two or three 45–60 minute sessions a day, split into chunks. Mix and match depending on your schedule.</p>
-
-      <ol class="steps">
-        <li class="step"><span class="step-n">A</span><span class="step-body"><strong>Vocab, kanji &amp; dialogue.</strong> Before studying a chapter, get most of its vocabulary and kanji down first. Genki marks the words used in each dialogue, so it's easy to prep. Try reading the dialogue without the English translation, guess from context and the pictures, then check how you did. Shadow the audio and review the previous day's work here too.</span></li>
-        <li class="step"><span class="step-n">B</span><span class="step-body"><strong>Textbook (grammar).</strong> Work through one grammar point a day and do its associated exercises. If it's a speaking exercise, do both parts.</span></li>
-        <li class="step"><span class="step-n">C</span><span class="step-body"><strong>Workbook.</strong> Do the workbook exercises later in the day, once the grammar point has had time to settle.</span></li>
-      </ol>
-
-      <div class="callout tip">
-        Don't skip the reading and writing sections at the back of each chapter. Get your writing checked on an app like <strong>HelloTalk</strong>, make corrections, resubmit, then move on to the next chapter.
+      <div class="reading-panel" id="tb-books">
+        <h3>Getting the books</h3>
+        <div class="link-grid">
+          <a class="link-card" href="https://mega.nz/folder/dS8j3RaR#IrTXP2U6EPL7NIDHleskZw" target="_blank">
+            <p class="link-card-title">Genki I (PDF)</p>
+            <p class="link-card-desc">The most popular beginner Japanese textbook, 2nd edition</p>
+          </a>
+          <a class="link-card" href="https://mega.nz/folder/FQkwBZYb#WKX6XQHOVORI-jzlbUWkaA" target="_blank">
+            <p class="link-card-title">Genki II (PDF)</p>
+            <p class="link-card-desc">Continuation of Genki, intermediate beginner</p>
+          </a>
+        </div>
       </div>
 
-      <p>You can add, drop, or reorder chunks depending on your schedule, and it's fine to mix low-effort and high-effort study in the same session. The point is consistency, not a rigid template.</p>
-
-      <h3>Folding in reading &amp; listening</h3>
-      <p>Textbook study works best alongside light immersion from day one, not after "finishing" the book. A realistic day might look like:</p>
-      <ul class="steps" style="list-style:none;">
-        <li class="step"><span class="step-n">🎧</span><span class="step-body">Making and eating breakfast: listen to a podcast (30 min)</span></li>
-        <li class="step"><span class="step-n">📺</span><span class="step-body">Lunch break: watch a grammar-focused YouTube video (30 min)</span></li>
-        <li class="step"><span class="step-n">🚃</span><span class="step-body">Commute: work through Pimsleur (60 min)</span></li>
-        <li class="step"><span class="step-n">📖</span><span class="step-body">Read manga (20 min)</span></li>
-        <li class="step"><span class="step-n">📝</span><span class="step-body">Workbook exercises (20 min)</span></li>
-        <li class="step"><span class="step-n">🗣</span><span class="step-body">Meet with a tutor (30 min)</span></li>
-      </ul>
-
-      <div class="callout info">
-        Once you're comfortable reading dialogue without translation and can hold basic conversations from the routine above, you're ready to move fully into the shared Immersion stage below, the textbook becomes a reference rather than the main driver.
+      <div class="reading-panel" id="tb-time">
+        <h3>How much time should I put in?</h3>
+        <p>This is a recommendation, not a hardcore rule. It's based on unofficial JLPT study hour estimates: N1 sits around <strong>4,800 hours</strong>. Spread over 4 years, that's roughly <strong>3 hours a day</strong>.</p>
+        <div class="callout info">
+          "Study" doesn't just mean sitting with the textbook open. It includes listening to level-appropriate podcasts, reading, meeting up with Japanese friends, and anything else that makes the language enjoyable to engage with.
+        </div>
       </div>
+
+      <div class="reading-panel" id="tb-plan">
+        <h3>The Genki study plan</h3>
+        <p class="view-sub" style="margin-top:0.25rem;">Two or three 45–60 minute sessions a day, split into four phases. Tap each one to see what it covers.</p>
+
+        <div class="plan-phases">
+          <div class="plan-track">
+            <button class="plan-dot active" onclick="planPhaseGo('a',this)">
+              <span class="plan-dot-icon">📖</span>
+              <span class="plan-dot-label">Vocab &amp;<br>Dialogue</span>
+            </button>
+            <button class="plan-dot" onclick="planPhaseGo('b',this)">
+              <span class="plan-dot-icon">📘</span>
+              <span class="plan-dot-label">Grammar</span>
+            </button>
+            <button class="plan-dot" onclick="planPhaseGo('c',this)">
+              <span class="plan-dot-icon">✍️</span>
+              <span class="plan-dot-label">Workbook</span>
+            </button>
+            <button class="plan-dot" onclick="planPhaseGo('d',this)">
+              <span class="plan-dot-icon">🎧</span>
+              <span class="plan-dot-label">Reading &amp;<br>Listening</span>
+            </button>
+          </div>
+
+          <div class="plan-detail">
+            <div class="plan-detail-panel active" id="plan-a">
+              <div class="plan-detail-head"><span class="plan-detail-letter">A</span><h4>Vocab, kanji &amp; dialogue</h4></div>
+              <p>Before studying a chapter, get most of its vocabulary and kanji down first. Genki marks the words used in each dialogue, so it's easy to prep. Try reading the dialogue without the English translation, guess from context and the pictures, then check how you did. Shadow the audio and review the previous day's work here too.</p>
+            </div>
+            <div class="plan-detail-panel" id="plan-b">
+              <div class="plan-detail-head"><span class="plan-detail-letter">B</span><h4>Textbook (grammar)</h4></div>
+              <p>Work through one grammar point a day and do its associated exercises. If it's a speaking exercise, do both parts.</p>
+            </div>
+            <div class="plan-detail-panel" id="plan-c">
+              <div class="plan-detail-head"><span class="plan-detail-letter">C</span><h4>Workbook</h4></div>
+              <p>Do the workbook exercises later in the day, once the grammar point has had time to settle.</p>
+            </div>
+            <div class="plan-detail-panel" id="plan-d">
+              <div class="plan-detail-head"><span class="plan-detail-letter">D</span><h4>Reading &amp; listening</h4></div>
+              <p>Textbook study works best alongside light immersion from day one, not after "finishing" the book. A realistic day might look like:</p>
+              <ul class="steps" style="list-style:none;">
+                <li class="step"><span class="step-n">🎧</span><span class="step-body">Making and eating breakfast: listen to a podcast (30 min)</span></li>
+                <li class="step"><span class="step-n">📺</span><span class="step-body">Lunch break: watch a grammar-focused YouTube video (30 min)</span></li>
+                <li class="step"><span class="step-n">🚃</span><span class="step-body">Commute: work through Pimsleur (60 min)</span></li>
+                <li class="step"><span class="step-n">📖</span><span class="step-body">Read manga (20 min)</span></li>
+                <li class="step"><span class="step-n">📝</span><span class="step-body">Workbook exercises (20 min)</span></li>
+                <li class="step"><span class="step-n">🗣</span><span class="step-body">Meet with a tutor (30 min)</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          Don't skip the reading and writing sections at the back of each chapter. Get your writing checked on an app like <strong>HelloTalk</strong>, make corrections, resubmit, then move on to the next chapter.
+        </div>
+
+        <p>You can add, drop, or reorder phases depending on your schedule, and it's fine to mix low-effort and high-effort study in the same session. The point is consistency, not a rigid template.</p>
+
+        <div class="callout info">
+          Once you're comfortable reading dialogue without translation and can hold basic conversations from the routine above, you're ready to move fully into the shared Immersion stage below, the textbook becomes a reference rather than the main driver.
+        </div>
+      </div>
+      </div><!-- /textbooks-tabs -->
 
       <div class="page-nav">
         <button class="page-nav-btn" onclick="go('guide-index')">
@@ -6761,6 +6933,15 @@ function subTabGo(scopeId, panelId, btn) {
   const oldPanel = scope.querySelector('.reading-panel.active');
   const newPanel = document.getElementById(panelId);
   staggeredPanelSwitch(oldPanel, newPanel, scope, btn);
+}
+
+function planPhaseGo(phase, btn) {
+  const track = btn.closest('.plan-track');
+  track.querySelectorAll('.plan-dot').forEach(d => d.classList.remove('active'));
+  btn.classList.add('active');
+  const detail = track.parentElement.querySelector('.plan-detail');
+  detail.querySelectorAll('.plan-detail-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('plan-' + phase).classList.add('active');
 }
 
 
