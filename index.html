@@ -8823,40 +8823,55 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   // but both require a personal API key and aren't CORS-open, so they'd need a
   // backend proxy to call safely from a static page like this one.
 
+  // Retries once on a transient gateway error (502/503/504) after a short
+  // delay — Jikan in particular times out under load fairly often, and a
+  // single retry clears most of those without meaningfully slowing anyone down.
+  function fetchJSON(url, opts) {
+    opts = opts || {};
+    const attempt = (retriesLeft) => fetch(url, { ...opts, signal: AbortSignal.timeout(8000) })
+      .then((r) => {
+        if (!r.ok) {
+          if (retriesLeft > 0 && [502, 503, 504].includes(r.status)) {
+            return new Promise((res) => setTimeout(res, 700)).then(() => attempt(retriesLeft - 1));
+          }
+          throw new Error('status ' + r.status);
+        }
+        return r.json();
+      });
+    return attempt(1);
+  }
+
   function jikanSearch(kind, q) {
-    return fetch(`https://api.jikan.moe/v4/${kind}?q=${encodeURIComponent(q)}&limit=3&sfw=true`)
-      .then((r) => r.json())
+    return fetchJSON(`https://api.jikan.moe/v4/${kind}?q=${encodeURIComponent(q)}&limit=3&sfw=true`)
       .then((json) => (json.data || []).map((it) => ({
         id: 'mal:' + it.mal_id,
         type: kind === 'anime' ? 'anime' : (it.type === 'Light Novel' ? 'light novel' : 'manga'),
         title: it.title_english || it.title,
         image: it.images && it.images.jpg && it.images.jpg.image_url
       })))
-      .catch((e) => { console.error('Jikan search failed', e); return []; });
+      .catch((e) => { console.error('Jikan search failed', e); return null; });
   }
 
   function vndbSearch(q) {
-    return fetch('https://api.vndb.org/kana/vn', {
+    return fetchJSON('https://api.vndb.org/kana/vn', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ filters: ['search', '=', q], fields: 'title, image.url', results: 3 })
     })
-      .then((r) => r.json())
       .then((json) => (json.results || []).map((it) => ({
         id: 'vndb:' + it.id, type: 'visual novel', title: it.title,
         image: it.image && it.image.url
       })))
-      .catch((e) => { console.error('VNDB search failed', e); return []; });
+      .catch((e) => { console.error('VNDB search failed', e); return null; });
   }
 
   function openLibrarySearch(q) {
-    return fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(q)}&limit=3&fields=key,title,cover_i`)
-      .then((r) => r.json())
+    return fetchJSON(`https://openlibrary.org/search.json?title=${encodeURIComponent(q)}&limit=3&fields=key,title,cover_i`)
       .then((json) => (json.docs || []).map((it) => ({
         id: 'ol:' + it.key, type: 'book', title: it.title,
         image: it.cover_i ? `https://covers.openlibrary.org/b/id/${it.cover_i}-M.jpg` : null
       })))
-      .catch((e) => { console.error('Open Library search failed', e); return []; });
+      .catch((e) => { console.error('Open Library search failed', e); return null; });
   }
 
   window.trackerMediaSearch = function (raw) {
@@ -8872,12 +8887,16 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
     mediaSearchTimer = setTimeout(async () => {
       resultsEl.classList.add('active');
       resultsEl.innerHTML = '<div class="tracker-media-results-msg">Searching…</div>';
-      let items = [];
+      let items = null;
       if (mediaSearchType === 'anime') items = await jikanSearch('anime', q);
       else if (mediaSearchType === 'manga') items = await jikanSearch('manga', q);
       else if (mediaSearchType === 'visual novel') items = await vndbSearch(q);
       else if (mediaSearchType === 'book') items = await openLibrarySearch(q);
       if (seq !== mediaSearchSeq) return; // a newer keystroke superseded this search
+      if (items === null) {
+        resultsEl.innerHTML = '<div class="tracker-media-results-msg">Search is temporarily unavailable, try again in a moment.</div>';
+        return;
+      }
       items = items.filter((it) => it.title);
       if (!items.length) {
         resultsEl.innerHTML = '<div class="tracker-media-results-msg">No matches found.</div>';
