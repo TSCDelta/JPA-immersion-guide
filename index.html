@@ -8431,7 +8431,7 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
   import {
     getFirestore, doc, setDoc, getDoc, updateDoc, increment, serverTimestamp,
-    collection, addDoc, query, orderBy, limit, onSnapshot
+    collection, addDoc, query, orderBy, limit, onSnapshot, runTransaction
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
   // ── PASTE YOUR OWN CONFIG HERE (see setup notes above) ──
@@ -8574,19 +8574,41 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
       // Monthly leaderboard total: reset to 0 if the stored month doesn't
       // match the current one, so the leaderboard naturally starts fresh
       // on the 1st of each month without needing a backend cron job.
+      //
+      // This whole read+compute+write has to happen inside a transaction
+      // (not a plain getDoc + updateDoc) because monthMinutes isn't a pure
+      // increment() — it depends on a value we read first (whether to carry
+      // it forward or reset it). Two entries submitted close together (double
+      // click, two tabs, a retried request) can otherwise both read the same
+      // starting value and the second write silently clobbers the first,
+      // quietly dropping minutes from the leaderboard total even though
+      // totalMinutes (a real increment()) stays correct. runTransaction
+      // retries automatically if it detects the doc changed underneath it,
+      // so concurrent submits are serialized instead of racing.
       const nowMonthKey = monthKeyStr(new Date());
-      const beforeSnap = await getDoc(userRef);
-      const beforeData = beforeSnap.data() || {};
-      const carriedMonthMinutes = (beforeData.monthKey === nowMonthKey) ? (beforeData.monthMinutes || 0) : 0;
-
-      await updateDoc(userRef, {
-        totalMinutes: increment(minutes),
-        [fieldPath]: increment(minutes),
-        monthMinutes: carriedMonthMinutes + minutes,
-        monthKey: nowMonthKey,
-        updatedAt: serverTimestamp()
+      let latestData = null;
+      await runTransaction(db, async (tx) => {
+        const snap = await tx.get(userRef);
+        const data = snap.data() || {};
+        const carriedMonthMinutes = (data.monthKey === nowMonthKey) ? (data.monthMinutes || 0) : 0;
+        const carriedTypeMinutes = (data.breakdown && data.breakdown[type]) || 0;
+        const nextData = {
+          ...data,
+          totalMinutes: (data.totalMinutes || 0) + minutes,
+          breakdown: { ...(data.breakdown || {}), [type]: carriedTypeMinutes + minutes },
+          monthMinutes: carriedMonthMinutes + minutes,
+          monthKey: nowMonthKey,
+        };
+        tx.update(userRef, {
+          totalMinutes: nextData.totalMinutes,
+          [fieldPath]: nextData.breakdown[type],
+          monthMinutes: nextData.monthMinutes,
+          monthKey: nextData.monthKey,
+          updatedAt: serverTimestamp()
+        });
+        latestData = nextData;
       });
-      renderDonut((await getDoc(userRef)).data());
+      renderDonut(latestData);
       evt.target.reset();
       trackerClearMedia();
       msg.textContent = 'Logged!';
