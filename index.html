@@ -6,7 +6,7 @@
 <title>Immersion Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 
   :root {
@@ -103,12 +103,6 @@
     background: rgba(42,8,56,0.12);
     color: #2a0838 !important;
   }
-
-  /* ── THEME-GATED CONTENT ──
-     Observatory link = dark mode only
-     JPA link         = light mode only */
-  [data-theme="light"] .dark-only { display: none !important; }
-  html:not([data-theme="light"]) .light-only { display: none !important; }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -465,10 +459,10 @@
     font-weight: 500;
   }
   .view-tag::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.7; }
-  .tag-green { color: var(--green); background: var(--green-dim); border: 1px solid rgba(157,143,239,0.25); }
-  .tag-blue  { color: var(--blue);  background: var(--blue-dim);  border: 1px solid rgba(82,174,200,0.25); }
-  .tag-amber { color: var(--amber); background: var(--amber-dim); border: 1px solid rgba(212,184,62,0.25); }
-  .tag-rose  { color: var(--rose);  background: var(--rose-dim);  border: 1px solid rgba(222,118,163,0.25); }
+  .tag-green { color: #ffffff; background: var(--green-dim); border: 1px solid rgba(157,143,239,0.25); }
+  .tag-blue  { color: #ffffff; background: var(--blue-dim);  border: 1px solid rgba(82,174,200,0.25); }
+  .tag-amber { color: #ffffff; background: var(--amber-dim); border: 1px solid rgba(212,184,62,0.25); }
+  .tag-rose  { color: #ffffff; background: var(--rose-dim);  border: 1px solid rgba(222,118,163,0.25); }
 
   h2 {
     font-size: 26px;
@@ -487,26 +481,27 @@
   }
   .view-sub {
     font-size: 14px;
-    color: var(--text-muted);
+    color: var(--text);
     margin-bottom: 2rem;
     line-height: 1.6;
     max-width: 520px;
   }
   h3 {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-family: 'Space Mono', monospace;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    text-transform: none;
+    font-family: 'Sora', sans-serif;
+    line-height: 1.3;
     margin: 2rem 0 0.75rem;
-    padding-left: 0.65rem;
-    border-left: 2px solid var(--border-strong);
+    padding-left: 0;
+    border-left: none;
   }
   p {
     font-size: 14px;
     line-height: 1.8;
-    color: var(--text-muted);
+    color: var(--text);
     margin-bottom: 0.85rem;
     max-width: 560px;
   }
@@ -526,7 +521,7 @@
     margin: 1rem 0;
     font-size: 13px;
     line-height: 1.7;
-    color: var(--text-muted);
+    color: var(--text);
     border: 1px solid;
     border-left-width: 3px;
     border-radius: 0 8px 8px 0;
@@ -539,10 +534,16 @@
 
   /* ── CARDS ── */
   .card {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
     margin: 0.75rem 0;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-3);
   }
   .card p { margin-bottom: 0.5rem; max-width: 560px; }
   .card p:last-child { margin-bottom: 0; }
@@ -568,12 +569,12 @@
     display: block;
     background: var(--bg-2);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.55rem 0.75rem;
+    border-radius: 10px;
+    padding: 0.65rem 0.85rem;
     text-decoration: none;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
   }
-  .link-card:hover { background: var(--bg-3); border-color: var(--border-strong); }
+  .link-card:hover { background: var(--bg-3); border-color: var(--border-strong); transform: translateY(-1px); }
   .link-card:hover .link-card-title { color: var(--green); }
   .link-card-title {
     font-size: 12px;
@@ -846,37 +847,6 @@
     border-radius: 3px;
     color: var(--text);
   }
-  /* ── THEME TOGGLE ── */
-  .theme-toggle {
-    background: none;
-    border: 1px solid var(--border-strong);
-    border-radius: 3px;
-    color: var(--text-dim);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    padding: 4px 10px;
-    cursor: pointer;
-    transition: color 0.1s, border-color 0.1s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .theme-toggle:hover { color: var(--text); border-color: var(--text-dim); }
-
-  /* ── TOPNAV ACCOUNT BUTTON ── */
-  .topnav-account {
-    display: flex; align-items: center; gap: 7px;
-    background: none; border: 1px solid var(--border-strong); border-radius: 3px;
-    color: var(--text-dim); font-family: 'Space Mono', monospace; font-size: 10px;
-    letter-spacing: 0.06em; padding: 4px 10px; cursor: pointer;
-    transition: color 0.1s, border-color 0.1s;
-  }
-  .topnav-account:hover { color: var(--text); border-color: var(--text-dim); }
-  .topnav-account-avatar { width: 16px; height: 16px; border-radius: 50%; display: none; }
-  .topnav-account.is-signed-in .topnav-account-avatar { display: block; }
-  .topnav-account-name { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-transform: none; letter-spacing: 0; }
-
   /* ── BURGER BUTTON (hidden on desktop) ── */
   .burger {
     display: none;
@@ -1483,8 +1453,8 @@
   .topnav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
   /* ── LANDING ── */
-  .landing { display: none; max-width: 980px; margin: 0 auto; padding: 5rem 2rem 0; position: relative; text-align: center; }
-  .landing.active { display: block; flex: 1 0 auto; }
+  .landing { display: none; max-width: 980px; margin: 0 auto; padding: 3rem 2rem; position: relative; text-align: center; }
+  .landing.active { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1 0 auto; }
   .landing::before {
     content: "";
     position: absolute;
@@ -1504,21 +1474,18 @@
     border: 1px solid rgba(157,143,242,0.25);
   }
   .landing-title {
-    font-size: clamp(36px, 6vw, 68px); font-weight: 700; letter-spacing: -0.04em;
-    line-height: 1.05; margin-bottom: 1.5rem;
-    background: linear-gradient(120deg, var(--text) 65%, var(--green));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    background-size: 200% auto;
+    font-size: clamp(36px, 6vw, 68px); font-weight: 800; letter-spacing: -0.04em;
+    line-height: 1.05; margin-bottom: 1.5rem; color: #ffffff;
   }
   .landing-title em {
-    font-style: normal;
-    background: linear-gradient(90deg, var(--purple), var(--green));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-style: normal; color: #ffffff;
   }
   .landing-desc {
     font-size: 16px; color: var(--text-muted); line-height: 1.75;
     max-width: 560px; margin: 0 auto 2rem;
   }
+  [data-theme="light"] .landing-title,
+  [data-theme="light"] .landing-title em { color: var(--text); }
   .landing-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4.5rem; }
   .landing-btn-primary {
     display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
@@ -1537,12 +1504,6 @@
     text-decoration: none;
   }
   .landing-btn-secondary:hover { color: var(--text); border-color: var(--text-dim); background: var(--bg-2); }
-
-  /* SECTION HEADS */
-  .landing-section-head { margin-bottom: 2rem; text-align: center; }
-  .landing-section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin: 0 auto 0.4rem; justify-content: center; }
-  .landing-section-title::before { display: none; }
-  .landing-section-sub { font-size: 16px; color: var(--text-muted); margin-left: auto; margin-right: auto; }
 
   /* SPLIT CARDS (JPA / Observatory) */
   .landing-split {
@@ -1620,89 +1581,31 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
-  .landing-cta-band-text { text-align: center; flex: 1 1 auto; min-width: 0; }
+  .landing-cta-band-text { text-align: left; min-width: 0; }
   .landing-cta-title { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); line-height: 1.3; }
   .landing-cta-sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .landing-cta-band-right { display: flex; align-items: center; justify-content: flex-end; gap: 1.25rem; flex-wrap: nowrap; flex-shrink: 0; }
   .landing-cta-actions { display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex: 0 0 auto; flex-wrap: nowrap; }
   .landing-cta-btn { text-decoration: none; padding: 8px 16px; font-size: 13px; white-space: nowrap; }
   .landing-cta-btn.c-obs-btn { background: linear-gradient(135deg, var(--rose), var(--purple)); box-shadow: 0 4px 20px -4px var(--rose-dim); }
 
   .landing-cta-quicklinks {
-    display: flex; align-items: center; justify-content: center; gap: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
     flex-wrap: nowrap; flex: 0 0 auto;
     padding-left: 1.25rem;
     border-left: 1px solid var(--border);
   }
   .landing-cta-quick-btn {
-    font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.03em;
-    padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border-strong);
-    background: var(--bg-2); color: var(--text-muted); cursor: pointer;
-    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.03em;
+    padding: 9px 18px; border-radius: 999px; border: 1px solid var(--border-strong);
+    background: var(--bg-3); color: var(--text-muted); cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.15s;
     white-space: nowrap;
   }
-  .landing-cta-quick-btn:hover { color: var(--text); border-color: var(--text-dim); background: var(--bg-3); }
+  .landing-cta-quick-btn:hover { color: var(--text); border-color: var(--green); background: var(--green-dim); transform: translateY(-1px); }
 
-  /* SIX-UP ENTRY GRID (Basics / Immersion / Anki / Yomitan / Resources / Speaking) */
-  .landing-grid6 {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-    margin-bottom: 2.25rem;
-  }
-  .grid6-card {
-    display: flex; flex-direction: column; align-items: flex-start; text-align: left;
-    background: var(--bg-2);
-    border: 1px solid var(--border); border-radius: 14px;
-    padding: 1.5rem 1.4rem 1.6rem; cursor: pointer; width: 100%; position: relative; overflow: hidden;
-    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
-  }
-  .grid6-card::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0.7;
-    background: var(--a);
-  }
-  .grid6-card::after {
-    content: ""; position: absolute; width: 170px; height: 170px; border-radius: 50%;
-    filter: blur(60px); opacity: 0.1; pointer-events: none; transition: opacity 0.2s;
-    bottom: -100px; right: -60px; background: radial-gradient(circle, var(--a), transparent 70%);
-  }
-  .grid6-card:hover { border-color: var(--border-strong); box-shadow: 0 14px 36px -18px var(--dim); transform: translateY(-3px); }
-  .grid6-card:hover::after { opacity: 0.2; }
-  .grid6-card-icon { font-size: 22px; line-height: 1; margin-bottom: 0.9rem; position: relative; z-index: 1; }
-  .grid6-card-title {
-    font-size: 16px; font-weight: 700; margin-bottom: 0.45rem; position: relative; z-index: 1;
-    color: var(--text-muted);
-  }
-  .grid6-card-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.55; margin-bottom: 1.1rem; position: relative; z-index: 1; }
-  .grid6-card-cta { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: auto; position: relative; z-index: 1; transition: color 0.15s; }
-  .grid6-card:hover .grid6-card-cta { color: var(--a); }
-  @media (max-width: 900px) {
-    .landing-grid6 { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .landing-pillars {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-    margin-top: 0.25rem; margin-bottom: 4.5rem;
-  }
-  .landing-pillar {
-    background: var(--bg-2); padding: 1.5rem 1.5rem 1.75rem; cursor: pointer;
-    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; text-align: center; border: 1px solid var(--border); width: 100%;
-    border-radius: 10px; position: relative; overflow: hidden;
-  }
-  .landing-pillar::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--green), var(--blue));
-    opacity: 0; transition: opacity 0.2s;
-  }
-  .landing-pillar:hover { background: var(--bg-3); border-color: var(--border-strong); box-shadow: 0 8px 30px -10px var(--green-dim); transform: translateY(-2px); }
-  .landing-pillar:hover::before { opacity: 1; }
-  .landing-pillar-icon {
-    font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-    margin-bottom: 0.85rem; display: block;
-    background: linear-gradient(90deg, var(--green), var(--blue));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .landing-pillar-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; }
-  .landing-pillar-desc { font-size: 12px; color: var(--text-dim); line-height: 1.55; display: block; }
 
   /* ── GUIDE INDEX ── */
   .guide-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; text-align: center; }
@@ -1715,7 +1618,7 @@
   }
   .guide-index-title { font-size: 30px; font-weight: 600; letter-spacing: -0.03em; color: var(--text); margin-bottom: 0.4rem; }
   .guide-index-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0 auto 2.5rem; }
-  .guide-stage { margin-bottom: 2.75rem; }
+  .guide-stage { margin-bottom: 2.5rem; text-align: left; }
   .guide-stage-sub {
     font-size: 12px;
     color: var(--text-dim);
@@ -1725,59 +1628,48 @@
   .guide-stage-title {
     font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 600;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--green);
-    margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px;
+    margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px;
     padding: 4px 10px; background: var(--green-dim); border-radius: 20px;
     border: 1px solid rgba(157,143,239,0.25); width: fit-content;
   }
-  .guide-stage-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; }
-  .guide-cards {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  .guide-stage-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; max-width: 520px; }
+
+  .guide-phase-card {
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px;
+    padding: 0.5rem;
   }
-  .guide-card {
-    background: var(--bg-2); padding: 1.25rem 1.35rem 1.4rem; cursor: pointer;
-    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s, transform 0.15s; border: 1px solid var(--border); text-align: center; width: 100%;
-    border-radius: 10px; position: relative; overflow: hidden;
+  .guide-list { display: flex; flex-direction: column; }
+  .guide-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 0.9rem 0.9rem; border-radius: 10px; cursor: pointer;
+    background: none; border: none; width: 100%; text-align: left;
+    transition: background 0.15s;
   }
-  .guide-card::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--green), var(--blue)); opacity: 0; transition: opacity 0.2s;
+  .guide-row + .guide-row { border-top: 1px solid var(--border); }
+  .guide-row:hover { background: var(--bg-3); }
+  .guide-row-icon {
+    width: 4px; align-self: stretch; border-radius: 3px; flex-shrink: 0;
   }
-  .guide-card:hover::before { opacity: 0.9; }
-  .guide-card:hover { background: var(--bg-3); box-shadow: 0 10px 30px -8px rgba(157,143,239,0.18); transform: translateY(-2px); }
-  .guide-card-num { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--green); margin-bottom: 0.45rem; display: block; }
-  .guide-card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: block; line-height: 1.3; }
-  .guide-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; display: block; }
+  .guide-row-icon.ic-blue  { background: var(--blue); }
+  .guide-row-icon.ic-green { background: var(--green); }
+  .guide-row-icon.ic-amber { background: var(--amber); }
+  .guide-row-icon.ic-rose  { background: var(--rose); }
+  .guide-row-icon.ic-teal  { background: var(--teal); }
+  .guide-row-body { flex: 1; min-width: 0; }
+  .guide-row-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; display: block; line-height: 1.3; }
+  .guide-row-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; display: block; }
+  .guide-row-arrow { color: var(--text-dim); flex-shrink: 0; font-size: 14px; transition: transform 0.15s, color 0.15s; }
+  .guide-row:hover .guide-row-arrow { color: var(--green); transform: translateX(3px); }
 
   /* Dark mode ("The Observatory"): brighten all card text for readability */
   html:not([data-theme="light"]) .guide-index-sub { color: #d4cfe8; }
-  html:not([data-theme="light"]) .guide-card-desc { color: #b9b2d0; }
-  html:not([data-theme="light"]) .grid6-card-desc { color: #b9b2d0; }
-  html:not([data-theme="light"]) .grid6-card-title { color: #f0eefa; }
-  html:not([data-theme="light"]) .grid6-card-cta { color: #d4cfe8; }
+  html:not([data-theme="light"]) .guide-row-desc { color: #b9b2d0; }
   html:not([data-theme="light"]) .link-card-desc { color: #b9b2d0; }
   html:not([data-theme="light"]) .landing-split-desc { color: #b9b2d0; }
-  html:not([data-theme="light"]) .landing-pillar-desc { color: #b9b2d0; }
   html:not([data-theme="light"]) .guide-stage-desc { color: #d4cfe8; }
   html:not([data-theme="light"]) .res-cat-card-icon { color: #d4cfe8; }
-  html:not([data-theme="light"]) .tracker-card-title { color: #b9b2d0; }
   html:not([data-theme="light"]) .card ol,
   html:not([data-theme="light"]) .card ul { color: #d4cfe8; }
-
-  .guide-card.c-blue  { border-left: 2px solid var(--card-m1-dim); }
-  .guide-card.c-green { border-left: 2px solid var(--card-m1-dim); }
-  .guide-card.c-amber { border-left: 2px solid var(--card-m1-dim); }
-  .guide-card.c-rose  { border-left: 2px solid var(--card-m1-dim); }
-  .guide-card.c-teal  { border-left: 2px solid var(--card-m1-dim); }
-  .guide-card.c-blue::before  { display: none; }
-  .guide-card.c-green::before { display: none; }
-  .guide-card.c-amber::before { display: none; }
-  .guide-card.c-rose::before  { display: none; }
-  .guide-card.c-teal::before  { display: none; }
-  .guide-card.c-blue:hover  { border-left-color: var(--card-m1a); }
-  .guide-card.c-green:hover { border-left-color: var(--card-m1a); }
-  .guide-card.c-amber:hover { border-left-color: var(--card-m1a); }
-  .guide-card.c-rose:hover  { border-left-color: var(--card-m1a); }
-  .guide-card.c-teal:hover  { border-left-color: var(--card-m1a); }
 
   /* ── RES INDEX ── */
   .res-index { display: none; max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
@@ -1875,39 +1767,13 @@
   .section-page { display: none; max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 3rem; }
   .section-page.active { display: block; flex: 1 0 auto; }
   .section-inner { max-width: 640px; }
-  .section-inner > .view-tag,
-  .section-inner > h2,
-  .section-inner > .view-sub {
-    text-align: center;
-  }
-  .section-inner > .view-tag { margin-left: auto; margin-right: auto; }
-  .section-inner > h2,
   .landing-cta-title {
     justify-content: center;
   }
-  .section-inner > .view-sub { margin-left: auto; margin-right: auto; }
-  .section-inner > h2::before,
   .landing-cta-title::before {
     display: none;
   }
 
-  /* Center all body content within section pages, not just the intro */
-  .section-inner { margin-left: auto; margin-right: auto; text-align: center; }
-  .section-inner h3 {
-    text-align: center;
-    border-left: none;
-    padding-left: 0;
-  }
-  .section-inner p {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-  .section-inner .callout {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
   .section-inner .video-wrap,
   .section-inner .img-placeholder {
     margin-left: auto;
@@ -1919,30 +1785,6 @@
     justify-content: center;
   }
   .section-inner .link-card {
-    text-align: center;
-  }
-  .section-inner .card {
-    text-align: center;
-  }
-  .section-inner .card p,
-  .section-inner .card ol,
-  .section-inner .card ul {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-  .section-inner .card ol,
-  .section-inner .card ul {
-    list-style-position: inside;
-    padding-left: 0;
-  }
-  .section-inner .steps {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 560px;
-  }
-  .section-inner .step {
-    align-items: center;
     text-align: center;
   }
   .section-inner .group-subnav,
@@ -1967,12 +1809,11 @@
     .topnav { padding: 0 1.25rem; gap: 0.75rem; }
     .topnav-link { padding: 5px 8px; font-size: 12px; }
     .landing { padding: 3rem 1.25rem 0; }
-    .landing-pillars { grid-template-columns: 1fr; }
-    .landing-grid6 { grid-template-columns: 1fr; }
     .landing-split { grid-template-columns: 1fr; }
     .landing-cta-band { padding: 0.6rem 0.85rem; padding-bottom: max(0.6rem, env(safe-area-inset-bottom)); }
     .landing-cta-band-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
     .landing-cta-band-text { text-align: center; }
+    .landing-cta-band-right { flex-direction: column; align-items: stretch; gap: 0.5rem; }
     .landing-cta-title { font-size: 13px; }
     .landing-cta-sub { display: none; }
     .landing-cta-actions { justify-content: stretch; gap: 0.5rem; }
@@ -1987,7 +1828,6 @@
     }
     .landing-title { font-size: 32px; }
     .guide-index { padding: 2rem 1.25rem; }
-    .guide-cards { grid-template-columns: 1fr 1fr; }
     .res-index { padding: 2rem 1.25rem; }
     .res-category-grid { grid-template-columns: repeat(3, 1fr); }
     .section-page { padding: 1.75rem 1.25rem 2.5rem; }
@@ -1997,14 +1837,12 @@
     .step-body { font-size: 13px; }
   }
   @media (max-width: 420px) {
-    .guide-cards { grid-template-columns: 1fr; }
     .res-category-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* light theme */
   [data-theme="light"] .landing-btn-primary { background: #626fb8; color: #fff; }
   [data-theme="light"] .guide-stage-label { color: var(--blue); }
-  [data-theme="light"] .guide-card-num { color: var(--blue); }
   [data-theme="light"] .page-nav-btn.next { background: rgba(98,111,184,0.12); border-color: #626fb8; color: #2a0838; }
   [data-theme="light"] .page-nav-btn.next .page-nav-label { color: rgba(0,0,0,0.4); }
   [data-theme="light"] .page-nav-btn.next:hover { background: rgba(98,111,184,0.2); }
@@ -3009,251 +2847,6 @@
     line-height: 1.5;
   }
 
-  /* ══════════════════ TRACKER TEASER (landing) ══════════════════ */
-  .dash-teaser {
-    margin-bottom: 5rem;
-    display: flex; flex-direction: column; align-items: center;
-  }
-  .dash-teaser-card {
-    width: 100%; max-width: 560px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    border-top: 2px solid var(--green);
-    background: var(--bg-2);
-    padding: 1.4rem 1.5rem 1.25rem;
-    box-shadow: 0 24px 60px -28px rgba(0,0,0,0.5);
-  }
-  .dash-teaser-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.4rem; }
-  .dash-teaser-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
-  .dash-teaser-rank { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-muted); background: var(--bg); border: 1px solid var(--border); padding: 3px 10px; border-radius: 999px; }
-
-  .dash-teaser-body { display: flex; gap: 2rem; margin-bottom: 1.4rem; }
-  .dash-teaser-metric { flex-shrink: 0; }
-  .dash-teaser-metric-num { font-family: 'Space Mono', monospace; font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; }
-  .dash-teaser-metric-num span { font-size: 16px; color: var(--text-dim); font-weight: 500; margin-left: 2px; }
-  .dash-teaser-metric-label { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
-  .dash-teaser-streak { font-size: 12px; color: var(--amber); margin-top: 12px; }
-
-  .dash-teaser-breakdown { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 9px; min-width: 0; }
-  .dash-teaser-bar-row { display: flex; align-items: center; gap: 9px; font-size: 11.5px; color: var(--text-muted); }
-  .dash-teaser-bar-label { width: 62px; flex-shrink: 0; }
-  .dash-teaser-bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
-  .dash-teaser-bar-fill { height: 100%; border-radius: 4px; }
-  .dash-teaser-bar-pct { width: 32px; text-align: right; flex-shrink: 0; font-family: 'Space Mono', monospace; }
-
-  .dash-teaser-heat-label { font-size: 10px; color: var(--text-dim); font-family: 'Space Mono', monospace; margin: 0 0 0.5rem; }
-  .dash-teaser-heat { display: flex; gap: 4px; }
-  .dash-teaser-heat span { flex: 1; aspect-ratio: 1; border-radius: 3px; }
-
-  .dash-teaser-explore {
-    margin-top: 1.75rem;
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--text); color: var(--bg);
-    font-size: 13px; font-weight: 600; padding: 0.65rem 1.4rem; border-radius: 8px;
-    border: none; cursor: pointer;
-    transition: transform 0.15s;
-  }
-  .dash-teaser-explore:hover { transform: translateY(-2px); }
-  .dash-teaser-caption { margin-top: 0.9rem; text-align: center; max-width: 480px; }
-
-  /* ══════════════════ TRACKER PAGE ══════════════════ */
-  .tracker-signin {
-    display: flex; flex-direction: column; align-items: center; gap: 1rem;
-    padding: 2.5rem 1rem; text-align: center;
-  }
-  .gsi-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: #fff; color: #1f1f1f; border: 1px solid #d0d0d5;
-    font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500;
-    padding: 0.65rem 1.25rem; border-radius: 8px; cursor: pointer;
-    transition: box-shadow 0.15s, background 0.15s;
-  }
-  .gsi-btn:hover { box-shadow: 0 4px 14px -4px rgba(0,0,0,0.3); }
-  .gsi-btn svg { width: 18px; height: 18px; }
-  .tracker-app { display: none; text-align: left; }
-  .tracker-app.active { display: block; }
-  .tracker-profile { display: flex; align-items: center; gap: 10px; margin-bottom: 2rem; justify-content: center; }
-  .tracker-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-strong); }
-  .tracker-profile-name { font-size: 14px; font-weight: 600; color: var(--text); }
-  .tracker-signout { font-size: 12px; color: var(--text-dim); background: none; border: none; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
-  .tracker-signout:hover { color: var(--text); }
-
-  .tracker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
-  .tracker-row { margin-bottom: 1.5rem; }
-  .tracker-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
-  .tracker-card-title { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1rem; }
-
-  .tracker-stats-row { display: flex; gap: 10px; margin-bottom: 0.85rem; flex-wrap: wrap; }
-  .tracker-stat-box { flex: 1; min-width: 110px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 0.95rem 1.1rem; transition: border-color 0.15s, transform 0.15s; }
-  .tracker-stats-row-primary .tracker-stat-box:hover { border-color: var(--border-strong); transform: translateY(-1px); }
-  .tracker-stat-label { font-family: 'Space Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
-  .tracker-stat-value { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
-  .tracker-stat-box.streak-box { border-color: var(--amber); background: var(--amber-dim); }
-  .tracker-stat-box.streak-box .tracker-stat-value { color: var(--amber); display: flex; align-items: center; gap: 5px; }
-  .tracker-stat-box.streak-box .streak-flame { font-size: 17px; filter: grayscale(1); opacity: 0.4; transition: filter 0.2s, opacity 0.2s; }
-  .tracker-stat-box.streak-box.is-live .streak-flame { filter: none; opacity: 1; }
-  .tracker-stat-box-alltime { background: linear-gradient(160deg, var(--blue-dim), var(--purple-dim)); border-color: var(--border-strong); }
-  .tracker-stat-box-alltime .tracker-stat-value {
-    background: linear-gradient(120deg, var(--blue), var(--purple));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-
-  .tracker-stats-row-secondary { margin-bottom: 1.5rem; }
-  .tracker-stats-row-secondary .tracker-stat-box { text-align: center; }
-  .tracker-stats-row-secondary .tracker-stat-value { font-size: 26px; }
-
-  /* ── RANK BAND ── */
-  .tracker-rank-band {
-    background: linear-gradient(120deg, var(--green-dim), var(--blue-dim));
-    border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-  .tracker-rank-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
-  .tracker-rank-name { font-size: 14px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
-  .tracker-rank-level {
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
-    background: var(--bg); border: 1px solid var(--border-strong); border-radius: 6px; padding: 2px 7px; color: var(--text-muted);
-  }
-  .tracker-rank-gear { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 13px; }
-  .tracker-rank-gear:hover { color: var(--text); }
-  .tracker-rank-track { height: 8px; border-radius: 5px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
-  .tracker-rank-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--green), var(--amber)); transition: width 0.3s; }
-  .tracker-rank-foot { margin-top: 6px; text-align: right; font-family: 'Space Mono', monospace; font-size: 10.5px; color: var(--text-dim); }
-
-  /* ── MEDIA SEARCH ── */
-  .tracker-media-type-row { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
-  .tracker-media-type-btn {
-    font-family: 'Sora', sans-serif; font-size: 12px; color: var(--text-muted);
-    background: var(--bg-2); border: 1px solid var(--border); border-radius: 999px;
-    padding: 5px 12px; cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s;
-  }
-  .tracker-media-type-btn:hover { border-color: var(--border-strong); color: var(--text); }
-  .tracker-media-type-btn.active { background: var(--green-dim); border-color: var(--green); color: var(--text); }
-  .tracker-media-search { position: relative; }
-  .tracker-media-search input { width: 100%; }
-  .tracker-media-results {
-    position: absolute; z-index: 5; top: calc(100% + 4px); left: 0; right: 0;
-    background: var(--bg-2); border: 1px solid var(--border-strong); border-radius: 8px;
-    max-height: 220px; overflow-y: auto; display: none;
-  }
-  .tracker-media-results.active { display: block; }
-  .tracker-media-result {
-    display: flex; align-items: center; gap: 8px; padding: 6px 8px; cursor: pointer; text-align: left;
-    background: none; border: none; width: 100%; color: var(--text);
-  }
-  .tracker-media-result:hover { background: var(--bg-3); }
-  .tracker-media-result img { width: 28px; height: 38px; object-fit: cover; border-radius: 3px; flex-shrink: 0; background: var(--bg-3); }
-  .tracker-media-result-title { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-  .tracker-media-result-tag {
-    font-family: 'Space Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.04em;
-    color: var(--text-dim); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; flex-shrink: 0;
-  }
-  .tracker-media-results-msg { padding: 8px; font-size: 12px; color: var(--text-dim); }
-  .tracker-media-picked {
-    display: flex; align-items: center; gap: 8px; margin-top: 8px;
-    background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px;
-  }
-  .tracker-media-picked img { width: 26px; height: 36px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
-  .tracker-media-picked span { flex: 1; font-size: 12.5px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .tracker-media-picked-clear { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 12px; flex-shrink: 0; }
-  .tracker-media-picked-clear:hover { color: var(--text); }
-
-  .tracker-card-donut { display: flex; flex-direction: column; }
-  .tracker-card-donut .donut-wrap { flex: 1; }
-
-  .tracker-card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-  .tracker-card-title-row .tracker-card-title { margin-bottom: 0; }
-  .tracker-week-nav { display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10.5px; color: var(--text-dim); }
-  .tracker-week-nav button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-family: inherit; font-size: inherit; }
-  .tracker-week-nav button:hover:not(:disabled) { color: var(--text); }
-  .tracker-week-nav button:disabled { opacity: 0.35; cursor: not-allowed; }
-  .tracker-week-nav span { color: var(--text-dim); }
-
-  /* ── HEATMAP ── */
-  .heatmap-wrap { overflow-x: auto; padding-bottom: 4px; }
-  .heatmap-months { display: flex; gap: 3px; margin-bottom: 4px; padding-left: 0; min-width: max-content; }
-  .heatmap-month-label { width: 13px; font-family: 'Space Mono', monospace; font-size: 9.5px; color: var(--text-dim); flex-shrink: 0; }
-  .heatmap-grid { display: flex; gap: 3px; min-width: max-content; }
-  .heatmap-col { display: flex; flex-direction: column; gap: 3px; }
-  .heatmap-cell {
-    width: 10px; height: 10px; border-radius: 2.5px; background: var(--bg-3);
-    border: 1px solid var(--border); display: block; flex-shrink: 0;
-  }
-  .heatmap-cell-empty { visibility: hidden; }
-  .heatmap-cell[data-level="1"] { background: var(--green); opacity: 0.28; border-color: transparent; }
-  .heatmap-cell[data-level="2"] { background: var(--green); opacity: 0.52; border-color: transparent; }
-  .heatmap-cell[data-level="3"] { background: var(--green); opacity: 0.76; border-color: transparent; }
-  .heatmap-cell[data-level="4"] { background: var(--green); opacity: 1; border-color: transparent; }
-  .heatmap-foot { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 10.5px; color: var(--text-dim); }
-  .heatmap-foot .heatmap-cell { width: 9px; height: 9px; }
-
-  .lb-subtitle { font-family: 'Space Mono', monospace; font-size: 9.5px; letter-spacing: 0.04em; text-transform: none; color: var(--text-dim); font-weight: 400; margin-left: 6px; }
-
-  .tracker-weekchart { display: flex; align-items: flex-end; gap: 10px; height: 150px; }
-  .tracker-weekchart-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
-  .tracker-weekchart-bar-track { flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-  .tracker-weekchart-bar-value { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-muted); margin-bottom: 5px; white-space: nowrap; }
-  .tracker-weekchart-bar { width: 100%; background: linear-gradient(180deg, var(--purple), var(--blue)); border-radius: 5px 5px 0 0; min-height: 3px; transition: height 0.25s; }
-  .tracker-weekchart-col.is-today .tracker-weekchart-bar { background: linear-gradient(180deg, var(--rose), var(--purple)); }
-  .tracker-weekchart-daylabel { margin-top: 8px; font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); }
-  .tracker-weekchart-col.is-today .tracker-weekchart-daylabel { color: var(--text); font-weight: 700; }
-  .tracker-weekchart-foot { text-align: right; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border); }
-
-  .tracker-form { display: flex; flex-direction: column; gap: 10px; }
-  .tracker-form-row { display: flex; gap: 8px; }
-  .tracker-form select, .tracker-form input {
-    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-    color: var(--text); font-family: 'Sora', sans-serif; font-size: 13px; padding: 0.55rem 0.7rem;
-    flex: 1; min-width: 0;
-  }
-  .tracker-form select:focus, .tracker-form input:focus { outline: none; border-color: var(--border-strong); }
-  .tracker-submit {
-    background: var(--text); color: var(--bg); border: none; border-radius: 8px;
-    font-size: 13px; font-weight: 600; padding: 0.6rem; cursor: pointer; transition: opacity 0.15s;
-  }
-  .tracker-submit:hover { opacity: 0.85; }
-  .tracker-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-  .tracker-msg { font-size: 12px; color: var(--text-dim); min-height: 16px; }
-
-  .donut-wrap { display: flex; align-items: center; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-  .donut-svg-wrap { position: relative; flex-shrink: 0; }
-  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
-  .donut-center-value { font-family: 'Space Mono', monospace; font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.15; }
-  .donut-center-label { font-family: 'Space Mono', monospace; font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); margin-top: 2px; }
-  .donut-legend { display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; }
-  .donut-legend-item { display: flex; align-items: center; gap: 7px; color: var(--text-muted); }
-  .donut-legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .donut-empty { font-size: 12.5px; color: var(--text-dim); text-align: center; padding: 1.5rem 0; }
-
-  .tracker-history { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; max-height: 460px; overflow-y: auto; }
-  .tracker-history-day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px; margin-bottom: 8px; border-bottom: 1px solid var(--border); }
-  .tracker-history-day-date { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
-  .tracker-history-day-total { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
-  .tracker-history-day-items { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
-  .tracker-history-item {
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
-    background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 12.5px;
-  }
-  .th-type { display: flex; align-items: center; gap: 8px; color: var(--text); min-width: 0; }
-  .th-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .th-note { color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .th-media-img { width: 18px; height: 24px; object-fit: cover; border-radius: 2px; flex-shrink: 0; }
-  .th-media-title { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .th-mins { font-family: 'Space Mono', monospace; color: var(--text-muted); flex-shrink: 0; }
-
-  .tracker-leaderboard { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
-  .lb-item { display: flex; align-items: center; gap: 10px; padding: 0.5rem 0.6rem; border-radius: 8px; font-size: 13px; }
-  .lb-item.is-me { background: var(--green-dim); }
-  .lb-rank { font-family: 'Space Mono', monospace; color: var(--text-dim); width: 18px; flex-shrink: 0; }
-  .lb-avatar { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; }
-  .lb-name { flex: 1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .lb-total { font-family: 'Space Mono', monospace; color: var(--text-muted); font-size: 12px; }
-
-  @media (max-width: 680px) {
-    .tracker-grid { grid-template-columns: 1fr; }
-    .dash-teaser-body { flex-direction: column; gap: 1.1rem; }
-    .dash-teaser-bar-label { width: 54px; }
-  }
 </style>
 </head>
 <body>
@@ -3284,17 +2877,7 @@
   <div class="topnav-links">
     <button class="topnav-link" data-nav="guide" onclick="go('guide-index')">Guide</button>
     <button class="topnav-link" data-nav="resources" onclick="openResourcePicker()">Resources</button>
-    <button class="topnav-link" data-nav="tracker" onclick="go('tracker')">Tracker</button>
     <button class="topnav-link" data-nav="faq" onclick="go('faq')">FAQ</button>
-  </div>
-  <div class="topnav-right">
-    <button class="topnav-account" id="topnav-account" onclick="go('account')" aria-label="Account">
-      <img class="topnav-account-avatar" id="topnav-account-avatar" src="" alt="">
-      <span id="topnav-account-label">Sign in</span>
-    </button>
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <span id="themeIcon">☀</span> <span id="themeLabel">light</span>
-    </button>
   </div>
 </nav>
 
@@ -3302,277 +2885,14 @@
 <div id="v-welcome" class="landing">
   <span class="landing-eyebrow">日本語 · immersion method</span>
   <h1 class="landing-title">The <em>Immersion</em> Guide</h1>
-  <p class="landing-desc">A complete guide to acquiring Japanese the natural way, through reading, listening, and living in the language. Shared by two communities, JPA and The Observatory.</p>
+  <p class="landing-desc">A complete guide to acquiring Japanese the natural way, through reading, listening, and living in the language.</p>
   <div class="landing-actions">
-    <button class="landing-btn-primary" onclick="go('guide-index')">Start the guide</button>
-    <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-secondary">Join JPA</a>
+    <button class="landing-btn-primary" onclick="go('guide-index')">Start Here</button>
     <a href="https://discord.gg/RZXYqmYcrx" target="_blank" class="landing-btn-secondary">Join The Observatory</a>
   </div>
 
-  <div class="landing-section-head">
-    <h2 class="landing-section-title">Start here</h2>
-    <p class="landing-section-sub">Six entry points into the guide, jump to whichever one matches where you're at.</p>
-  </div>
-
-  <div class="landing-grid6">
-    <button class="grid6-card" style="--a: var(--card-m1a); --b: var(--card-m1b); --dim: var(--card-m1-dim)" onclick="go('basics')">
-      <span class="grid6-card-icon">🎯</span>
-      <span class="grid6-card-title">Basics</span>
-      <span class="grid6-card-desc">Kana, grammar, vocab, and pitch accent, the recommended starting checklist.</span>
-      <span class="grid6-card-cta">Start with Basics →</span>
-    </button>
-    <button class="grid6-card" style="--a: var(--card-m2a); --b: var(--card-m2b); --dim: var(--card-m2-dim)" onclick="go('immersion-group')">
-      <span class="grid6-card-icon">🌊</span>
-      <span class="grid6-card-title">Immersion</span>
-      <span class="grid6-card-desc">What immersion is, tool setup, and how to actually do it, the core of the method.</span>
-      <span class="grid6-card-cta">Learn immersion →</span>
-    </button>
-    <button class="grid6-card" style="--a: var(--card-m1a); --b: var(--card-m1b); --dim: var(--card-m1-dim)" onclick="go('anki')">
-      <span class="grid6-card-icon">🃏</span>
-      <span class="grid6-card-title">Anki</span>
-      <span class="grid6-card-desc">Settings, add-ons, and how to review cards correctly without burning out.</span>
-      <span class="grid6-card-cta">Anki deep dive →</span>
-    </button>
-    <button class="grid6-card" style="--a: var(--card-m2a); --b: var(--card-m2b); --dim: var(--card-m2-dim)" onclick="go('yomitan')">
-      <span class="grid6-card-icon">🔍</span>
-      <span class="grid6-card-title">Yomitan</span>
-      <span class="grid6-card-desc">Install the pop-up dictionary, load dictionaries, and connect it to Anki.</span>
-      <span class="grid6-card-cta">Set up Yomitan →</span>
-    </button>
-    <button class="grid6-card" style="--a: var(--card-m1a); --b: var(--card-m1b); --dim: var(--card-m1-dim)" onclick="openResourcePicker()">
-      <span class="grid6-card-icon">🗂️</span>
-      <span class="grid6-card-title">Resources</span>
-      <span class="grid6-card-desc">A curated library across 19 categories, from dictionaries to podcasts to mining.</span>
-      <span class="grid6-card-cta">Browse resources →</span>
-    </button>
-    <button class="grid6-card" style="--a: var(--card-m2a); --b: var(--card-m2b); --dim: var(--card-m2-dim)" onclick="go('skills-group')">
-      <span class="grid6-card-icon">🗣️</span>
-      <span class="grid6-card-title">Speaking</span>
-      <span class="grid6-card-desc">Sounding natural, output activities, and when to start speaking and writing.</span>
-      <span class="grid6-card-cta">Start speaking →</span>
-    </button>
-  </div>
-
-  <div class="dash-teaser">
-    <div class="dash-teaser-card">
-      <div class="dash-teaser-head">
-        <span class="dash-teaser-tag">Your immersion, at a glance</span>
-        <span class="dash-teaser-rank">Rank #—</span>
-      </div>
-
-      <div class="dash-teaser-body">
-        <div class="dash-teaser-metric">
-          <div class="dash-teaser-metric-num">42<span>h</span></div>
-          <div class="dash-teaser-metric-label">Logged this month</div>
-          <div class="dash-teaser-streak">🔥 6 day streak</div>
-        </div>
-        <div class="dash-teaser-breakdown">
-          <div class="dash-teaser-bar-row"><span class="dash-teaser-bar-label">Reading</span><div class="dash-teaser-bar-track"><div class="dash-teaser-bar-fill" style="width:40%;background:var(--blue)"></div></div><span class="dash-teaser-bar-pct">40%</span></div>
-          <div class="dash-teaser-bar-row"><span class="dash-teaser-bar-label">Listening</span><div class="dash-teaser-bar-track"><div class="dash-teaser-bar-fill" style="width:27%;background:var(--teal)"></div></div><span class="dash-teaser-bar-pct">27%</span></div>
-          <div class="dash-teaser-bar-row"><span class="dash-teaser-bar-label">Anime</span><div class="dash-teaser-bar-track"><div class="dash-teaser-bar-fill" style="width:20%;background:var(--rose)"></div></div><span class="dash-teaser-bar-pct">20%</span></div>
-          <div class="dash-teaser-bar-row"><span class="dash-teaser-bar-label">Anki</span><div class="dash-teaser-bar-track"><div class="dash-teaser-bar-fill" style="width:13%;background:var(--purple)"></div></div><span class="dash-teaser-bar-pct">13%</span></div>
-        </div>
-      </div>
-
-      <div class="dash-teaser-heat-label">Last 14 days</div>
-      <div class="dash-teaser-heat">
-        <span style="background:var(--green); opacity:0.25"></span>
-        <span style="background:var(--green); opacity:0.6"></span>
-        <span style="background:var(--border)"></span>
-        <span style="background:var(--green); opacity:0.9"></span>
-        <span style="background:var(--green); opacity:0.4"></span>
-        <span style="background:var(--green); opacity:0.7"></span>
-        <span style="background:var(--green); opacity:1"></span>
-        <span style="background:var(--green); opacity:0.5"></span>
-        <span style="background:var(--border)"></span>
-        <span style="background:var(--green); opacity:0.8"></span>
-        <span style="background:var(--green); opacity:0.35"></span>
-        <span style="background:var(--green); opacity:0.65"></span>
-        <span style="background:var(--green); opacity:1"></span>
-        <span style="background:var(--green); opacity:0.55"></span>
-      </div>
-    </div>
-    <button class="dash-teaser-explore" onclick="go('tracker')">Explore the tracker →</button>
-    <p class="dash-teaser-caption">Log your reading, listening, and anime time, watch your breakdown fill in, and see where you land on the leaderboard.</p>
-  </div>
-
-
 </div>
 
-<!-- ── TRACKER ── -->
-<div id="v-tracker" class="section-page">
-  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('welcome')">Home</button><span class="breadcrumb-sep"> / </span><span>Tracker</span></div>
-  <div class="section-inner">
-    <span class="view-tag tag-blue">Immersion Tracker</span>
-    <h2>Track your immersion</h2>
-    <p class="view-sub">Log your reading, listening, and anime time, see your breakdown, and check the leaderboard. Sign in with Google to get started.</p>
-
-    <div class="tracker-signin" id="tracker-signin">
-      <button class="gsi-btn" onclick="trackerSignIn()">
-        <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34 5.1 29.3 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34 5.1 29.3 3 24 3 16.3 3 9.7 7.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 45c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.6 2.4-7.2 2.4-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.5 40.5 16.2 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.2 5.2C40.9 36 44 30.5 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
-        Sign in with Google
-      </button>
-      <p class="tracker-msg" id="tracker-signin-msg"></p>
-    </div>
-
-    <div class="tracker-app" id="tracker-app">
-      <div class="tracker-profile">
-        <img class="tracker-avatar" id="tracker-avatar" src="" alt="">
-        <span class="tracker-profile-name" id="tracker-name"></span>
-        <button class="tracker-signout" onclick="trackerSignOut()">Sign out</button>
-      </div>
-
-      <div class="tracker-stats-row tracker-stats-row-primary">
-        <div class="tracker-stat-box"><div class="tracker-stat-label">Today</div><div class="tracker-stat-value" id="stat-today">0m</div></div>
-        <div class="tracker-stat-box"><div class="tracker-stat-label">This week</div><div class="tracker-stat-value" id="stat-week">0m</div></div>
-        <div class="tracker-stat-box"><div class="tracker-stat-label">This month</div><div class="tracker-stat-value" id="stat-month">0m</div></div>
-        <div class="tracker-stat-box tracker-stat-box-alltime"><div class="tracker-stat-label">All time</div><div class="tracker-stat-value" id="stat-alltime">0m</div></div>
-        <div class="tracker-stat-box streak-box" id="stat-streak-box"><div class="tracker-stat-label">Streak</div><div class="tracker-stat-value" id="stat-streak"><span class="streak-flame">🔥</span><span id="stat-streak-num">0</span></div></div>
-      </div>
-
-      <div class="tracker-stats-row tracker-stats-row-secondary">
-        <div class="tracker-stat-box"><div class="tracker-stat-label">Days immersed</div><div class="tracker-stat-value" id="stat-days">0</div></div>
-        <div class="tracker-stat-box"><div class="tracker-stat-label">Titles logged</div><div class="tracker-stat-value" id="stat-titles">0</div></div>
-      </div>
-
-      <div class="tracker-rank-band" id="tracker-rank-band">
-        <div class="tracker-rank-head">
-          <span class="tracker-rank-name"><span id="tracker-rank-name">Newcomer</span> <span class="tracker-rank-level" id="tracker-rank-level">LEVEL 1</span></span>
-          <button type="button" class="tracker-rank-gear" onclick="alert('Ranks are based on your all-time logged hours.')" aria-label="About ranks">⚙</button>
-        </div>
-        <div class="tracker-rank-track"><div class="tracker-rank-fill" id="tracker-rank-fill" style="width:0%"></div></div>
-        <div class="tracker-rank-foot" id="tracker-rank-hours">0 / 25 hours</div>
-      </div>
-
-      <div class="tracker-grid">
-        <div class="tracker-card">
-          <div class="tracker-card-title">Log immersion</div>
-          <form class="tracker-form" onsubmit="trackerAddEntry(event)">
-            <div class="tracker-form-row">
-              <select id="tracker-type" required>
-                <option value="reading">Reading</option>
-                <option value="listening">Listening</option>
-                <option value="anime">Anime</option>
-                <option value="anki">Anki / mining</option>
-                <option value="other">Other</option>
-              </select>
-              <input type="number" id="tracker-minutes" placeholder="Minutes" min="1" step="1" required>
-            </div>
-            <input type="text" id="tracker-note" placeholder="Note (e.g. Read 12 pages of よつばと!)" maxlength="80">
-
-            <div class="tracker-media-search" id="tracker-media-search-wrap">
-              <div class="tracker-media-type-row" id="tracker-media-type-row">
-                <button type="button" class="tracker-media-type-btn active" data-type="anime" onclick="trackerSetMediaType('anime', this)">Anime</button>
-                <button type="button" class="tracker-media-type-btn" data-type="manga" onclick="trackerSetMediaType('manga', this)">Manga</button>
-                <button type="button" class="tracker-media-type-btn" data-type="visual novel" onclick="trackerSetMediaType('visual novel', this)">Visual Novel</button>
-                <button type="button" class="tracker-media-type-btn" data-type="book" onclick="trackerSetMediaType('book', this)">Book</button>
-              </div>
-              <input type="text" id="tracker-media-input" placeholder="Search anime titles (optional)" autocomplete="off" oninput="trackerMediaSearch(this.value)">
-              <div class="tracker-media-results" id="tracker-media-results"></div>
-              <div class="tracker-media-picked" id="tracker-media-picked" style="display:none;">
-                <img id="tracker-media-picked-img" src="" alt="">
-                <span id="tracker-media-picked-title"></span>
-                <button type="button" class="tracker-media-picked-clear" onclick="trackerClearMedia()" aria-label="Remove title">✕</button>
-              </div>
-            </div>
-
-            <button class="tracker-submit" type="submit">Add entry</button>
-            <p class="tracker-msg" id="tracker-form-msg"></p>
-          </form>
-        </div>
-
-        <div class="tracker-card tracker-card-donut">
-          <div class="tracker-card-title">Your breakdown</div>
-          <div class="donut-wrap" id="tracker-donut-wrap">
-            <p class="donut-empty">Log an entry to see your breakdown here.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="tracker-row">
-        <div class="tracker-card">
-          <div class="tracker-card-title-row">
-            <div class="tracker-card-title">Weekly activity</div>
-            <div class="tracker-week-nav">
-              <button type="button" onclick="trackerWeekNav(-1)">← Prev</button>
-              <span id="tracker-week-range"></span>
-              <button type="button" id="tracker-week-next" onclick="trackerWeekNav(1)">Next →</button>
-            </div>
-          </div>
-          <div class="tracker-weekchart" id="tracker-weekchart"></div>
-          <div class="tracker-weekchart-foot" id="tracker-week-total">Week total: 0m</div>
-        </div>
-      </div>
-
-      <div class="tracker-row">
-        <div class="tracker-card">
-          <div class="tracker-card-title">Activity heatmap</div>
-          <div class="heatmap-wrap">
-            <div class="heatmap-months" id="tracker-heatmap-months"></div>
-            <div class="heatmap-grid" id="tracker-heatmap"></div>
-          </div>
-          <div class="heatmap-foot">
-            <span>Less</span>
-            <span class="heatmap-cell" data-level="0"></span>
-            <span class="heatmap-cell" data-level="1"></span>
-            <span class="heatmap-cell" data-level="2"></span>
-            <span class="heatmap-cell" data-level="3"></span>
-            <span class="heatmap-cell" data-level="4"></span>
-            <span>More</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tracker-row">
-        <div class="tracker-card">
-          <div class="tracker-card-title">History</div>
-          <ul class="tracker-history" id="tracker-history">
-            <li class="donut-empty">No entries yet.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tracker-row">
-        <div class="tracker-card">
-          <div class="tracker-card-title">Leaderboard<span class="lb-subtitle">resets on the 1st of each month</span></div>
-          <ul class="tracker-leaderboard" id="tracker-leaderboard">
-            <li class="donut-empty">Loading…</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── ACCOUNT ── -->
-<div id="v-account" class="section-page">
-  <div class="breadcrumb"><button class="breadcrumb-link" onclick="go('welcome')">Home</button><span class="breadcrumb-sep"> / </span><span>Account</span></div>
-  <div class="section-inner">
-    <span class="view-tag tag-blue">Account</span>
-    <h2>Account</h2>
-    <p class="view-sub">Sign in with Google to track your immersion and show up on the leaderboard.</p>
-
-    <div class="tracker-signin" id="account-signin">
-      <button class="gsi-btn" onclick="trackerSignIn()">
-        <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34 5.1 29.3 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34 5.1 29.3 3 24 3 16.3 3 9.7 7.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 45c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.6 2.4-7.2 2.4-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.5 40.5 16.2 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.2 5.2C40.9 36 44 30.5 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
-        Sign in with Google
-      </button>
-      <p class="tracker-msg" id="account-signin-msg"></p>
-    </div>
-
-    <div class="tracker-app" id="account-app" style="max-width: 340px; margin: 0 auto;">
-      <div class="tracker-profile">
-        <img class="tracker-avatar" id="account-avatar" src="" alt="">
-        <span class="tracker-profile-name" id="account-name"></span>
-      </div>
-      <p class="view-sub" id="account-email" style="margin-bottom: 1.5rem;"></p>
-      <div class="landing-actions" style="justify-content: center;">
-        <button class="landing-btn-primary" onclick="go('tracker')">Go to Tracker</button>
-        <button class="landing-btn-secondary" onclick="trackerSignOut()">Sign out</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ── GUIDE INDEX ── -->
 <div id="v-guide-index" class="guide-index">
@@ -3581,52 +2901,105 @@
   <p class="guide-index-sub">Follow the sections in order. Each one builds on the last.</p>
 
   <div class="guide-stage">
-    <h3 class="guide-stage-title">Basics</h3>
-
-    <div class="guide-cards">
-      <button class="guide-card c-blue" onclick="go('basics')">        <span class="guide-card-title">Basics</span>
-        <span class="guide-card-desc">Kana, grammar, vocab, and pitch, your immersion-first starting checklist.</span>
-      </button>
+    <h3 class="guide-stage-title">Phase 1 · Basics</h3>
+    <p class="guide-stage-desc">Your starting checklist before you begin immersing.</p>
+    <div class="guide-phase-card">
+      <div class="guide-list">
+        <button class="guide-row" onclick="go('basics')">
+          <span class="guide-row-icon ic-blue"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Basics</span>
+            <span class="guide-row-desc">Kana, grammar, vocab, and pitch, your immersion-first starting checklist.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="guide-stage">
-    <h3 class="guide-stage-title">Immersion</h3>
-
-    <div class="guide-cards">
-      <button class="guide-card c-green" onclick="go('immersion-group')">        <span class="guide-card-title">Immersion</span>
-        <span class="guide-card-desc">What immersion is, your goal, tool setup, and how to actually do it, all in one place.</span>
-      </button>
-      <button class="guide-card c-teal" onclick="go('skills-group')">        <span class="guide-card-title">Skills</span>
-        <span class="guide-card-desc">Reading (manga, LNs, VNs, games), listening, and speaking: one page per skill.</span>
-      </button>
-      <button class="guide-card c-amber" onclick="go('mining')">        <span class="guide-card-title">Sentence mining</span>
-        <span class="guide-card-desc">Build a personalised Anki deck from your own content.</span>
-      </button>
-      <button class="guide-card c-rose" onclick="go('routine')">        <span class="guide-card-title">Daily routine</span>
-        <span class="guide-card-desc">What a consistent study day looks like.</span>
-      </button>
+    <h3 class="guide-stage-title">Phase 2 · Immersion</h3>
+    <p class="guide-stage-desc">The core of the method, what to do and how to keep doing it.</p>
+    <div class="guide-phase-card">
+      <div class="guide-list">
+        <button class="guide-row" onclick="go('immersion-group')">
+          <span class="guide-row-icon ic-green"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Immersion</span>
+            <span class="guide-row-desc">What immersion is, your goal, tool setup, and how to actually do it, all in one place.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+        <button class="guide-row" onclick="go('skills-group')">
+          <span class="guide-row-icon ic-teal"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Skills</span>
+            <span class="guide-row-desc">Reading (manga, LNs, VNs, games), listening, and speaking: one page per skill.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+        <button class="guide-row" onclick="go('mining')">
+          <span class="guide-row-icon ic-amber"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Sentence mining</span>
+            <span class="guide-row-desc">Build a personalised Anki deck from your own content.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+        <button class="guide-row" onclick="go('routine')">
+          <span class="guide-row-icon ic-rose"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Daily routine</span>
+            <span class="guide-row-desc">What a consistent study day looks like.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="guide-stage">
-    <h3 class="guide-stage-title">Misc</h3>
-    <div class="guide-cards">
-      <button class="guide-card c-amber" onclick="go('jlpt')">        <span class="guide-card-title">JLPT</span>
-        <span class="guide-card-desc">Practice tests, prep books, Anki decks: N5 through N1.</span>
-      </button>
-      <button class="guide-card c-rose" onclick="go('anki')">        <span class="guide-card-title">Anki deep dive</span>
-        <span class="guide-card-desc">Settings, add-ons, and how to review cards correctly.</span>
-      </button>
-      <button class="guide-card c-teal" onclick="go('yomitan')">        <span class="guide-card-title">Yomitan setup</span>
-        <span class="guide-card-desc">Install the pop-up dictionary, load dictionaries, and connect it to Anki.</span>
-      </button>
-      <button class="guide-card c-green" onclick="openResourcePicker()">        <span class="guide-card-title">Resources</span>
-        <span class="guide-card-desc">Every tool, app, and site, organised by category.</span>
-      </button>
+    <h3 class="guide-stage-title">Phase 3 · Misc</h3>
+    <p class="guide-stage-desc">Reference material and deeper dives, come back to these as you need them.</p>
+    <div class="guide-phase-card">
+      <div class="guide-list">
+        <button class="guide-row" onclick="go('jlpt')">
+          <span class="guide-row-icon ic-amber"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">JLPT</span>
+            <span class="guide-row-desc">Practice tests, prep books, Anki decks: N5 through N1.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+        <button class="guide-row" onclick="go('anki')">
+          <span class="guide-row-icon ic-rose"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Anki deep dive</span>
+            <span class="guide-row-desc">Settings, add-ons, and how to review cards correctly.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+        <button class="guide-row" onclick="go('yomitan')">
+          <span class="guide-row-icon ic-teal"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Yomitan setup</span>
+            <span class="guide-row-desc">Install the pop-up dictionary, load dictionaries, and connect it to Anki.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+        <button class="guide-row" onclick="openResourcePicker()">
+          <span class="guide-row-icon ic-green"></span>
+          <span class="guide-row-body">
+            <span class="guide-row-title">Resources</span>
+            <span class="guide-row-desc">Every tool, app, and site, organised by category.</span>
+          </span>
+          <span class="guide-row-arrow">→</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
+
 
 <!-- ── RESOURCES INDEX ── -->
 <div id="v-res-index" class="res-index">
@@ -7344,24 +6717,24 @@
   <div class="landing-cta-band-inner">
     <div class="landing-cta-band-text">
       <h2 class="landing-cta-title">Ready to start?</h2>
-      <p class="landing-cta-sub">Join whichever community brought you here, the guide is the same either way.</p>
+      <p class="landing-cta-sub">Join the community, the guide is the same either way.</p>
     </div>
-    <div class="landing-cta-actions">
-      <a href="https://discord.gg/jpacademy" target="_blank" class="landing-btn-primary landing-cta-btn">Join JPA</a>
-      <a href="https://discord.gg/RZXYqmYcrx" target="_blank" class="landing-btn-primary landing-cta-btn c-obs-btn">Join The Observatory</a>
-    </div>
-    <div class="landing-cta-quicklinks">
-      <button class="landing-cta-quick-btn" onclick="go('guide-index')">Guide</button>
-      <button class="landing-cta-quick-btn" onclick="openResourcePicker()">Resources</button>
-      <button class="landing-cta-quick-btn" onclick="go('tracker')">Tracker</button>
-      <button class="landing-cta-quick-btn" onclick="go('faq')">FAQ</button>
+    <div class="landing-cta-band-right">
+      <div class="landing-cta-actions">
+        <a href="https://discord.gg/RZXYqmYcrx" target="_blank" class="landing-btn-primary landing-cta-btn c-obs-btn">Join The Observatory</a>
+      </div>
+      <div class="landing-cta-quicklinks">
+        <button class="landing-cta-quick-btn" onclick="go('guide-index')">Guide</button>
+        <button class="landing-cta-quick-btn" onclick="openResourcePicker()">Resources</button>
+        <button class="landing-cta-quick-btn" onclick="go('faq')">FAQ</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
 
-const views = ['welcome','guide-index','res-index','basics','mining','routine','jlpt','anki','yomitan','resources','faq','immersion-group','skills-group','tracker','account',
+const views = ['welcome','guide-index','res-index','basics','mining','routine','jlpt','anki','yomitan','resources','faq','immersion-group','skills-group',
   'res-kana','res-anki','res-dictionaries','res-grammar','res-anime','res-drama','res-manga','res-novels','res-vn','res-mining','res-podcasts','res-subs','res-kanji','res-pitch','res-audio','res-immersion','res-mobile','res-tracking','res-textbooks','res-all'];
 
 const resCategories = [
@@ -7453,7 +6826,6 @@ function go(id, pushState = true) {
     if (nav === 'guide' && guideIds.includes(id)) btn.classList.add('active');
     if (nav === 'resources' && resIds.includes(id)) btn.classList.add('active');
     if (nav === 'faq' && id === 'faq') btn.classList.add('active');
-    if (nav === 'tracker' && id === 'tracker') btn.classList.add('active');
   });
   closeResourcePickerBtn();
   if (pushState) {
@@ -7668,27 +7040,6 @@ window.addEventListener('popstate', (e) => {
   go(id, false);
 })();
 
-const themes = ['dark', 'light'];
-const themeIcons  = { dark: '☀', light: '☾' };
-const themeLabels = { dark: 'light', light: 'dark' };
-
-function applyTheme(t) {
-  if (t === 'dark') {
-    document.documentElement.removeAttribute('data-theme');
-  } else {
-    document.documentElement.setAttribute('data-theme', t);
-  }
-  document.getElementById('themeIcon').textContent  = themeIcons[t];
-  document.getElementById('themeLabel').textContent = themeLabels[t];
-  localStorage.setItem('theme', t);
-}
-
-function toggleTheme() {
-  const current = document.documentElement.getAttribute('data-theme') || 'dark';
-  const next = themes[(themes.indexOf(current) + 1) % themes.length];
-  applyTheme(next);
-}
-
 function toggleSidebar() {} function closeSidebar() {}
 
 
@@ -7764,11 +7115,6 @@ async function runFaqSearch() {
       'Search unavailable right now. Browse the questions below.';
   }
 }
-
-(function initTheme() {
-  const saved = localStorage.getItem('theme');
-  if (saved && themes.includes(saved)) applyTheme(saved);
-})();
 
 function updateResIndexSearch(query) {
   const q = (query || '').toLowerCase().trim();
@@ -8385,791 +7731,5 @@ document.querySelectorAll('.gif-wrap, .img-figure').forEach(container => {
 })();
 </script>
 
-<!-- ══════════════════════════════════════════════════════════════════
-     IMMERSION TRACKER — Firebase Auth (Google sign-in) + Firestore
-     ══════════════════════════════════════════════════════════════════
-
-     SETUP (one-time, on your side):
-     1. Go to https://console.firebase.google.com, create a free project.
-     2. Project settings → General → "Add app" → Web app. Copy the config
-        object it gives you and paste it into firebaseConfig below.
-     3. Build → Authentication → Get started → Sign-in method → enable "Google".
-     4. Build → Firestore Database → Create database → start in production mode.
-     5. Firestore → Rules tab, paste this and Publish:
-
-        rules_version = '2';
-        service cloud.firestore {
-          match /databases/{database}/documents {
-            match /users/{uid} {
-              allow read: if request.auth != null;
-              allow write: if request.auth != null && request.auth.uid == uid;
-              match /entries/{entryId} {
-                allow read: if request.auth != null;
-                allow write: if request.auth != null && request.auth.uid == uid;
-              }
-            }
-          }
-        }
-
-        This lets anyone signed in read everyone's totals (for the leaderboard)
-        but only ever write their own data.
-
-        Leaderboard note: each user doc also stores monthMinutes + monthKey
-        (e.g. "2026-07"). The leaderboard ranks by monthMinutes and treats a
-        stale monthKey as 0, so rankings reset automatically on the 1st of
-        each month — no cron job or Cloud Function needed. totalMinutes
-        keeps accumulating all-time as before, and streaks are computed
-        client-side from each user's own entries.
-     6. Authentication → Settings → Authorized domains → add the domain you
-        host this file on (e.g. yourname.github.io). Without this, sign-in
-        will fail with an "unauthorized domain" error.
-  ══════════════════════════════════════════════════════════════════ -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import {
-    getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-  import {
-    getFirestore, doc, setDoc, getDoc, updateDoc, increment, serverTimestamp,
-    collection, addDoc, query, orderBy, limit, onSnapshot, runTransaction
-  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-  // ── PASTE YOUR OWN CONFIG HERE (see setup notes above) ──
-  const firebaseConfig = {
-    apiKey: "AIzaSyBrQdtqlidupdHOotDjqPQVlZcApVbAiaI",
-    authDomain: "guide-b2c3e.firebaseapp.com",
-    projectId: "guide-b2c3e",
-    storageBucket: "guide-b2c3e.firebasestorage.app",
-    messagingSenderId: "787369242522",
-    appId: "1:787369242522:web:21b8c5f49623dc07dcd423",
-    measurementId: "G-DVZQSW37X5"
-  };
-
-  const TYPE_COLORS = {
-    reading:   { var: '--blue',   label: 'Reading' },
-    listening: { var: '--teal',   label: 'Listening' },
-    anime:     { var: '--rose',   label: 'Anime' },
-    anki:      { var: '--purple', label: 'Anki / mining' },
-    other:     { var: '--green',  label: 'Other' },
-  };
-
-  let app, auth, db, currentUser = null;
-  let unsubHistory = null;
-  let lastEntries = [];
-  let weekOffset = 0;
-  let pickedMedia = null;
-  let mediaSearchTimer = null;
-  let mediaSearchSeq = 0;
-  let mediaSearchType = 'anime';
-
-  const RANK_TIERS = [
-    { name: 'Newcomer',     hours: 0 },
-    { name: 'Beginner',     hours: 25 },
-    { name: 'Novice',       hours: 100 },
-    { name: 'Intermediate', hours: 300 },
-    { name: 'Advanced',     hours: 600 },
-    { name: 'Fluent',       hours: 1000 },
-  ];
-
-  try {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-  } catch (e) {
-    console.error('Firebase failed to initialize — did you paste your config into firebaseConfig?', e);
-  }
-
-  window.trackerSignIn = async function () {
-    const msg = document.getElementById('tracker-signin-msg');
-    if (!auth) { msg.textContent = 'Tracker is not configured yet.'; return; }
-    try {
-      msg.textContent = '';
-      await signInWithPopup(auth, new GoogleAuthProvider());
-    } catch (e) {
-      console.error(e);
-      msg.textContent = 'Sign-in failed: ' + (e.code || e.message);
-    }
-  };
-
-  window.trackerSignOut = function () {
-    if (unsubHistory) { unsubHistory(); unsubHistory = null; }
-    signOut(auth);
-  };
-
-  if (auth) {
-    onAuthStateChanged(auth, async (user) => {
-      currentUser = user;
-      const gate = document.getElementById('tracker-signin');
-      const appEl = document.getElementById('tracker-app');
-      const acctGate = document.getElementById('account-signin');
-      const acctApp = document.getElementById('account-app');
-      const navBtn = document.getElementById('topnav-account');
-      const navAvatar = document.getElementById('topnav-account-avatar');
-      const navLabel = document.getElementById('topnav-account-label');
-
-      if (user) {
-        gate.style.display = 'none';
-        appEl.classList.add('active');
-        document.getElementById('tracker-avatar').src = user.photoURL || '';
-        document.getElementById('tracker-name').textContent = user.displayName || user.email || 'You';
-
-        acctGate.style.display = 'none';
-        acctApp.classList.add('active');
-        document.getElementById('account-avatar').src = user.photoURL || '';
-        document.getElementById('account-name').textContent = user.displayName || 'You';
-        document.getElementById('account-email').textContent = user.email || '';
-
-        navBtn.classList.add('is-signed-in');
-        navAvatar.src = user.photoURL || '';
-        navLabel.textContent = (user.displayName || 'Account').split(' ')[0];
-
-        const userRef = doc(db, 'users', user.uid);
-        const snap = await getDoc(userRef);
-        if (!snap.exists()) {
-          await setDoc(userRef, {
-            displayName: user.displayName || 'Anonymous',
-            photoURL: user.photoURL || '',
-            totalMinutes: 0,
-            breakdown: { reading: 0, listening: 0, anime: 0, anki: 0, other: 0 },
-            monthMinutes: 0,
-            monthKey: monthKeyStr(new Date()),
-            updatedAt: serverTimestamp()
-          });
-        }
-
-        renderDonut((await getDoc(userRef)).data());
-        watchHistory(user.uid);
-        watchLeaderboard();
-      } else {
-        gate.style.display = '';
-        appEl.classList.remove('active');
-        acctGate.style.display = '';
-        acctApp.classList.remove('active');
-        navBtn.classList.remove('is-signed-in');
-        navAvatar.src = '';
-        navLabel.textContent = 'Sign in';
-      }
-    });
-  }
-
-  window.trackerAddEntry = async function (evt) {
-    evt.preventDefault();
-    if (!currentUser) return;
-    const type = document.getElementById('tracker-type').value;
-    const minutes = parseInt(document.getElementById('tracker-minutes').value, 10);
-    const note = document.getElementById('tracker-note').value.trim();
-    const btn = evt.target.querySelector('.tracker-submit');
-    const msg = document.getElementById('tracker-form-msg');
-    if (!minutes || minutes <= 0) { msg.textContent = 'Enter a valid number of minutes.'; return; }
-
-    btn.disabled = true;
-    msg.textContent = '';
-    try {
-      const userRef = doc(db, 'users', currentUser.uid);
-      await addDoc(collection(userRef, 'entries'), {
-        type, minutes, note, media: pickedMedia || null, createdAt: serverTimestamp()
-      });
-      const fieldPath = 'breakdown.' + type;
-
-      // Monthly leaderboard total: reset to 0 if the stored month doesn't
-      // match the current one, so the leaderboard naturally starts fresh
-      // on the 1st of each month without needing a backend cron job.
-      //
-      // This whole read+compute+write has to happen inside a transaction
-      // (not a plain getDoc + updateDoc) because monthMinutes isn't a pure
-      // increment() — it depends on a value we read first (whether to carry
-      // it forward or reset it). Two entries submitted close together (double
-      // click, two tabs, a retried request) can otherwise both read the same
-      // starting value and the second write silently clobbers the first,
-      // quietly dropping minutes from the leaderboard total even though
-      // totalMinutes (a real increment()) stays correct. runTransaction
-      // retries automatically if it detects the doc changed underneath it,
-      // so concurrent submits are serialized instead of racing.
-      const nowMonthKey = monthKeyStr(new Date());
-      let latestData = null;
-      await runTransaction(db, async (tx) => {
-        const snap = await tx.get(userRef);
-        const data = snap.data() || {};
-        const carriedMonthMinutes = (data.monthKey === nowMonthKey) ? (data.monthMinutes || 0) : 0;
-        const carriedTypeMinutes = (data.breakdown && data.breakdown[type]) || 0;
-        const nextData = {
-          ...data,
-          totalMinutes: (data.totalMinutes || 0) + minutes,
-          breakdown: { ...(data.breakdown || {}), [type]: carriedTypeMinutes + minutes },
-          monthMinutes: carriedMonthMinutes + minutes,
-          monthKey: nowMonthKey,
-        };
-        tx.update(userRef, {
-          totalMinutes: nextData.totalMinutes,
-          [fieldPath]: nextData.breakdown[type],
-          monthMinutes: nextData.monthMinutes,
-          monthKey: nextData.monthKey,
-          updatedAt: serverTimestamp()
-        });
-        latestData = nextData;
-      });
-      renderDonut(latestData);
-      evt.target.reset();
-      trackerClearMedia();
-      msg.textContent = 'Logged!';
-      setTimeout(() => { if (msg.textContent === 'Logged!') msg.textContent = ''; }, 2000);
-    } catch (e) {
-      console.error(e);
-      msg.textContent = 'Could not save: ' + (e.code || e.message);
-    } finally {
-      btn.disabled = false;
-    }
-  };
-
-  function renderDonut(data) {
-    const allTimeMinutes = (data && data.totalMinutes) || 0;
-    const atEl = document.getElementById('stat-alltime');
-    if (atEl) atEl.textContent = fmtMins(allTimeMinutes);
-
-    renderRankBand(allTimeMinutes);
-
-    const wrap = document.getElementById('tracker-donut-wrap');
-    const breakdown = (data && data.breakdown) || {};
-    const total = Object.values(breakdown).reduce((a, b) => a + (b || 0), 0);
-    if (!total) {
-      wrap.innerHTML = '<p class="donut-empty">Log an entry to see your breakdown here.</p>';
-      return;
-    }
-    const R = 60, C = 2 * Math.PI * R;
-    let offset = 0;
-    let circles = `<circle cx="72" cy="72" r="${R}" fill="none" stroke="var(--border)" stroke-width="16"/>`;
-    let legend = '';
-    Object.entries(TYPE_COLORS).forEach(([key, meta]) => {
-      const val = breakdown[key] || 0;
-      if (!val) return;
-      const frac = val / total;
-      const dash = frac * C;
-      circles += `<circle cx="72" cy="72" r="${R}" fill="none" stroke="${'var(' + meta.var + ')'}" stroke-width="16" stroke-dasharray="${dash.toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}" transform="rotate(-90 72 72)"/>`;
-      offset += dash;
-      const pct = Math.round(frac * 100);
-      legend += `<div class="donut-legend-item"><span class="donut-legend-dot" style="background:var(${meta.var})"></span>${meta.label} — ${pct}% (${fmtMins(val)})</div>`;
-    });
-    wrap.innerHTML = `
-      <div class="donut-svg-wrap">
-        <svg viewBox="0 0 144 144" width="180" height="180">${circles}</svg>
-        <div class="donut-center">
-          <div class="donut-center-value">${fmtMins(total)}</div>
-          <div class="donut-center-label">All time</div>
-        </div>
-      </div>
-      <div class="donut-legend">${legend}</div>
-    `;
-  }
-
-  function renderRankBand(allTimeMinutes) {
-    const hours = allTimeMinutes / 60;
-    const nameEl = document.getElementById('tracker-rank-name');
-    const levelEl = document.getElementById('tracker-rank-level');
-    const fillEl = document.getElementById('tracker-rank-fill');
-    const footEl = document.getElementById('tracker-rank-hours');
-    if (!nameEl) return;
-
-    let idx = 0;
-    for (let i = 0; i < RANK_TIERS.length; i++) {
-      if (hours >= RANK_TIERS[i].hours) idx = i;
-    }
-    const cur = RANK_TIERS[idx];
-    const next = RANK_TIERS[idx + 1];
-
-    nameEl.textContent = cur.name;
-    levelEl.textContent = 'LEVEL ' + (idx + 1);
-
-    if (next) {
-      const span = next.hours - cur.hours;
-      const pct = Math.max(0, Math.min(100, ((hours - cur.hours) / span) * 100));
-      fillEl.style.width = pct.toFixed(1) + '%';
-      footEl.textContent = `${Math.round(hours * 10) / 10} / ${next.hours} hours`;
-    } else {
-      fillEl.style.width = '100%';
-      footEl.textContent = `${Math.round(hours * 10) / 10} hours — max rank`;
-    }
-  }
-
-  function fmtMins(total) {
-    total = Math.max(0, Math.round(total || 0));
-    const h = Math.floor(total / 60), m = total % 60;
-    if (h > 0) return `${h}h ${m}m`;
-    return `${m}m`;
-  }
-
-  function startOfDay(d) { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
-  function startOfWeek(d) { const x = startOfDay(d); const day = (x.getDay() + 6) % 7; x.setDate(x.getDate() - day); return x; }
-  function startOfMonth(d) { const x = startOfDay(d); x.setDate(1); return x; }
-  function monthKeyStr(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
-
-  function watchHistory(uid) {
-    const entriesRef = collection(db, 'users', uid, 'entries');
-    const q = query(entriesRef, orderBy('createdAt', 'desc'), limit(200));
-    if (unsubHistory) unsubHistory();
-    unsubHistory = onSnapshot(q, (snap) => {
-      const entries = [];
-      snap.forEach((docSnap) => {
-        const e = docSnap.data();
-        const date = (e.createdAt && e.createdAt.toDate) ? e.createdAt.toDate() : new Date();
-        entries.push({ ...e, date });
-      });
-      lastEntries = entries;
-      renderHistory(entries);
-      renderStats(entries);
-      renderWeekChart(entries, weekOffset);
-      renderStreak(entries);
-      renderHeatmap(entries);
-    }, (err) => console.error(err));
-  }
-
-  window.trackerWeekNav = function (delta) {
-    weekOffset = Math.min(0, weekOffset + delta);
-    renderWeekChart(lastEntries, weekOffset);
-  };
-
-  function renderStreak(entries) {
-    const numEl = document.getElementById('stat-streak-num');
-    const boxEl = document.getElementById('stat-streak-box');
-    if (!numEl) return;
-    const daySet = new Set(entries.map((e) => startOfDay(e.date).getTime()));
-    const today = startOfDay(new Date());
-    let cursor = new Date(today);
-    // If nothing logged yet today, the streak isn't broken until the day
-    // actually passes — so check from yesterday instead.
-    if (!daySet.has(cursor.getTime())) cursor.setDate(cursor.getDate() - 1);
-    let streak = 0;
-    while (daySet.has(cursor.getTime())) {
-      streak++;
-      cursor.setDate(cursor.getDate() - 1);
-    }
-    numEl.textContent = streak;
-    if (boxEl) boxEl.classList.toggle('is-live', streak > 0);
-  }
-
-  function renderHeatmap(entries) {
-    const gridEl = document.getElementById('tracker-heatmap');
-    const monthsEl = document.getElementById('tracker-heatmap-months');
-    if (!gridEl) return;
-
-    const totalsByDay = new Map();
-    entries.forEach((e) => {
-      const key = startOfDay(e.date).getTime();
-      totalsByDay.set(key, (totalsByDay.get(key) || 0) + (e.minutes || 0));
-    });
-
-    const WEEKS = 20;
-    const today = startOfDay(new Date());
-    const gridStart = startOfWeek(new Date(today.getTime() - (WEEKS - 1) * 7 * 86400000));
-    const max = Math.max(1, ...totalsByDay.values());
-
-    let cols = '';
-    let monthLabels = '';
-    let lastMonth = null;
-    for (let w = 0; w < WEEKS; w++) {
-      const colStart = new Date(gridStart);
-      colStart.setDate(colStart.getDate() + w * 7);
-      const m = colStart.getMonth();
-      monthLabels += `<span class="heatmap-month-label">${m !== lastMonth ? colStart.toLocaleDateString(undefined, { month: 'short' }) : ''}</span>`;
-      lastMonth = m;
-
-      let cells = '';
-      for (let d = 0; d < 7; d++) {
-        const cellDate = new Date(gridStart);
-        cellDate.setDate(cellDate.getDate() + w * 7 + d);
-        if (cellDate > today) {
-          cells += `<span class="heatmap-cell heatmap-cell-empty"></span>`;
-          continue;
-        }
-        const mins = totalsByDay.get(cellDate.getTime()) || 0;
-        const level = mins <= 0 ? 0 : mins < max * 0.25 ? 1 : mins < max * 0.5 ? 2 : mins < max * 0.75 ? 3 : 4;
-        const label = cellDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-        cells += `<span class="heatmap-cell" data-level="${level}" title="${label}: ${fmtMins(mins)}"></span>`;
-      }
-      cols += `<div class="heatmap-col">${cells}</div>`;
-    }
-    gridEl.innerHTML = cols;
-    if (monthsEl) monthsEl.innerHTML = monthLabels;
-  }
-
-  function renderHistory(entries) {
-    const listEl = document.getElementById('tracker-history');
-    if (!entries.length) {
-      listEl.innerHTML = '<li class="donut-empty">No entries yet.</li>';
-      return;
-    }
-    const groups = [];
-    let cur = null;
-    entries.forEach((e) => {
-      const key = e.date.toDateString();
-      if (!cur || cur.key !== key) {
-        cur = { key, date: e.date, items: [], total: 0 };
-        groups.push(cur);
-      }
-      cur.items.push(e);
-      cur.total += (e.minutes || 0);
-    });
-    const todayKey = new Date().toDateString();
-    const yestKey = new Date(Date.now() - 86400000).toDateString();
-    listEl.innerHTML = groups.map((g) => {
-      const heading = g.key === todayKey ? 'Today' : g.key === yestKey ? 'Yesterday'
-        : g.date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-      const items = g.items.map((e) => {
-        const meta = TYPE_COLORS[e.type] || TYPE_COLORS.other;
-        const mediaBit = e.media
-          ? (e.media.image ? `<img class="th-media-img" src="${e.media.image}" alt="">` : '') +
-            `<span class="th-media-title">${escapeHtml(e.media.title)}</span>`
-          : (e.note ? `<span class="th-note">${escapeHtml(e.note)}</span>` : '');
-        return `<li class="tracker-history-item">
-          <span class="th-type"><span class="th-dot" style="background:var(${meta.var})"></span>${meta.label}${mediaBit ? ' — ' + mediaBit : ''}</span>
-          <span class="th-mins">${e.minutes}m</span>
-        </li>`;
-      }).join('');
-      return `<li>
-        <div class="tracker-history-day-head">
-          <span class="tracker-history-day-date">${heading}</span>
-          <span class="tracker-history-day-total">${fmtMins(g.total)}</span>
-        </div>
-        <ul class="tracker-history-day-items">${items}</ul>
-      </li>`;
-    }).join('');
-  }
-
-  function renderStats(entries) {
-    const now = new Date();
-    const sod = startOfDay(now), sow = startOfWeek(now), som = startOfMonth(now);
-    let today = 0, week = 0, month = 0;
-    const daySet = new Set();
-    const titleSet = new Set();
-    entries.forEach((e) => {
-      const mins = e.minutes || 0;
-      if (e.date >= sod) today += mins;
-      if (e.date >= sow) week += mins;
-      if (e.date >= som) month += mins;
-      daySet.add(startOfDay(e.date).getTime());
-      if (e.media && e.media.title) titleSet.add(e.media.id || e.media.title);
-    });
-    const t = document.getElementById('stat-today');
-    const w = document.getElementById('stat-week');
-    const m = document.getElementById('stat-month');
-    const daysEl = document.getElementById('stat-days');
-    const titlesEl = document.getElementById('stat-titles');
-    if (t) t.textContent = fmtMins(today);
-    if (w) w.textContent = fmtMins(week);
-    if (m) m.textContent = fmtMins(month);
-    if (daysEl) daysEl.textContent = daySet.size;
-    if (titlesEl) titlesEl.textContent = titleSet.size;
-  }
-
-  function renderWeekChart(entries, offset) {
-    offset = offset || 0;
-    const el = document.getElementById('tracker-weekchart');
-    const footEl = document.getElementById('tracker-week-total');
-    const rangeEl = document.getElementById('tracker-week-range');
-    const nextBtn = document.getElementById('tracker-week-next');
-    if (!el) return;
-    const todayStart = startOfDay(new Date());
-    const weekStart = new Date(startOfWeek(new Date()));
-    weekStart.setDate(weekStart.getDate() + offset * 7);
-    const days = [];
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(weekStart); d.setDate(d.getDate() + i);
-      days.push({ date: d, total: 0 });
-    }
-    entries.forEach((e) => {
-      const key = startOfDay(e.date).getTime();
-      const day = days.find((d) => d.date.getTime() === key);
-      if (day) day.total += (e.minutes || 0);
-    });
-    const max = Math.max(1, ...days.map((d) => d.total));
-    const weekTotal = days.reduce((a, d) => a + d.total, 0);
-    el.innerHTML = days.map((d) => {
-      const pct = Math.max(3, Math.round((d.total / max) * 100));
-      const label = d.date.toLocaleDateString(undefined, { weekday: 'short' }).slice(0, 2) + ' ' + d.date.getDate();
-      const isToday = d.date.getTime() === todayStart.getTime();
-      return `<div class="tracker-weekchart-col${isToday ? ' is-today' : ''}">
-        <div class="tracker-weekchart-bar-track">
-          <span class="tracker-weekchart-bar-value">${d.total ? fmtMins(d.total) : ''}</span>
-          <div class="tracker-weekchart-bar" style="height:${d.total ? pct : 0}%" title="${fmtMins(d.total)}"></div>
-        </div>
-        <span class="tracker-weekchart-daylabel">${label}</span>
-      </div>`;
-    }).join('');
-    if (footEl) footEl.textContent = `Week total: ${fmtMins(weekTotal)}`;
-    if (rangeEl) {
-      const weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 6);
-      const fmt = (d) => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-      rangeEl.textContent = offset === 0 ? 'This week' : `${fmt(weekStart)} – ${fmt(weekEnd)}`;
-    }
-    if (nextBtn) nextBtn.disabled = offset >= 0;
-  }
-
-  function watchLeaderboard() {
-    const listEl = document.getElementById('tracker-leaderboard');
-    const usersRef = collection(db, 'users');
-    // Ranked by this month's minutes (monthMinutes), not the all-time total,
-    // so the board naturally resets on the 1st. We over-fetch on monthMinutes
-    // since a user's stored value can be stale from a previous month, then
-    // zero those out and re-sort client-side before taking the top 20 —
-    // this avoids needing a composite Firestore index or a backend cron job.
-    const q = query(usersRef, orderBy('monthMinutes', 'desc'), limit(50));
-    onSnapshot(q, (snap) => {
-      if (snap.empty) {
-        listEl.innerHTML = '<li class="donut-empty">No one has logged anything yet, be the first.</li>';
-        return;
-      }
-      const nowMonthKey = monthKeyStr(new Date());
-      let rows = [];
-      snap.forEach((docSnap) => {
-        const u = docSnap.data();
-        const mins = (u.monthKey === nowMonthKey) ? (u.monthMinutes || 0) : 0;
-        rows.push({ id: docSnap.id, u, mins });
-      });
-      rows.sort((a, b) => b.mins - a.mins);
-      rows = rows.slice(0, 20);
-
-      if (!rows.some((r) => r.mins > 0)) {
-        listEl.innerHTML = '<li class="donut-empty">No one has logged anything this month yet, be the first.</li>';
-        return;
-      }
-
-      listEl.innerHTML = '';
-      rows.forEach((r, i) => {
-        const isMe = currentUser && r.id === currentUser.uid;
-        const li = document.createElement('li');
-        li.className = 'lb-item' + (isMe ? ' is-me' : '');
-        const hours = Math.round((r.mins / 60) * 10) / 10;
-        li.innerHTML = `
-          <span class="lb-rank">#${i + 1}</span>
-          <img class="lb-avatar" src="${r.u.photoURL || ''}" alt="">
-          <span class="lb-name">${escapeHtml(r.u.displayName || 'Anonymous')}</span>
-          <span class="lb-total">${hours}h</span>
-        `;
-        listEl.appendChild(li);
-      });
-    }, (err) => console.error(err));
-  }
-
-  // ── MEDIA SEARCH ──
-  // The user picks a type first (Anime / Manga / Visual Novel / Book, see the
-  // chip row above the input), then searches — only the matching database is
-  // queried, instead of hitting all of them per keystroke:
-  //   • Jikan (https://docs.api.jikan.moe/)     — anime + manga/light novels, unofficial MyAnimeList API
-  //   • VNDB Kana API (https://api.vndb.org/kana#the-basics) — visual novels
-  //   • Open Library (https://openlibrary.org/dev/docs/api/search) — books
-  // All are public and CORS-friendly, so they can be called straight from
-  // the browser — no backend needed. jiten.moe and jpdb.io both have APIs too,
-  // but both require a personal API key and aren't CORS-open, so they'd need a
-  // backend proxy to call safely from a static page like this one.
-  //
-  // These APIs mostly do exact/substring matching, so a typo, or a query that
-  // skips a word in the middle of the title (e.g. "motto haramase mahou" for
-  // "Motto! Haramase! Honoo no Oppai Isekai Ero Mahou Gakuen!"), can come back
-  // empty even though a human would immediately recognize the closest match.
-  // To fix that: we send only the query's first word to the remote API (to
-  // pull a wide net of candidates, since remote search is decent at prefix
-  // matching but not much else), fetch more results than we show (15–20
-  // instead of 3), then rank everything ourselves against the FULL query
-  // using per-word fuzzy matching (edit distance + substring containment) so
-  // typos and skipped/reordered words still surface the closest title.
-
-  function fuzzySeedTerm(rawQuery) {
-    const first = rawQuery.trim().split(/\s+/)[0] || rawQuery;
-    return first;
-  }
-
-  function normalizeTokens(str) {
-    return (str || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
-  }
-
-  function levenshtein(a, b) {
-    const m = a.length, n = b.length;
-    if (!m) return n;
-    if (!n) return m;
-    const dp = new Array(n + 1);
-    for (let j = 0; j <= n; j++) dp[j] = j;
-    for (let i = 1; i <= m; i++) {
-      let prev = dp[0];
-      dp[0] = i;
-      for (let j = 1; j <= n; j++) {
-        const tmp = dp[j];
-        dp[j] = a[i - 1] === b[j - 1] ? prev : 1 + Math.min(prev, dp[j], dp[j - 1]);
-        prev = tmp;
-      }
-    }
-    return dp[n];
-  }
-
-  // Best similarity (0–1) between one query word and any word in the title,
-  // allowing for a partially-typed word (substring/prefix) or a typo (edit distance).
-  function bestWordSimilarity(qWord, titleWords) {
-    let best = 0;
-    for (const tWord of titleWords) {
-      if (tWord === qWord) return 1;
-      if (tWord.includes(qWord) || qWord.includes(tWord)) { best = Math.max(best, 0.92); continue; }
-      const dist = levenshtein(qWord, tWord);
-      const sim = 1 - dist / Math.max(qWord.length, tWord.length);
-      if (sim > best) best = sim;
-    }
-    return best;
-  }
-
-  // Scores how well a candidate title matches the full (possibly misspelled,
-  // possibly out-of-order, possibly word-skipping) query the user typed.
-  function fuzzyScoreTitle(rawQuery, title) {
-    const qWords = normalizeTokens(rawQuery);
-    const tWords = normalizeTokens(title);
-    if (!qWords.length || !tWords.length) return { matchedRatio: 0, avgSim: 0 };
-    let sum = 0, matched = 0;
-    for (const qw of qWords) {
-      const sim = bestWordSimilarity(qw, tWords);
-      sum += sim;
-      if (sim >= 0.6) matched++;
-    }
-    return { matchedRatio: matched / qWords.length, avgSim: sum / qWords.length };
-  }
-
-  // Re-ranks (and trims) a candidate list against the full raw query, always
-  // keeping the closest options even if none are a great match, so a typo
-  // never just comes back empty when something close exists.
-  function fuzzyRank(rawQuery, items) {
-    const scored = items.map((it) => ({ it, ...fuzzyScoreTitle(rawQuery, it.title) }));
-    scored.sort((a, b) => (b.matchedRatio - a.matchedRatio) || (b.avgSim - a.avgSim));
-    let kept = scored.filter((s) => s.matchedRatio >= 0.5 || s.avgSim >= 0.55);
-    if (!kept.length) kept = scored.slice(0, 5);
-    return kept.slice(0, 6).map((s) => s.it);
-  }
-
-  // Retries once on a transient gateway error (502/503/504) after a short
-  // delay — Jikan in particular times out under load fairly often, and a
-  // single retry clears most of those without meaningfully slowing anyone down.
-  function fetchJSON(url, opts) {
-    opts = opts || {};
-    const attempt = (retriesLeft) => fetch(url, { ...opts, signal: AbortSignal.timeout(8000) })
-      .then((r) => {
-        if (!r.ok) {
-          if (retriesLeft > 0 && [502, 503, 504].includes(r.status)) {
-            return new Promise((res) => setTimeout(res, 700)).then(() => attempt(retriesLeft - 1));
-          }
-          throw new Error('status ' + r.status);
-        }
-        return r.json();
-      });
-    return attempt(1);
-  }
-
-  function jikanSearch(kind, q) {
-    return fetchJSON(`https://api.jikan.moe/v4/${kind}?q=${encodeURIComponent(fuzzySeedTerm(q))}&limit=20&sfw=true`)
-      .then((json) => (json.data || []).map((it) => ({
-        id: 'mal:' + it.mal_id,
-        type: kind === 'anime' ? 'anime' : (it.type === 'Light Novel' ? 'light novel' : 'manga'),
-        title: it.title_english || it.title,
-        image: it.images && it.images.jpg && it.images.jpg.image_url
-      })))
-      .catch((e) => { console.error('Jikan search failed', e); return null; });
-  }
-
-  function vndbSearch(q) {
-    return fetchJSON('https://api.vndb.org/kana/vn', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filters: ['search', '=', fuzzySeedTerm(q)], fields: 'title, image.url', results: 20 })
-    })
-      .then((json) => (json.results || []).map((it) => ({
-        id: 'vndb:' + it.id, type: 'visual novel', title: it.title,
-        image: it.image && it.image.url
-      })))
-      .catch((e) => { console.error('VNDB search failed', e); return null; });
-  }
-
-  function openLibrarySearch(q) {
-    return fetchJSON(`https://openlibrary.org/search.json?title=${encodeURIComponent(fuzzySeedTerm(q))}&limit=20&fields=key,title,cover_i`)
-      .then((json) => (json.docs || []).map((it) => ({
-        id: 'ol:' + it.key, type: 'book', title: it.title,
-        image: it.cover_i ? `https://covers.openlibrary.org/b/id/${it.cover_i}-M.jpg` : null
-      })))
-      .catch((e) => { console.error('Open Library search failed', e); return null; });
-  }
-
-  window.trackerMediaSearch = function (raw) {
-    const q = raw.trim();
-    const resultsEl = document.getElementById('tracker-media-results');
-    if (mediaSearchTimer) clearTimeout(mediaSearchTimer);
-    if (q.length < 3) {
-      resultsEl.classList.remove('active');
-      resultsEl.innerHTML = '';
-      return;
-    }
-    const seq = ++mediaSearchSeq;
-    mediaSearchTimer = setTimeout(async () => {
-      resultsEl.classList.add('active');
-      resultsEl.innerHTML = '<div class="tracker-media-results-msg">Searching…</div>';
-      let items = null;
-      if (mediaSearchType === 'anime') items = await jikanSearch('anime', q);
-      else if (mediaSearchType === 'manga') items = await jikanSearch('manga', q);
-      else if (mediaSearchType === 'visual novel') items = await vndbSearch(q);
-      else if (mediaSearchType === 'book') items = await openLibrarySearch(q);
-      if (seq !== mediaSearchSeq) return; // a newer keystroke superseded this search
-      if (items === null) {
-        resultsEl.innerHTML = '<div class="tracker-media-results-msg">Search is temporarily unavailable, try again in a moment.</div>';
-        return;
-      }
-      items = fuzzyRank(q, items.filter((it) => it.title));
-      if (!items.length) {
-        resultsEl.innerHTML = '<div class="tracker-media-results-msg">No matches found.</div>';
-        return;
-      }
-      resultsEl.innerHTML = items.map((it, i) =>
-        `<button type="button" class="tracker-media-result" onclick="trackerPickMedia(${i})">
-          <img src="${it.image || ''}" alt="">
-          <span class="tracker-media-result-title">${escapeHtml(it.title)}</span>
-          <span class="tracker-media-result-tag">${it.type}</span>
-        </button>`
-      ).join('');
-      window.__trackerMediaResults = items;
-    }, 400);
-  };
-
-  window.trackerSetMediaType = function (type, btn) {
-    mediaSearchType = type;
-    const row = document.getElementById('tracker-media-type-row');
-    if (row) row.querySelectorAll('.tracker-media-type-btn').forEach((b) => b.classList.toggle('active', b === btn));
-    const input = document.getElementById('tracker-media-input');
-    const resultsEl = document.getElementById('tracker-media-results');
-    if (input) {
-      input.placeholder = `Search ${type} titles (optional)`;
-      if (input.value.trim().length >= 3) {
-        trackerMediaSearch(input.value); // re-run the search against the newly selected type
-      } else if (resultsEl) {
-        resultsEl.classList.remove('active');
-        resultsEl.innerHTML = '';
-      }
-    }
-  };
-
-  window.trackerPickMedia = function (i) {
-    const it = (window.__trackerMediaResults || [])[i];
-    if (!it) return;
-    pickedMedia = it;
-    const picked = document.getElementById('tracker-media-picked');
-    document.getElementById('tracker-media-picked-img').src = it.image || '';
-    document.getElementById('tracker-media-picked-title').textContent = it.title;
-    picked.style.display = 'flex';
-    document.getElementById('tracker-media-input').value = '';
-    document.getElementById('tracker-media-results').classList.remove('active');
-    document.getElementById('tracker-media-results').innerHTML = '';
-  };
-
-  window.trackerClearMedia = function () {
-    pickedMedia = null;
-    const picked = document.getElementById('tracker-media-picked');
-    if (picked) picked.style.display = 'none';
-  };
-
-  function escapeHtml(str) {
-    const d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-  }
-</script>
 </body>
 </html>
