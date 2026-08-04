@@ -153,7 +153,12 @@
 
   .starfield-layer {
     position: absolute;
-    inset: -60px;
+    top: 50%;
+    left: 50%;
+    width: 300vmax;
+    height: 300vmax;
+    margin-top: -150vmax;
+    margin-left: -150vmax;
     background-repeat: repeat;
     transform-origin: 50% 50%;
     will-change: transform;
@@ -176,8 +181,8 @@
       radial-gradient(1.1px 1.1px at 53% 52%, var(--text) 60%, transparent 100%),
       radial-gradient(1px 1px at 70% 40%, var(--text) 60%, transparent 100%),
       radial-gradient(1px 1px at 29% 30%, var(--text) 60%, transparent 100%);
-    background-size: 340px 340px;
-    opacity: 0.55;
+    background-size: 210px 210px;
+    opacity: 0.65;
     animation: starTwinkleA 7s ease-in-out infinite, starDiskRotate 130s linear infinite;
   }
   .starfield-layer.silver-lg {
@@ -190,8 +195,8 @@
       radial-gradient(1.4px 1.4px at 94% 48%, var(--blue) 70%, transparent 100%),
       radial-gradient(1.6px 1.6px at 50% 78%, var(--blue) 70%, transparent 100%),
       radial-gradient(1.4px 1.4px at 28% 54%, var(--blue) 70%, transparent 100%);
-    background-size: 460px 420px;
-    opacity: 0.4;
+    background-size: 280px 260px;
+    opacity: 0.5;
     animation: starTwinkleB 9s ease-in-out infinite, starDiskRotate 130s linear infinite;
   }
   .starfield-layer.gold {
@@ -202,8 +207,8 @@
       radial-gradient(1.5px 1.5px at 8% 70%, var(--amber) 75%, transparent 100%),
       radial-gradient(1.6px 1.6px at 45% 12%, var(--amber) 75%, transparent 100%),
       radial-gradient(1.5px 1.5px at 95% 60%, var(--amber) 75%, transparent 100%);
-    background-size: 560px 520px;
-    opacity: 0.3;
+    background-size: 340px 320px;
+    opacity: 0.38;
     animation: starTwinkleGold 11s ease-in-out infinite, starDiskRotate 130s linear infinite;
   }
   .starfield-layer.micro-dust {
@@ -220,8 +225,8 @@
       radial-gradient(0.9px 0.9px at 30% 92%, var(--text) 55%, transparent 100%),
       radial-gradient(0.8px 0.8px at 56% 5%, var(--text) 55%, transparent 100%),
       radial-gradient(0.8px 0.8px at 79% 40%, var(--text) 55%, transparent 100%);
-    background-size: 260px 260px;
-    opacity: 0.35;
+    background-size: 160px 160px;
+    opacity: 0.45;
     animation: starTwinkleA 8.5s ease-in-out infinite reverse, starDiskRotate 130s linear infinite;
   }
   @keyframes starTwinkleA { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.75; } }
@@ -473,12 +478,16 @@
     line-height: 1.2;
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
   }
-  h2::before {
-    content: ""; width: 8px; height: 28px; border-radius: 4px; flex-shrink: 0;
-    background: linear-gradient(180deg, var(--green), var(--amber));
+  h2::before,
+  h2::after {
+    content: ""; flex: 1; height: 2px; border-radius: 2px; min-width: 24px;
   }
+  h2::before { background: linear-gradient(90deg, transparent, var(--green)); }
+  h2::after  { background: linear-gradient(90deg, var(--amber), transparent); }
   .view-sub {
     font-size: 14px;
     color: var(--text);
@@ -1655,7 +1664,7 @@
   .guide-row-icon.ic-amber { background: var(--amber); }
   .guide-row-icon.ic-rose  { background: var(--rose); }
   .guide-row-icon.ic-teal  { background: var(--teal); }
-  .guide-row-body { flex: 1; min-width: 0; }
+  .guide-row-body { flex: 1; min-width: 0; text-align: center; }
   .guide-row-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; display: block; line-height: 1.3; }
   .guide-row-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; display: block; }
   .guide-row-arrow { color: var(--text-dim); flex-shrink: 0; font-size: 14px; transition: transform 0.15s, color 0.15s; }
@@ -1770,7 +1779,8 @@
   .landing-cta-title {
     justify-content: center;
   }
-  .landing-cta-title::before {
+  .landing-cta-title::before,
+  .landing-cta-title::after {
     display: none;
   }
 
